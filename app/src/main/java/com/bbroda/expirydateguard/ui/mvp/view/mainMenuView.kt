@@ -27,6 +27,8 @@ class mainMenuView(var activity: mainMenuActivity, bus: EventBus) : NavigationVi
     private val toolbar: Toolbar? = activity.findViewById(R.id.my_toolbar)
     private var recyclerView: RecyclerView? = activity.findViewById(R.id.my_products_recycler)
 
+    lateinit var adapter: RecyclerAdapter
+
     init {
         navigationView?.bringToFront()
         activity.setSupportActionBar(toolbar)
@@ -48,15 +50,21 @@ class mainMenuView(var activity: mainMenuActivity, bus: EventBus) : NavigationVi
 
     fun initRecyclerView(products: MutableList<Product>) {
         Log.d(TAG, "initRecyclerView: INIT RECYCLERVIEW")
-        val adapter = RecyclerAdapter(products)
+        adapter = RecyclerAdapter(products)
         recyclerView!!.layoutManager = LinearLayoutManager(activity)
         recyclerView!!.adapter = adapter
         recyclerView!!.visibility = View.VISIBLE
     }
 
+    fun notifyAdapter(){
+        //poprawić potem na coś wydajniejszego
+        recyclerView?.adapter?.notifyDataSetChanged()
+    }
     fun doSomething(){}
 
     class SomeViewActionEvent{}
+
+    class DeleteProduct(var product: Product){}
 
     class InitRecyclerView{}
 

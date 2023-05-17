@@ -54,9 +54,10 @@ dependencies {
     def room_version = "2.5.1"
 
     implementation "androidx.room:room-runtime:$room_version"
-    annotationProcessor "androidx.room:room-compiler:$room_version"
 
     apply plugin: 'kotlin-kapt'
+
+    implementation "androidx.room:room-ktx:2.5.1"
 
     // To use Kotlin annotation processing tool (kapt)
     kapt "androidx.room:room-compiler:$room_version"
