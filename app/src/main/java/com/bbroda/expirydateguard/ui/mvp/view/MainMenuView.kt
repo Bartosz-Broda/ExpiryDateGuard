@@ -10,15 +10,16 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bbroda.expirydateguard.R
-import com.bbroda.expirydateguard.ui.activities.mainMenuActivity
+import com.bbroda.expirydateguard.ui.activities.MainMenuActivity
 import com.bbroda.expirydateguard.ui.adapters.RecyclerAdapter
 import com.bbroda.expirydateguard.ui.classes.Product
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.navigation.NavigationView
 import org.greenrobot.eventbus.EventBus
 import java.lang.ref.WeakReference
 
 
-class mainMenuView(var activity: mainMenuActivity, bus: EventBus) : NavigationView.OnNavigationItemSelectedListener {
+class MainMenuView(var activity: MainMenuActivity, bus: EventBus) : NavigationView.OnNavigationItemSelectedListener {
 
     private val activityRef = WeakReference(activity)
 
@@ -26,6 +27,7 @@ class mainMenuView(var activity: mainMenuActivity, bus: EventBus) : NavigationVi
     private val navigationView: NavigationView? = activity.findViewById(R.id.nav_view)
     private val toolbar: Toolbar? = activity.findViewById(R.id.my_toolbar)
     private var recyclerView: RecyclerView? = activity.findViewById(R.id.my_products_recycler)
+    private val fabAddProduct: FloatingActionButton? = activity.findViewById(R.id.FAB_Add_product)
 
     lateinit var adapter: RecyclerAdapter
 
@@ -40,10 +42,17 @@ class mainMenuView(var activity: mainMenuActivity, bus: EventBus) : NavigationVi
 
         drawerLayout!!.addDrawerListener(toggle)
         toggle.syncState()
-        toolbar?.bringToFront()
-        navigationView?.bringToFront()
 
+        toolbar?.bringToFront()
+
+        navigationView?.bringToFront()
         navigationView!!.setNavigationItemSelectedListener(this)
+
+        fabAddProduct?.bringToFront()
+        fabAddProduct?.setOnClickListener {
+            Log.d(TAG, "FAB: CLICKED!xxxxx")
+            bus.post(AddProduct())
+        }
 
         Log.d(TAG, "iniT UI: XXXXXX")
     }
@@ -62,7 +71,7 @@ class mainMenuView(var activity: mainMenuActivity, bus: EventBus) : NavigationVi
     }
     fun doSomething(){}
 
-    class SomeViewActionEvent{}
+    class AddProduct{}
 
     class DeleteProduct(var product: Product){}
 

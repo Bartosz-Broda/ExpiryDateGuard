@@ -5,7 +5,7 @@
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.activities.mainMenuActivity"
+    tools:context=".ui.activities.MainMenuActivity"
     tools:openDrawer="start">
 
     <com.google.android.material.navigation.NavigationView
@@ -103,6 +103,7 @@
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:layout_width="wrap_content"
+            android:id="@+id/FAB_Add_product"
             android:layout_height="wrap_content"
             android:baselineAlignBottom="false"
             android:clickable="true"

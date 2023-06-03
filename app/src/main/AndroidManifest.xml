@@ -9,15 +9,23 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.ExpiryDateGuard" >
+
         <activity
-            android:name=".ui.activities.mainMenuActivity"
+            android:name="com.bbroda.expirydateguard.ui.activities.AddNewProductActivity"
+            android:exported="true">
+        </activity>
+        
+        <activity
+            android:name=".ui.activities.MainMenuActivity"
             android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+
+
     </application>
 
 </manifest>

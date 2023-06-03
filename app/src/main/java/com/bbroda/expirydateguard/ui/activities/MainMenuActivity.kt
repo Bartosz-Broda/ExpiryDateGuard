@@ -4,31 +4,29 @@ package com.bbroda.expirydateguard.ui.activities
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.bbroda.expirydateguard.R
-import com.bbroda.expirydateguard.ui.mvp.model.mainMenuModel
-import com.bbroda.expirydateguard.ui.mvp.presenter.mainMenuPresenter
-import com.bbroda.expirydateguard.ui.mvp.view.mainMenuView
+import com.bbroda.expirydateguard.ui.mvp.model.MainMenuModel
+import com.bbroda.expirydateguard.ui.mvp.presenter.MainMenuPresenter
+import com.bbroda.expirydateguard.ui.mvp.view.MainMenuView
 import org.greenrobot.eventbus.EventBus
 
 
-class mainMenuActivity : AppCompatActivity() {
+class MainMenuActivity : AppCompatActivity() {
 
-
-    private lateinit var presenter: mainMenuPresenter
+    private lateinit var presenter: MainMenuPresenter
     private val bus = EventBus.getDefault()
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_menu_activity)
 
-        presenter = mainMenuPresenter(
-            mainMenuView(this, bus),
-            mainMenuModel(bus),
+        presenter = MainMenuPresenter(
+            MainMenuView(this, bus),
+            MainMenuModel(bus),
             this
         )
 
         EventBus.getDefault().register(presenter)
-        bus.post(mainMenuView.InitRecyclerView())
+        bus.post(MainMenuView.InitRecyclerView())
     }
 
     public override fun onResume() {

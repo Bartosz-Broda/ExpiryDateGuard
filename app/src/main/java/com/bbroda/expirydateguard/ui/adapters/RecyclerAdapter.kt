@@ -8,7 +8,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bbroda.expirydateguard.R
 import com.bbroda.expirydateguard.ui.classes.Product
-import com.bbroda.expirydateguard.ui.mvp.view.mainMenuView
+import com.bbroda.expirydateguard.ui.mvp.view.MainMenuView
 import org.greenrobot.eventbus.EventBus
 
 class RecyclerAdapter(private val dataSet: MutableList<Product>) :
@@ -51,7 +51,7 @@ class RecyclerAdapter(private val dataSet: MutableList<Product>) :
 
         //Setting onclicklistener for button
         viewHolder.deleteProductButton.setOnClickListener {
-            EventBus.getDefault().post(mainMenuView.DeleteProduct(dataSet[position]))
+            EventBus.getDefault().post(MainMenuView.DeleteProduct(dataSet[position]))
             //dataSet.removeAt(position)
             dataSet.remove(dataSet[position])
             notifyItemRemoved(position)

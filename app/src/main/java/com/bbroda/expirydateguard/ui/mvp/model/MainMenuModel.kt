@@ -9,7 +9,7 @@ import java.time.LocalDate
 
 //import com.nerdscorner.mvplib.events.model.BaseEventsModel
 
-class mainMenuModel(var bus: EventBus){
+class MainMenuModel(var bus: EventBus){
 
 
     suspend fun getListOfProducts(database: ProductsDatabase){
