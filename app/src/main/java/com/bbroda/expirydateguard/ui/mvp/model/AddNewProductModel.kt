@@ -16,14 +16,16 @@ import java.time.LocalDate
 
 class AddNewProductModel(var bus: EventBus) {
 
-    suspend fun addNewProductToDatabase(localDate: LocalDate, name: String, database: ProductsDatabase) {
+    suspend fun addNewProductToDatabase(localDate: LocalDate, name: String, type: String ,database: ProductsDatabase) {
         try{
             Log.d(TAG, "addNewProductToDatabase: Adding new product - xxxx")
-            val product = Product(0,name, localDate)
+            val product = Product(0,name, type, localDate)
+            Log.d(TAG, "addNewProductToDatabase: Adding new product2 - xxxx")
             database.productDao().insertAll(product)
+            Log.d(TAG, "addNewProductToDatabase: Adding new product3 - xxxx")
             bus.post(ProductAdded())
         }
-        catch(e:java.lang.IllegalArgumentException){
+        catch(e: java.lang.Exception){
             Log.d(TAG, "addNewProductToDatabase xxxx: ERROR: $e")
         }
     }

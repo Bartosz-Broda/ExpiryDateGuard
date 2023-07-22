@@ -21,15 +21,19 @@ class RecyclerAdapter(private val dataSet: MutableList<Product>) :
      */
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val nameTextView: TextView
+        val typeTextView: TextView
         val dateTextView: TextView
+        val addProductToMealButton: ImageButton
         val deleteProductButton: ImageButton
         val parentLayout: View
 
         init {
             // Define click listener for the ViewHolder's View
             nameTextView = view.findViewById(R.id.product_name)
+            typeTextView = view.findViewById(R.id.product_type)
             dateTextView = view.findViewById(R.id.expiry_date)
             deleteProductButton = view.findViewById(R.id.delete_product_button)
+            addProductToMealButton = view.findViewById(R.id.add_product_to_meal_button)
             parentLayout = view.findViewById(R.id.parent_layout)
         }
     }
@@ -49,6 +53,7 @@ class RecyclerAdapter(private val dataSet: MutableList<Product>) :
         // Get element from your dataset at this position and replace the
         // contents of the view with that element
         viewHolder.nameTextView.text = dataSet[position].name
+        viewHolder.typeTextView.text = dataSet[position].type
         viewHolder.dateTextView.text = dataSet[position].expiryDate.toString()
         val current = LocalDate.now()
         if(dataSet[position].expiryDate < current){
@@ -66,5 +71,9 @@ class RecyclerAdapter(private val dataSet: MutableList<Product>) :
 
     // Return the size of your dataset (invoked by the layout manager)
     override fun getItemCount() = dataSet.size
+
+    fun showPlusButton(){
+
+    }
 
 }

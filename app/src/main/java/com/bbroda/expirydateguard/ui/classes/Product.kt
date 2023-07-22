@@ -9,6 +9,7 @@ import java.time.LocalDate
 data class Product(
     @PrimaryKey (autoGenerate = true) val uid: Int,
     @ColumnInfo (name = "product name") var name: String?,
+    @ColumnInfo (name = "product type") var type: String?,
     @ColumnInfo (name = "expiryDate") var expiryDate: LocalDate,
     //Kiedyś może będzie obrazek
     // var image: Image?

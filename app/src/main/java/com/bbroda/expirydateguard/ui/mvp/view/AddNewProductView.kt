@@ -14,7 +14,8 @@ import java.time.LocalDate
 
 class AddNewProductView(var activity: AddNewProductActivity,var bus: EventBus) {
 
-    private val productEdText: EditText = activity.findViewById(R.id.product_name_edittext)
+    private val productTypeEdText: EditText = activity.findViewById(R.id.product_type_edittext)
+    private val productNameEdText: EditText = activity.findViewById(R.id.product_name_edittext)
     private val dayEdText: EditText = activity.findViewById(R.id.expiry_date_edittext_Day)
     private val monthEdText: EditText = activity.findViewById(R.id.expiry_date_edittext_Month)
     private val yearEdText: EditText = activity.findViewById(R.id.expiry_date_edittext_year)
@@ -25,13 +26,14 @@ class AddNewProductView(var activity: AddNewProductActivity,var bus: EventBus) {
         saveButton.setOnClickListener {
             Log.d(TAG, "BUTTON CLICKED: XXXXXX")
             try {
-                val name = productEdText.text.toString()
+                val type = productTypeEdText.text.toString()
+                val name = productNameEdText.text.toString()
                 val day = dayEdText.text.toString().toInt()
                 val month = monthEdText.text.toString().toInt()
                 val year = yearEdText.text.toString().toInt()
                 val localDate = LocalDate.of(year, month, day)
                 Log.d(TAG, "doSomething: xxxx: DATE: $localDate")
-                bus.post(NewProductAdded(localDate, name))
+                bus.post(NewProductAdded(localDate, name, type))
             }
             catch (exception: Exception){
                 when(exception){
@@ -58,12 +60,14 @@ class AddNewProductView(var activity: AddNewProductActivity,var bus: EventBus) {
     }
 
     fun onApiSuccessfulCall(result: String, name: String, type: String){
+        productNameEdText.setText(name)
+        productTypeEdText.setText(type)
         Toast.makeText(activity, result, Toast.LENGTH_LONG).show()
     }
 
     fun displayToastOnApiFailure(){
         Toast.makeText(activity, "Can't fetch information about this product", Toast.LENGTH_LONG).show()
     }
-    class NewProductAdded(val date: LocalDate, val name: String)
+    class NewProductAdded(val date: LocalDate, val name: String, val type: String)
     class ScanProduct()
 }

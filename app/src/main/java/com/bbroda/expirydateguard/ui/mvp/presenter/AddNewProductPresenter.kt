@@ -8,6 +8,8 @@ import com.bbroda.expirydateguard.ui.activities.AddNewProductActivity
 import com.bbroda.expirydateguard.ui.classes.ProductsDatabase
 import com.bbroda.expirydateguard.ui.mvp.model.AddNewProductModel
 import com.bbroda.expirydateguard.ui.mvp.view.AddNewProductView
+import com.google.android.gms.common.moduleinstall.ModuleInstall
+import com.google.android.gms.common.moduleinstall.ModuleInstallRequest
 import com.google.mlkit.vision.codescanner.GmsBarcodeScanning
 import kotlinx.coroutines.*
 import org.greenrobot.eventbus.Subscribe
@@ -17,13 +19,52 @@ class AddNewProductPresenter(val view: AddNewProductView, val model: AddNewProdu
 
     val db = ProductsDatabase.getDatabase(activity)
 
+    init{
+        //It solves the problem of not opening scanner
+        val moduleInstallClient = ModuleInstall.getClient(activity)
+        val optionalModuleApi = GmsBarcodeScanning.getClient(activity)
+        moduleInstallClient
+            .areModulesAvailable(optionalModuleApi)
+            .addOnSuccessListener {
+                if (it.areModulesAvailable()) {
+                    // Modules are present on the device...
+                } else {
+                    // Modules are not present on the device...
+                    val moduleInstallRequest =
+                        ModuleInstallRequest.newBuilder()
+                            .addApi(optionalModuleApi)
+                            // Add more APIs if you would like to request multiple optional modules.
+                            // .addApi(...)
+                            // Set the listener if you need to monitor the download progress.
+                            // .setListener(listener)
+                            .build()
+
+                    moduleInstallClient
+                        .installModules(moduleInstallRequest)
+                        .addOnSuccessListener {
+                            if (it.areModulesAlreadyInstalled()) {
+                                // Modules are already installed when the request is sent.
+                            }
+                        }
+                        .addOnFailureListener {
+                            // Handle failure…
+                            Log.d(TAG, "CANNOT INSTALL SCANNER: ")
+                        }
+                }
+            }
+            .addOnFailureListener {
+                // Handle failure...
+                Log.d(TAG, "CANNOT CHECK IF SCANNER IS INSTALLED: ")
+            }
+    }
+
     @Subscribe
     fun onSomeViewAction(event: AddNewProductView.NewProductAdded) {
 
         Log.d(TAG, "onSomeViewAction: XXXX - got new product")
         activity.lifecycleScope.launch {
             try {
-                model.addNewProductToDatabase(event.date, event.name, db)
+                model.addNewProductToDatabase(event.date, event.name, event.type, db)
             } catch (e: Exception) {
                 // handler error
             }
@@ -52,7 +93,10 @@ class AddNewProductPresenter(val view: AddNewProductView, val model: AddNewProdu
         //On successful call i fetch name and type of scanned product from API
         try{
             val name = event.response.body()?.products?.get(0)?.product_name.toString()
-            val type = event.response.body()?.products?.get(0)?.category_properties?.ciqual_food_name.toString()
+            var type = event.response.body()?.products?.get(0)?.category_properties?.ciqual_food_name.toString()
+            if(type == "null"){
+                type = ""
+            }
             view.onApiSuccessfulCall(result, name, type)
         }
         catch (e: java.lang.Exception){
@@ -66,6 +110,7 @@ class AddNewProductPresenter(val view: AddNewProductView, val model: AddNewProdu
     }
 
     fun scanBarcode(){
+
         val scanner = GmsBarcodeScanning.getClient(activity)
         scanner.startScan()
             .addOnSuccessListener { barcode ->

@@ -29,7 +29,7 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/cardview"
         android:layout_width="350dp"
-        android:layout_height="200dp"
+        android:layout_height="290dp"
         android:layout_alignTop="@+id/title_text_view"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="100dp"
@@ -39,36 +39,48 @@
 
         <TextView
             android:id="@+id/textview_in_card"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="72dp"
-            android:textSize="20sp"
-            android:text="Expiration \n date"
+            android:layout_marginTop="125dp"
+            android:text="Expiration date"
             android:textAlignment="center"
-            android:textColor="@color/black"/>
+            android:textColor="@color/black"
+            android:textSize="20sp" />
 
         <EditText
-            android:id="@+id/product_name_edittext"
+            android:id="@+id/product_type_edittext"
             android:layout_width="300dp"
             android:layout_height="40dp"
             android:layout_marginStart="25dp"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="70dp"
             android:autofillHints=""
             android:background="@drawable/edittext_bg"
-            android:hint="Product name"
+            android:hint="Product type (eg. Ketchup)"
             android:padding="10dp"
             android:textCursorDrawable="@color/colorPrimary" />
+
+        <EditText
+        android:id="@+id/product_name_edittext"
+        android:layout_width="300dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="15dp"
+        android:autofillHints=""
+        android:background="@drawable/edittext_bg"
+        android:hint="Product name (eg. Brand)"
+        android:padding="10dp"
+        android:textCursorDrawable="@color/colorPrimary" />
 
 
         <EditText
             android:id="@+id/expiry_date_edittext_Day"
-            android:layout_width="50dp"
+            android:layout_width="80dp"
             android:layout_height="40dp"
             android:layout_below="@+id/product_name_edittext"
             android:layout_alignStart="@+id/product_name_edittext"
-            android:layout_marginStart="105dp"
-            android:layout_marginTop="80dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="160dp"
             android:autofillHints="."
             android:background="@drawable/edittext_bg"
             android:ems="10"
@@ -79,11 +91,11 @@
 
         <EditText
             android:id="@+id/expiry_date_edittext_Month"
-            android:layout_width="50dp"
+            android:layout_width="80dp"
             android:layout_height="40dp"
             android:layout_below="@+id/product_name_edittext"
-            android:layout_marginStart="165dp"
-            android:layout_marginTop="80dp"
+            android:layout_marginStart="137dp"
+            android:layout_marginTop="160dp"
             android:layout_toEndOf="@+id/expiry_date_edittext_Day"
             android:autofillHints="."
             android:background="@drawable/edittext_bg"
@@ -95,11 +107,11 @@
 
         <EditText
             android:id="@+id/expiry_date_edittext_year"
-            android:layout_width="100dp"
+            android:layout_width="80dp"
             android:layout_height="40dp"
             android:layout_below="@+id/product_name_edittext"
-            android:layout_marginStart="225dp"
-            android:layout_marginTop="80dp"
+            android:layout_marginStart="235dp"
+            android:layout_marginTop="160dp"
             android:autofillHints="."
             android:background="@drawable/edittext_bg"
             android:ems="10"
@@ -110,10 +122,10 @@
 
         <Button
             android:id="@+id/save_new_product_button"
-            android:layout_width="wrap_content"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="130dp"
-            android:layout_marginTop="140dp"
+            android:layout_marginStart="125dp"
+            android:layout_marginTop="225dp"
             android:text="Save" />
 
     </androidx.cardview.widget.CardView>
@@ -123,7 +135,7 @@
         android:layout_width="wrap_content"
         android:layout_height="60dp"
         android:layout_below="@+id/cardview"
-        android:layout_marginTop="90dp"
+        android:layout_marginTop="50dp"
         android:layout_centerHorizontal="true"
         android:text="SCAN PRODUCT" />
 
