@@ -4,29 +4,28 @@ package com.bbroda.expirydateguard.ui.activities
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.bbroda.expirydateguard.R
-import com.bbroda.expirydateguard.ui.mvp.model.AddNewProductModel
-import com.bbroda.expirydateguard.ui.mvp.presenter.AddNewProductPresenter
-import com.bbroda.expirydateguard.ui.mvp.view.AddNewProductView
-import com.bbroda.expirydateguard.ui.mvp.view.MainMenuView
+import com.bbroda.expirydateguard.ui.mvp.model.OCRCameraModel
+import com.bbroda.expirydateguard.ui.mvp.presenter.OCRCameraPresenter
+import com.bbroda.expirydateguard.ui.mvp.view.OCRCameraView
 import org.greenrobot.eventbus.EventBus
 
-class AddNewProductActivity : AppCompatActivity() {
+class OCRCameraActivity : AppCompatActivity() {
 
-    private lateinit var presenter: AddNewProductPresenter
+    private lateinit var presenter: OCRCameraPresenter
     private val bus = EventBus.getDefault()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.add_new_product_activity)
 
-        presenter = AddNewProductPresenter(
-                AddNewProductView(this, bus),
-                AddNewProductModel(bus),
-                this
+        presenter = OCRCameraPresenter(
+            OCRCameraView(this, bus),
+            OCRCameraModel(bus),
+            this
         )
 
         EventBus.getDefault().register(presenter)
-        bus.post(MainMenuView.InitRecyclerView())
+        //bus.post(MainMenuView.InitRecyclerView())
     }
 
     public override fun onResume() {

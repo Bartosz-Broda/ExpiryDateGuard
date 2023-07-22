@@ -10,6 +10,7 @@ import com.bbroda.expirydateguard.R
 import com.bbroda.expirydateguard.ui.classes.Product
 import com.bbroda.expirydateguard.ui.mvp.view.MainMenuView
 import org.greenrobot.eventbus.EventBus
+import java.time.LocalDate
 
 class RecyclerAdapter(private val dataSet: MutableList<Product>) :
     RecyclerView.Adapter<RecyclerAdapter.ViewHolder>() {
@@ -22,12 +23,14 @@ class RecyclerAdapter(private val dataSet: MutableList<Product>) :
         val nameTextView: TextView
         val dateTextView: TextView
         val deleteProductButton: ImageButton
+        val parentLayout: View
 
         init {
             // Define click listener for the ViewHolder's View
             nameTextView = view.findViewById(R.id.product_name)
             dateTextView = view.findViewById(R.id.expiry_date)
             deleteProductButton = view.findViewById(R.id.delete_product_button)
+            parentLayout = view.findViewById(R.id.parent_layout)
         }
     }
 
@@ -47,7 +50,10 @@ class RecyclerAdapter(private val dataSet: MutableList<Product>) :
         // contents of the view with that element
         viewHolder.nameTextView.text = dataSet[position].name
         viewHolder.dateTextView.text = dataSet[position].expiryDate.toString()
-        //Setting onclicklistener for button
+        val current = LocalDate.now()
+        if(dataSet[position].expiryDate < current){
+            viewHolder.parentLayout.setBackgroundResource(R.drawable.recycler_item_bg_red)
+        }
 
         //Setting onclicklistener for button
         viewHolder.deleteProductButton.setOnClickListener {

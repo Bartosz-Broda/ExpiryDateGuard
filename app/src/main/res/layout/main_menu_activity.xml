@@ -56,14 +56,12 @@
                 >
 
                 <ImageView
-                    android:layout_width="300dp"
+                    android:layout_width="220dp"
                     android:layout_height="200dp"
-                    android:src="@drawable/fridge3"
-                    android:scaleType="centerCrop"
-                    android:layout_gravity="end"
+                    android:layout_gravity="bottom|end"
                     android:layout_marginBottom="15dp"
-                    app:layout_collapseMode="parallax"
-                    />
+                    android:src="@drawable/lodowka_open"
+                    app:layout_collapseMode="parallax" />
 
 
                 <androidx.appcompat.widget.Toolbar
@@ -94,7 +92,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
-                android:padding="5dp"
                 android:nestedScrollingEnabled="false"
                 android:visibility="visible"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior" />

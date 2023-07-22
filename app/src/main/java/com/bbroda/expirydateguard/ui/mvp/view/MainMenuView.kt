@@ -58,7 +58,7 @@ class MainMenuView(var activity: MainMenuActivity, bus: EventBus) : NavigationVi
     }
 
     fun initRecyclerView(products: MutableList<Product>) {
-        Log.d(TAG, "initRecyclerView: INIT RECYCLERVIEW")
+        Log.d(TAG, "initRecyclerView: xxxx INIT RECYCLERVIEW")
         adapter = RecyclerAdapter(products)
         recyclerView!!.layoutManager = LinearLayoutManager(activity)
         recyclerView!!.adapter = adapter
@@ -76,6 +76,8 @@ class MainMenuView(var activity: MainMenuActivity, bus: EventBus) : NavigationVi
     class DeleteProduct(var product: Product){}
 
     class InitRecyclerView{}
+
+    class ReloadProducts
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         TODO("Not yet implemented")

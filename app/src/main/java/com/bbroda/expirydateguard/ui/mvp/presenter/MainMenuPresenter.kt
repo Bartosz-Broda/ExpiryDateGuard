@@ -20,11 +20,37 @@ class MainMenuPresenter(val view: MainMenuView, val model: MainMenuModel, val ac
 
     val db = ProductsDatabase.getDatabase(activity)
 
+    /*init {
+        val moduleInstallClient = ModuleInstall.getClient(activity)
+
+        val optionalModuleApi = TfLite.getClient(activity)
+        val moduleInstallRequest =
+            ModuleInstallRequest.newBuilder()
+                .addApi
+                // Add more APIs if you would like to request multiple optional modules.
+                // .addApi(...)
+                // Set the listener if you need to monitor the download progress.
+                // .setListener(listener)
+                .build()
+
+        moduleInstallClient
+            .installModules(moduleInstallRequest)
+            .addOnSuccessListener {
+                if (it.areModulesAlreadyInstalled()) {
+                    // Modules are already installed when the request is sent.
+                }
+            }
+            .addOnFailureListener {
+                // Handle failure…
+            }
+    }*/
+
     @Subscribe
     fun onFabClicked(event: MainMenuView.AddProduct) {
         Log.d(TAG, "onSomeViewAction: adding new product")
         val intent = Intent(activity, AddNewProductActivity::class.java)
         startActivity(activity, intent, null)
+        activity.onPause()
     }
 
     @Subscribe (threadMode = ThreadMode.MAIN)
@@ -66,6 +92,19 @@ class MainMenuPresenter(val view: MainMenuView, val model: MainMenuModel, val ac
     fun onProductsObtained(event: MainMenuModel.ObtainedListOfProducts) {
         view.initRecyclerView(event.listOfProducts)
         Log.d(TAG, "onProductsObtained: XXXXXX")
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onRefreshNeeded(event: MainMenuView.ReloadProducts) {
+        activity.lifecycleScope.launch {
+            try{
+                model.getListOfProducts(db)
+            }
+            catch (e: Exception) {
+                // handler error
+            }
+        }
+        Log.d(TAG, "onProductsRefreshed: XXXXXX")
     }
 
 }

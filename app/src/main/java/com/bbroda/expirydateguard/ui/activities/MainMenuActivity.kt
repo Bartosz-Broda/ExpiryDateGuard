@@ -34,6 +34,7 @@ class MainMenuActivity : AppCompatActivity() {
         if (!bus.isRegistered(presenter)){
             bus.register(presenter)
         }
+        bus.post(MainMenuView.ReloadProducts())
     }
 
     public override fun onPause() {
