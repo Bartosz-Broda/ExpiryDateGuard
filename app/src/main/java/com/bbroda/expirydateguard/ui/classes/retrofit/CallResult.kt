@@ -10,5 +10,5 @@ data class CallResult(
     @JsonProperty ("page_count") val page_count: Int?,
     @JsonProperty ("page_size") val page_size: Int?,
     @JsonProperty ("products") val products: Array<Products>,
-    @JsonProperty ("skip") val skip: Int?
+    @JsonProperty ("skip") val skip: Int?,
 )

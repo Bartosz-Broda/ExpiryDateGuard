@@ -18,6 +18,9 @@ import org.greenrobot.eventbus.Subscribe
 class AddNewProductPresenter(val view: AddNewProductView, val model: AddNewProductModel, val activity: AddNewProductActivity) {
 
     val db = ProductsDatabase.getDatabase(activity)
+    var ingredients: String = ""
+    var nutriments: String = ""
+    var imageUrl: String = ""
 
     init{
         //It solves the problem of not opening scanner
@@ -64,8 +67,9 @@ class AddNewProductPresenter(val view: AddNewProductView, val model: AddNewProdu
         Log.d(TAG, "onSomeViewAction: XXXX - got new product")
         activity.lifecycleScope.launch {
             try {
-                model.addNewProductToDatabase(event.date, event.name, event.type, db)
+                model.addNewProductToDatabase(event.date, event.name, event.type,ingredients, nutriments, imageUrl, db)
             } catch (e: Exception) {
+                Log.d(TAG, "onSomeViewAction: $e")
                 // handler error
             }
         }
@@ -92,24 +96,64 @@ class AddNewProductPresenter(val view: AddNewProductView, val model: AddNewProdu
         val result = event.response.body().toString()
         //On successful call i fetch name and type of scanned product from API
         try{
+            ingredients = event.response.body()?.products?.get(0)?.ingredients_text.toString()
+
+            //Getting nutriments in a string form, converting to Map and filtering by "100g" key
+            val originalNutriments: Map<String, Any> = event.response.body()?.products?.get(0)?.nutriments!!.allNutriments
+            val mutableMapNutriments : MutableMap<String,Any> = mutableMapOf()
+            for (i in originalNutriments.keys){
+                if (i.contains("100g")){
+                    originalNutriments[i]?.let { mutableMapNutriments.put(i, it) }
+                }
+                if (i.contains("energy_100g")||i.contains("fruits-vegetables-nuts-estimate")||i.contains("nutrition-sscore")||i.contains("nova-group")){
+                    originalNutriments[i]?.let { mutableMapNutriments.remove(i) }}
+
+                if (i.contains("energy-kj_100g")){
+                    originalNutriments[i]?.let { mutableMapNutriments.remove(i) }
+                    originalNutriments[i]?.let { mutableMapNutriments.put("energy (kJ)", "$it kJ") }
+                }
+
+                if (i.contains("energy-kcal_100g")){
+                    originalNutriments[i]?.let { mutableMapNutriments.remove(i) }
+                    originalNutriments[i]?.let { mutableMapNutriments.put("energy (kcal)", "$it kcal") }
+                }
+            }
+            //Editing nutriments for better look
+            nutriments = mutableMapNutriments.toString()
+            nutriments = nutriments.replace("{"," ")
+            nutriments = nutriments.removeSuffix("}")
+            nutriments = nutriments.replace("_", " in ",true)
+            nutriments = nutriments.replace("kJ,","kJ\n",false)
+            nutriments = nutriments.replace(",","g\n",false)
+            nutriments = nutriments.replace("=",": ",false)
+            nutriments = nutriments.replace("-"," ",false)
+
+            Log.d(TAG, "apiCallSuccessful: NUTRIMENTSs: $nutriments")
+
+
             val name = event.response.body()?.products?.get(0)?.product_name.toString()
             var type = event.response.body()?.products?.get(0)?.category_properties?.ciqual_food_name.toString()
             if(type == "null"){
                 type = ""
             }
+            imageUrl = event.response.body()!!.products[0].imageUrl.toString()
             view.onApiSuccessfulCall(result, name, type)
+
         }
         catch (e: java.lang.Exception){
             view.displayToastOnApiFailure()
-            Log.d(TAG, "apiCallSuccessfull: No name or something: $e")
+            Log.d(TAG, "apiCallSuccessfull: Api Call not successfull: $e")
         }
+
+        view.changeVisibilityOfProgressBar(false)
     }
     @Subscribe
     fun apiCallFailed(event: AddNewProductModel.BarcodeFailed){
         view.displayToastOnApiFailure()
+        view.changeVisibilityOfProgressBar(false)
     }
 
-    fun scanBarcode(){
+    private fun scanBarcode(){
 
         val scanner = GmsBarcodeScanning.getClient(activity)
         scanner.startScan()
@@ -122,16 +166,19 @@ class AddNewProductPresenter(val view: AddNewProductView, val model: AddNewProdu
                     val mResult: Deferred<Unit> = async { model.makeApiCall(rawValue) }
                     mResult.await()
                 }
-
+                view.changeVisibilityOfProgressBar(false)
             }
             .addOnCanceledListener {
                 // Task canceled
                 Toast.makeText(activity, "canceled", Toast.LENGTH_SHORT).show()
+                view.changeVisibilityOfProgressBar(false)
             }
             .addOnFailureListener { e ->
                 // Task failed with an exception
                 Log.d(TAG, "BARCODE FAILURE xxxx: $e")
+                view.changeVisibilityOfProgressBar(false)
             }
+        view.changeVisibilityOfProgressBar(true)
     }
 
 

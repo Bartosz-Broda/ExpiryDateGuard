@@ -1,18 +1,24 @@
 package com.bbroda.expirydateguard.ui.adapters
 
+import android.app.AlertDialog
+import android.content.Context
+import android.graphics.Color
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bbroda.expirydateguard.R
 import com.bbroda.expirydateguard.ui.classes.Product
 import com.bbroda.expirydateguard.ui.mvp.view.MainMenuView
 import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.EventBus.TAG
 import java.time.LocalDate
 
-class RecyclerAdapter(private val dataSet: MutableList<Product>) :
+class RecyclerAdapter(private val dataSet: MutableList<Product>, val activityContext: Context) :
     RecyclerView.Adapter<RecyclerAdapter.ViewHolder>() {
 
     /**
@@ -25,6 +31,7 @@ class RecyclerAdapter(private val dataSet: MutableList<Product>) :
         val dateTextView: TextView
         val addProductToMealButton: ImageButton
         val deleteProductButton: ImageButton
+        val deleteProductFromMealButton: ImageButton
         val parentLayout: View
 
         init {
@@ -34,6 +41,7 @@ class RecyclerAdapter(private val dataSet: MutableList<Product>) :
             dateTextView = view.findViewById(R.id.expiry_date)
             deleteProductButton = view.findViewById(R.id.delete_product_button)
             addProductToMealButton = view.findViewById(R.id.add_product_to_meal_button)
+            deleteProductFromMealButton = view.findViewById(R.id.delete_product_from_meal_button)
             parentLayout = view.findViewById(R.id.parent_layout)
         }
     }
@@ -62,10 +70,46 @@ class RecyclerAdapter(private val dataSet: MutableList<Product>) :
 
         //Setting onclicklistener for button
         viewHolder.deleteProductButton.setOnClickListener {
-            EventBus.getDefault().post(MainMenuView.DeleteProduct(dataSet[position]))
-            //dataSet.removeAt(position)
-            dataSet.remove(dataSet[position])
-            notifyItemRemoved(position)
+
+            val builder = AlertDialog.Builder(activityContext)
+            builder.setTitle("Alert")
+            builder.setMessage("Czy na pewno chcesz usunąć ten produkt ze swojej lodówki?")
+
+            builder.setPositiveButton("Usuń") { dialog, which ->
+
+                EventBus.getDefault().post(MainMenuView.DeleteProduct(dataSet[position]))
+                //dataSet.removeAt(position)
+                dataSet.remove(dataSet[position])
+                notifyItemRemoved(position)
+
+                Toast.makeText(activityContext,
+                    "Usunięto", Toast.LENGTH_SHORT).show()
+            }
+
+            builder.setNegativeButton("Anuluj") { dialog, which ->
+                dialog.dismiss()
+            }
+            builder.show()
+
+        }
+
+        viewHolder.addProductToMealButton.setOnClickListener{
+            viewHolder.addProductToMealButton.visibility = View.GONE
+            viewHolder.deleteProductFromMealButton.visibility = View.VISIBLE
+            viewHolder.itemView.setBackgroundColor(Color.WHITE)
+            EventBus.getDefault().post(MainMenuView.AddProductToDish())
+        }
+
+        viewHolder.deleteProductFromMealButton.setOnClickListener {
+            viewHolder.addProductToMealButton.visibility = View.VISIBLE
+            viewHolder.deleteProductFromMealButton.visibility = View.GONE
+            viewHolder.itemView.setBackgroundColor(Color.LTGRAY)
+            EventBus.getDefault().post(MainMenuView.DeleteProductFromDish())
+        }
+
+        viewHolder.parentLayout.setOnClickListener { 
+            EventBus.getDefault().post(MainMenuView.OpenProductDetails(dataSet[position].uid))
+            Log.d(TAG, "onBindViewHolder: ${dataSet[position].uid}")
         }
     }
 

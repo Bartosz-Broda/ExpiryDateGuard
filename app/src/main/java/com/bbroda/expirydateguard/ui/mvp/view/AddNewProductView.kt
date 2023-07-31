@@ -2,8 +2,10 @@ package com.bbroda.expirydateguard.ui.mvp.view
 
 import android.content.ContentValues.TAG
 import android.util.Log
+import android.view.View
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.core.widget.doAfterTextChanged
 import com.bbroda.expirydateguard.R
@@ -21,6 +23,7 @@ class AddNewProductView(var activity: AddNewProductActivity,var bus: EventBus) {
     private val yearEdText: EditText = activity.findViewById(R.id.expiry_date_edittext_year)
     private val saveButton: Button = activity.findViewById(R.id.save_new_product_button)
     private val scanProductButton: Button = activity.findViewById(R.id.scanButton)
+    private val apiCallProgressBar:ProgressBar = activity.findViewById(R.id.scan_progress_bar)
 
     init {
         saveButton.setOnClickListener {
@@ -28,7 +31,12 @@ class AddNewProductView(var activity: AddNewProductActivity,var bus: EventBus) {
             try {
                 val type = productTypeEdText.text.toString()
                 val name = productNameEdText.text.toString()
-                val day = dayEdText.text.toString().toInt()
+                val day = if(dayEdText.text.isEmpty()){
+                    Log.d(TAG, "emptyyy: ")
+                    "01".toInt()
+                }else{
+                    dayEdText.text.toString().toInt()
+                }
                 val month = monthEdText.text.toString().toInt()
                 val year = yearEdText.text.toString().toInt()
                 val localDate = LocalDate.of(year, month, day)
@@ -67,6 +75,14 @@ class AddNewProductView(var activity: AddNewProductActivity,var bus: EventBus) {
 
     fun displayToastOnApiFailure(){
         Toast.makeText(activity, "Can't fetch information about this product", Toast.LENGTH_LONG).show()
+    }
+
+    fun changeVisibilityOfProgressBar(isVisible: Boolean){
+        if (isVisible){
+        apiCallProgressBar.visibility = View.VISIBLE
+        }else{
+            apiCallProgressBar.visibility = View.GONE
+        }
     }
     class NewProductAdded(val date: LocalDate, val name: String, val type: String)
     class ScanProduct()

@@ -2,6 +2,7 @@ package com.bbroda.expirydateguard.ui.activities
 
 
 import android.os.Bundle
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import com.bbroda.expirydateguard.R
 import com.bbroda.expirydateguard.ui.mvp.model.MainMenuModel
@@ -27,6 +28,17 @@ class MainMenuActivity : AppCompatActivity() {
 
         EventBus.getDefault().register(presenter)
         bus.post(MainMenuView.InitRecyclerView())
+
+        //można dać opcję z sharedpref - jeśli otwarte menu boczcne to backpress robi tylko reload main menu
+        onBackPressedDispatcher.addCallback(this, object: OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                // Whatever you want
+                // when back pressed
+                println("Back button pressed")
+                finish()
+            }
+        })
+
     }
 
     public override fun onResume() {

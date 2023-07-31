@@ -9,6 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.ExpiryDateGuard" >
+		<activity android:name="com.bbroda.expirydateguard.ui.activities.ProductScreenActivity">
+		</activity>
 		<activity android:name="com.bbroda.expirydateguard.ui.activities.OCRCameraActivity">
 		</activity>
 

@@ -1,12 +1,16 @@
 package com.bbroda.expirydateguard.ui.mvp.view
 
 import android.content.ContentValues.TAG
+import android.content.Context
+import android.graphics.Color
 import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.widget.Toolbar
+import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bbroda.expirydateguard.R
@@ -42,9 +46,7 @@ class MainMenuView(var activity: MainMenuActivity, bus: EventBus) : NavigationVi
 
         drawerLayout!!.addDrawerListener(toggle)
         toggle.syncState()
-
         toolbar?.bringToFront()
-
         navigationView?.bringToFront()
         navigationView!!.setNavigationItemSelectedListener(this)
 
@@ -59,10 +61,38 @@ class MainMenuView(var activity: MainMenuActivity, bus: EventBus) : NavigationVi
 
     fun initRecyclerView(products: MutableList<Product>) {
         Log.d(TAG, "initRecyclerView: xxxx INIT RECYCLERVIEW")
-        adapter = RecyclerAdapter(products)
+        adapter = RecyclerAdapter(products, activity)
         recyclerView!!.layoutManager = LinearLayoutManager(activity)
         recyclerView!!.adapter = adapter
         recyclerView!!.visibility = View.VISIBLE
+        recyclerView!!.addItemDecoration(
+            DividerItemDecoration(
+                activity,
+                LinearLayoutManager(activity).orientation
+            )
+        )
+    }
+
+    private fun addProductsToDish() {
+        //change trashcan icons to plus icons
+        try {
+            val itemCount = recyclerView?.adapter?.itemCount
+            for (i in 0 until itemCount!!) {
+                val holder = recyclerView?.findViewHolderForAdapterPosition(i)
+                if (holder != null) {
+                    holder.itemView.setBackgroundColor(Color.LTGRAY)
+                    val deleteButton =
+                        holder.itemView.findViewById<View>(R.id.delete_product_button)
+                    deleteButton.visibility = View.GONE
+                    val addButton =
+                        holder.itemView.findViewById<View>(R.id.add_product_to_meal_button)
+                    addButton.visibility = View.VISIBLE
+                }
+            }
+        }catch(e: java.lang.Exception){
+            Log.d(TAG, "addProductsToDish: EXCEPTION: $e")
+        }
+
     }
 
     fun notifyAdapter(){
@@ -71,6 +101,9 @@ class MainMenuView(var activity: MainMenuActivity, bus: EventBus) : NavigationVi
     }
     fun doSomething(){}
 
+    fun getContext():Context{
+        return activity
+    }
     class AddProduct{}
 
     class DeleteProduct(var product: Product){}
@@ -79,8 +112,25 @@ class MainMenuView(var activity: MainMenuActivity, bus: EventBus) : NavigationVi
 
     class ReloadProducts
 
+    class AddProductToDish
+
+    class DeleteProductFromDish
+
+    class OpenProductDetails(val primaryKey: Int)
+
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        TODO("Not yet implemented")
+        if (item.itemId == R.id.new_recipe_with_my_products) {
+            drawerLayout?.closeDrawer(GravityCompat.START)
+            addProductsToDish()
+
+
+            
+        }
+
+        if(item.itemId == R.id.my_recepies){
+
+        }
+       return true
     }
 }
 

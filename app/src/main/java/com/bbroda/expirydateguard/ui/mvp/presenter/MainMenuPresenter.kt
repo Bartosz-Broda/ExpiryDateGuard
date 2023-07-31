@@ -7,6 +7,7 @@ import androidx.core.content.ContextCompat.startActivity
 import androidx.lifecycle.lifecycleScope
 import com.bbroda.expirydateguard.ui.activities.AddNewProductActivity
 import com.bbroda.expirydateguard.ui.activities.MainMenuActivity
+import com.bbroda.expirydateguard.ui.activities.ProductScreenActivity
 import com.bbroda.expirydateguard.ui.classes.ProductsDatabase
 import com.bbroda.expirydateguard.ui.mvp.model.MainMenuModel
 import com.bbroda.expirydateguard.ui.mvp.model.MainMenuModel.SomeModelActionEvent
@@ -105,6 +106,23 @@ class MainMenuPresenter(val view: MainMenuView, val model: MainMenuModel, val ac
             }
         }
         Log.d(TAG, "onProductsRefreshed: XXXXXX")
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onProductAddedToDish(event: MainMenuView.AddProductToDish) {
+        TODO("Tworzenie listy w bazie i dodawanie do niej tego produktu")
+        Log.d(TAG, "onProductsObtained: XXXXXX")
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onDetailsOpened(event: MainMenuView.OpenProductDetails) {
+
+        Log.d(TAG, "onDetailsOpened: opening product details")
+        val intent = Intent(activity, ProductScreenActivity::class.java)
+        intent.putExtra("UID",event.primaryKey)
+        startActivity(activity, intent, null)
+        activity.onPause()
+
     }
 
 }

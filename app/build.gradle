@@ -97,4 +97,10 @@ dependencies {
 
     //JacksonConverter
     implementation("com.squareup.retrofit2:converter-jackson:2.9.0")
+
+    //OnBackPressed
+    implementation 'androidx.appcompat:appcompat:1.6.0-alpha04'
+
+    //Glide implementation
+    implementation "com.github.bumptech.glide:glide:4.12.0"
 }

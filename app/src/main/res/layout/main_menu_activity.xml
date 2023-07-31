@@ -108,7 +108,7 @@
             app:fabSize="normal"
             app:layout_anchor="@id/appbar"
             app:layout_anchorGravity="end|bottom"
-            android:layout_marginEnd="30dp"
+            android:layout_marginEnd="60dp"
             android:backgroundTint="@color/purple_500"
             />
 
