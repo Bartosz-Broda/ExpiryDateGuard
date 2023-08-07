@@ -1,4 +1,4 @@
-package com.bbroda.expirydateguard.ui.classes
+package com.bbroda.expirydateguard.ui.classes.productdatabase
 
 import android.content.Context
 import androidx.room.Database
@@ -19,7 +19,7 @@ abstract class ProductsDatabase : RoomDatabase() {
             if (INSTANCE == null) {
                 synchronized(this) {
                     INSTANCE =
-                        Room.databaseBuilder(context,ProductsDatabase::class.java, "product_database")
+                        Room.databaseBuilder(context, ProductsDatabase::class.java, "product_database")
                             .build()
                 }
             }

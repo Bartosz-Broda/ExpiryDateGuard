@@ -5,7 +5,7 @@ import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
 import com.bbroda.expirydateguard.ui.activities.AddNewProductActivity
-import com.bbroda.expirydateguard.ui.classes.ProductsDatabase
+import com.bbroda.expirydateguard.ui.classes.productdatabase.ProductsDatabase
 import com.bbroda.expirydateguard.ui.mvp.model.AddNewProductModel
 import com.bbroda.expirydateguard.ui.mvp.view.AddNewProductView
 import com.google.android.gms.common.moduleinstall.ModuleInstall

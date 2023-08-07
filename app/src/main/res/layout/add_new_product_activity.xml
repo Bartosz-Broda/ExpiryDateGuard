@@ -22,7 +22,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="80dp"
         android:textSize="33sp"
-        android:text="Add new product"
+        android:text="@string/dodaj_nowy_produkt"
         android:textColor="@color/black"/>
 
 
@@ -43,7 +43,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="125dp"
-            android:text="Expiration date"
+            android:text="@string/data_przydatno_ci_do_spo_ycia"
             android:textAlignment="center"
             android:textColor="@color/black"
             android:textSize="20sp" />
@@ -53,11 +53,11 @@
             android:layout_width="300dp"
             android:layout_height="40dp"
             android:layout_marginStart="25dp"
-            android:layout_marginTop="70dp"
+            android:layout_marginTop="65dp"
             android:autofillHints=""
             android:textCursorDrawable="@drawable/cursor_black"
             android:background="@drawable/edittext_bg"
-            android:hint="Product type (eg. Ketchup)"
+            android:hint="@string/typ_produktu_np_ketchup"
             android:padding="10dp" />
 
         <EditText
@@ -68,7 +68,7 @@
         android:layout_marginTop="15dp"
         android:autofillHints=""
         android:background="@drawable/edittext_bg"
-        android:hint="Product name (eg. Brand)"
+        android:hint="@string/nazwa_produku_np_marka"
         android:padding="10dp"
         android:textCursorDrawable="@drawable/cursor_black" />
 
@@ -84,7 +84,7 @@
             android:autofillHints="."
             android:background="@drawable/edittext_bg"
             android:ems="10"
-            android:hint="DD"
+            android:hint="@string/dd"
             android:inputType="datetime"
             android:padding="10dp"
             android:textCursorDrawable="@drawable/cursor_black" />
@@ -100,7 +100,7 @@
             android:autofillHints="."
             android:background="@drawable/edittext_bg"
             android:ems="10"
-            android:hint="MM"
+            android:hint="@string/mm"
             android:inputType="datetime"
             android:padding="10dp"
             android:textCursorDrawable="@drawable/cursor_black" />
@@ -115,7 +115,7 @@
             android:autofillHints="."
             android:background="@drawable/edittext_bg"
             android:ems="10"
-            android:hint="YYYY"
+            android:hint="@string/rrrr"
             android:inputType="datetime"
             android:padding="10dp"
             android:textCursorDrawable="@drawable/cursor_black" />
@@ -127,7 +127,7 @@
             android:layout_marginStart="120dp"
             android:layout_marginTop="225dp"
             android:background="@drawable/rounded_background_gray"
-            android:text="Save" />
+            android:text="@string/zapisz" />
 
     </androidx.cardview.widget.CardView>
 
@@ -139,7 +139,7 @@
         android:layout_marginTop="50dp"
         android:background="@drawable/rounded_background_gray"
         android:layout_centerHorizontal="true"
-        android:text="SCAN PRODUCT" />
+        android:text="@string/skanuj_produkt" />
 
     <ProgressBar
         android:id="@+id/scan_progress_bar"

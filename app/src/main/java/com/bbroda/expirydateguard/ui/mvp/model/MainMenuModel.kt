@@ -2,8 +2,8 @@ package com.bbroda.expirydateguard.ui.mvp.model
 
 import android.content.ContentValues.TAG
 import android.util.Log
-import com.bbroda.expirydateguard.ui.classes.Product
-import com.bbroda.expirydateguard.ui.classes.ProductsDatabase
+import com.bbroda.expirydateguard.ui.classes.productdatabase.Product
+import com.bbroda.expirydateguard.ui.classes.productdatabase.ProductsDatabase
 import org.greenrobot.eventbus.EventBus
 
 //import com.nerdscorner.mvplib.events.model.BaseEventsModel

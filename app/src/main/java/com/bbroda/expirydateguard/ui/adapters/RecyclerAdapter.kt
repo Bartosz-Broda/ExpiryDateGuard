@@ -12,7 +12,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bbroda.expirydateguard.R
-import com.bbroda.expirydateguard.ui.classes.Product
+import com.bbroda.expirydateguard.ui.classes.productdatabase.Product
 import com.bbroda.expirydateguard.ui.mvp.view.MainMenuView
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.EventBus.TAG

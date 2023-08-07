@@ -130,7 +130,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:text="Typ produktu:"
+                android:text="@string/typ_produktu"
                 app:layout_constraintBottom_toTopOf="@+id/product_type_textview_productscreen"
                 app:layout_constraintStart_toStartOf="parent" />
 
@@ -158,7 +158,7 @@
                 android:layout_marginTop="48dp"
                 android:layout_marginEnd="16dp"
                 android:gravity="start"
-                android:hint="YYYY"
+                android:hint="@string/rrrr"
                 android:maxLength="4"
                 android:textColor="@android:color/black"
                 android:textSize="17sp"
@@ -176,7 +176,7 @@
                 android:layout_marginTop="48dp"
                 android:layout_marginEnd="16dp"
                 android:gravity="start"
-                android:hint="MM"
+                android:hint="@string/mm"
                 android:text=""
                 android:maxLength="2"
                 android:textColor="@android:color/black"
@@ -195,7 +195,7 @@
                 android:layout_marginTop="48dp"
                 android:layout_marginEnd="16dp"
                 android:gravity="start"
-                android:hint="DD"
+                android:hint="@string/dd"
                 android:text=""
                 android:textColor="@android:color/black"
                 android:textSize="17sp"
@@ -214,7 +214,7 @@
                 android:layout_marginTop="48dp"
                 android:layout_marginEnd="16dp"
                 android:gravity="start"
-                android:text="Brak informacji o składnikach"
+                android:text="@string/brak_informacji_o_sk_adnikach"
                 android:textColor="@android:color/black"
                 android:textSize="17sp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -228,7 +228,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:text="Składniki:"
+                android:text="@string/sk_adniki"
                 app:layout_constraintBottom_toTopOf="@+id/ingredients_textview_product_screen"
                 app:layout_constraintStart_toStartOf="parent" />
 
@@ -238,7 +238,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:text="Data przydatności do spożycia:"
+                android:text="@string/data_przydatno_ci_do_spo_ycia"
                 app:layout_constraintBottom_toTopOf="@+id/expiry_date_textview_product_screen"
                 app:layout_constraintStart_toStartOf="parent" />
 
@@ -251,7 +251,7 @@
                 android:layout_marginTop="44dp"
                 android:layout_marginEnd="16dp"
                 android:gravity="start"
-                android:text="Brak informacji o wartościach odżywczych"
+                android:text="@string/brak_informacji_o_warto_ciach_od_ywczych"
                 android:textColor="@android:color/black"
                 android:textSize="17sp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -264,7 +264,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:text="Wartości odżywcze w 100g produktu:"
+                android:text="@string/warto_ci_od_ywcze_w_100g_produktu"
                 app:layout_constraintBottom_toTopOf="@+id/nutrition_textview_product_screen"
                 app:layout_constraintStart_toStartOf="parent" />
 
@@ -276,7 +276,7 @@
                 android:layout_marginBottom="50dp"
                 android:background="@drawable/rounded_background_gray"
                 android:padding="10dp"
-                android:text="Edytuj produkt"
+                android:text="@string/edytuj_produkt"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

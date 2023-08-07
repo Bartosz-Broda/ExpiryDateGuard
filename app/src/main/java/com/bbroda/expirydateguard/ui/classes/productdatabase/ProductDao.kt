@@ -1,4 +1,4 @@
-package com.bbroda.expirydateguard.ui.classes
+package com.bbroda.expirydateguard.ui.classes.productdatabase
 
 import androidx.room.*
 

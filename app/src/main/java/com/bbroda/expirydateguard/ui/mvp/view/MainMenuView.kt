@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
@@ -16,14 +17,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bbroda.expirydateguard.R
 import com.bbroda.expirydateguard.ui.activities.MainMenuActivity
 import com.bbroda.expirydateguard.ui.adapters.RecyclerAdapter
-import com.bbroda.expirydateguard.ui.classes.Product
+import com.bbroda.expirydateguard.ui.classes.productdatabase.Product
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.navigation.NavigationView
 import org.greenrobot.eventbus.EventBus
 import java.lang.ref.WeakReference
 
 
-class MainMenuView(var activity: MainMenuActivity, bus: EventBus) : NavigationView.OnNavigationItemSelectedListener {
+class MainMenuView(var activity: MainMenuActivity, val bus: EventBus) : NavigationView.OnNavigationItemSelectedListener {
 
     private val activityRef = WeakReference(activity)
 
@@ -57,6 +58,8 @@ class MainMenuView(var activity: MainMenuActivity, bus: EventBus) : NavigationVi
         }
 
         Log.d(TAG, "iniT UI: XXXXXX")
+
+
     }
 
     fun initRecyclerView(products: MutableList<Product>) {
@@ -65,12 +68,15 @@ class MainMenuView(var activity: MainMenuActivity, bus: EventBus) : NavigationVi
         recyclerView!!.layoutManager = LinearLayoutManager(activity)
         recyclerView!!.adapter = adapter
         recyclerView!!.visibility = View.VISIBLE
+
+        if(recyclerView!!.itemDecorationCount == 0){
         recyclerView!!.addItemDecoration(
             DividerItemDecoration(
                 activity,
                 LinearLayoutManager(activity).orientation
             )
         )
+        }
     }
 
     private fun addProductsToDish() {
@@ -93,6 +99,27 @@ class MainMenuView(var activity: MainMenuActivity, bus: EventBus) : NavigationVi
             Log.d(TAG, "addProductsToDish: EXCEPTION: $e")
         }
 
+    }
+
+    fun showChangeLang(listItems: Array<String>) {
+
+        //val listItmes = arrayOf(activity.getString(R.string.jezyk_pl), activity.getString(R.string.jezyk_en))
+
+        val mBuilder = AlertDialog.Builder(activity)
+        mBuilder.setTitle(activity.getString(R.string.language_choice))
+        mBuilder.setSingleChoiceItems(listItems, -1) { dialog, which ->
+            if (which == 0) {
+                bus.post(ChangeLanguage("pl"))
+                dialog.dismiss()
+                drawerLayout?.close()
+            } else if (which == 1) {
+                bus.post(ChangeLanguage("en"))
+                drawerLayout?.close()
+                dialog.dismiss()
+            }
+        }
+        val mDialog = mBuilder.create()
+        mDialog.show()
     }
 
     fun notifyAdapter(){
@@ -118,18 +145,25 @@ class MainMenuView(var activity: MainMenuActivity, bus: EventBus) : NavigationVi
 
     class OpenProductDetails(val primaryKey: Int)
 
+    class ShowLanguageChoice
+
+    class ChangeLanguage(val lang: String)
+
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.new_recipe_with_my_products) {
             drawerLayout?.closeDrawer(GravityCompat.START)
             addProductsToDish()
-
-
-            
         }
 
         if(item.itemId == R.id.my_recepies){
 
         }
+
+        if(item.itemId == R.id.change_language){
+            bus.post(ShowLanguageChoice())
+            Log.d(TAG, "onNavigationItemSelected: click!")
+        }
+
        return true
     }
 }

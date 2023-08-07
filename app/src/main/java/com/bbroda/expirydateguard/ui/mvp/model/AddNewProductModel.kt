@@ -3,8 +3,8 @@ package com.bbroda.expirydateguard.ui.mvp.model
 import android.annotation.SuppressLint
 import android.content.ContentValues.TAG
 import android.util.Log
-import com.bbroda.expirydateguard.ui.classes.Product
-import com.bbroda.expirydateguard.ui.classes.ProductsDatabase
+import com.bbroda.expirydateguard.ui.classes.productdatabase.Product
+import com.bbroda.expirydateguard.ui.classes.productdatabase.ProductsDatabase
 import com.bbroda.expirydateguard.ui.classes.retrofit.CallResult
 import com.bbroda.expirydateguard.ui.classes.retrofit.OpenFoodFactsAPI
 import com.bbroda.expirydateguard.ui.classes.retrofit.RetrofitHelper

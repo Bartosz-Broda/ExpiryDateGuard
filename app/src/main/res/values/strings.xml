@@ -10,9 +10,33 @@
     <string name="second_fragment_label">Second Fragment</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
-
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="typ_produktu">Typ produktu</string>
     <string name="data_przydatno_ci">data przydatności</string>
+    <string name="collapse_title">Twoja\nlodówka</string>
+    <string name="przepisy_kulinarne">Przepisy kulinarne</string>
+    <string name="wyszukaj_przepis_z_moimi_produktami">Wyszukaj przepis z moimi produktami</string>
+    <string name="moje_przepisy">Moje przepisy</string>
+    <string name="ustawienia">Ustawienia</string>
+    <string name="zmie_j_zyk">Zmień język</string>
+    <string name="angielski">Angielski</string>
+    <string name="polski">Polski</string>
+    <string name="language_choice">Wybierz język</string>
+    <string name="dodaj_nowy_produkt">Dodaj nowy produkt</string>
+    <string name="data_przydatno_ci_do_spo_ycia">Data przydatności do spożycia:</string>
+    <string name="typ_produktu_np_ketchup">Typ produktu (np. ketchup)</string>
+    <string name="nazwa_produku_np_marka">Nazwa produku (np. marka)</string>
+    <string name="dd">DD</string>
+    <string name="mm">MM</string>
+    <string name="rrrr">RRRR</string>
+    <string name="zapisz">Zapisz</string>
+    <string name="skanuj_produkt">SKANUJ PRODUKT</string>
+    <string name="brak_informacji_o_sk_adnikach">Brak informacji o składnikach</string>
+    <string name="sk_adniki">Składniki:</string>
+    <string name="brak_informacji_o_warto_ciach_od_ywczych">Brak informacji o wartościach odżywczych</string>
+    <string name="warto_ci_od_ywcze_w_100g_produktu">Wartości odżywcze w 100g produktu:</string>
+    <string name="edytuj_produkt">Edytuj produkt</string>
+    <string name="jezyk_pl">Polski</string>
+    <string name="jezyk_en">Angielski</string>
 </resources>

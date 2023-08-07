@@ -3,18 +3,28 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     >
 
-    <item android:title="Cook something!"
+    <item android:title="@string/przepisy_kulinarne"
         android:orderInCategory="1">
         <menu>
             <item
                 android:id="@+id/new_recipe_with_my_products"
-                android:title="Use my products"
+                android:title="@string/wyszukaj_przepis_z_moimi_produktami"
                 app:showAsAction="never" />
 
             <item
                 android:id="@+id/my_recepies"
-                android:title="My reciepies"
+                android:title="@string/moje_przepisy"
                 app:showAsAction="never" />
+        </menu>
+    </item>
+
+    <item android:title="@string/ustawienia"
+        android:orderInCategory="1">
+        <menu>
+            <item
+                android:id="@+id/change_language"
+                android:title="@string/zmie_j_zyk"
+                app:showAsAction="never"/>
         </menu>
     </item>
 

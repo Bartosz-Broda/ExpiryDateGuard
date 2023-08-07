@@ -3,7 +3,7 @@ package com.bbroda.expirydateguard.ui.mvp.presenter
 import android.util.Log
 import androidx.lifecycle.lifecycleScope
 import com.bbroda.expirydateguard.ui.activities.ProductScreenActivity
-import com.bbroda.expirydateguard.ui.classes.ProductsDatabase
+import com.bbroda.expirydateguard.ui.classes.productdatabase.ProductsDatabase
 import com.bbroda.expirydateguard.ui.mvp.model.ProductScreenModel
 import com.bbroda.expirydateguard.ui.mvp.view.ProductScreenView
 import kotlinx.coroutines.launch

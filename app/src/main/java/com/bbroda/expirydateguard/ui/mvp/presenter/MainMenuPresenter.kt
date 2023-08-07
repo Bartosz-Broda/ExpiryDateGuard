@@ -1,16 +1,17 @@
 package com.bbroda.expirydateguard.ui.mvp.presenter
 
 import android.content.ContentValues.TAG
+import android.content.Context
 import android.content.Intent
 import android.util.Log
 import androidx.core.content.ContextCompat.startActivity
 import androidx.lifecycle.lifecycleScope
+import com.bbroda.expirydateguard.R
 import com.bbroda.expirydateguard.ui.activities.AddNewProductActivity
 import com.bbroda.expirydateguard.ui.activities.MainMenuActivity
 import com.bbroda.expirydateguard.ui.activities.ProductScreenActivity
-import com.bbroda.expirydateguard.ui.classes.ProductsDatabase
+import com.bbroda.expirydateguard.ui.classes.productdatabase.ProductsDatabase
 import com.bbroda.expirydateguard.ui.mvp.model.MainMenuModel
-import com.bbroda.expirydateguard.ui.mvp.model.MainMenuModel.SomeModelActionEvent
 import com.bbroda.expirydateguard.ui.mvp.view.MainMenuView
 import kotlinx.coroutines.launch
 import org.greenrobot.eventbus.Subscribe
@@ -21,42 +22,16 @@ class MainMenuPresenter(val view: MainMenuView, val model: MainMenuModel, val ac
 
     val db = ProductsDatabase.getDatabase(activity)
 
-    /*init {
-        val moduleInstallClient = ModuleInstall.getClient(activity)
+    init {
 
-        val optionalModuleApi = TfLite.getClient(activity)
-        val moduleInstallRequest =
-            ModuleInstallRequest.newBuilder()
-                .addApi
-                // Add more APIs if you would like to request multiple optional modules.
-                // .addApi(...)
-                // Set the listener if you need to monitor the download progress.
-                // .setListener(listener)
-                .build()
-
-        moduleInstallClient
-            .installModules(moduleInstallRequest)
-            .addOnSuccessListener {
-                if (it.areModulesAlreadyInstalled()) {
-                    // Modules are already installed when the request is sent.
-                }
-            }
-            .addOnFailureListener {
-                // Handle failure…
-            }
-    }*/
+    }
 
     @Subscribe
     fun onFabClicked(event: MainMenuView.AddProduct) {
         Log.d(TAG, "onSomeViewAction: adding new product")
-        val intent = Intent(activity, AddNewProductActivity::class.java)
+        val intent = Intent(activity.baseContext, AddNewProductActivity::class.java)
         startActivity(activity, intent, null)
         activity.onPause()
-    }
-
-    @Subscribe (threadMode = ThreadMode.MAIN)
-    fun onSomeModelAction(event: SomeModelActionEvent) {
-        view.doSomething()
     }
 
     @Subscribe (threadMode = ThreadMode.MAIN)
@@ -118,11 +93,29 @@ class MainMenuPresenter(val view: MainMenuView, val model: MainMenuModel, val ac
     fun onDetailsOpened(event: MainMenuView.OpenProductDetails) {
 
         Log.d(TAG, "onDetailsOpened: opening product details")
-        val intent = Intent(activity, ProductScreenActivity::class.java)
+        val intent = Intent(activity.baseContext, ProductScreenActivity::class.java)
         intent.putExtra("UID",event.primaryKey)
         startActivity(activity, intent, null)
         activity.onPause()
 
     }
+
+
+    @Subscribe
+    fun changeAppLanguage(event: MainMenuView.ChangeLanguage) {
+        val editor = activity.getSharedPreferences("Settings", Context.MODE_PRIVATE).edit()
+        editor.putString("My_Lang", event.lang)
+        editor.apply()
+        Log.d(TAG, "setLocate language: finish")
+
+        activity.recreate()
+    }
+
+    @Subscribe
+    fun onShowLanguageChoice(event: MainMenuView.ShowLanguageChoice){
+        val listItmes = arrayOf(activity.getString(R.string.jezyk_pl), activity.getString(R.string.jezyk_en))
+        view.showChangeLang(listItmes)
+    }
+
 
 }
