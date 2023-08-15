@@ -1,4 +1,4 @@
-package com.bbroda.expirydateguard.ui.classes.retrofit
+package com.bbroda.expirydateguard.ui.classes.groceryRetrofit
 
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
@@ -7,7 +7,6 @@ import java.util.concurrent.TimeUnit
 
 
 object RetrofitHelper {
-
     fun getInstance(): Retrofit {
         val okHttpClient: OkHttpClient = OkHttpClient.Builder()
             .connectTimeout(1, TimeUnit.MINUTES)

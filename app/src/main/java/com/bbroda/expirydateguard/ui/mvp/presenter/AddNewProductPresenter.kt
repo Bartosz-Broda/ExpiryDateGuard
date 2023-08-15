@@ -10,8 +10,17 @@ import com.bbroda.expirydateguard.ui.mvp.model.AddNewProductModel
 import com.bbroda.expirydateguard.ui.mvp.view.AddNewProductView
 import com.google.android.gms.common.moduleinstall.ModuleInstall
 import com.google.android.gms.common.moduleinstall.ModuleInstallRequest
+import com.google.mlkit.common.model.DownloadConditions
+import com.google.mlkit.nl.languageid.LanguageIdentification
+import com.google.mlkit.nl.translate.TranslateLanguage
+import com.google.mlkit.nl.translate.Translation
+import com.google.mlkit.nl.translate.TranslatorOptions
 import com.google.mlkit.vision.codescanner.GmsBarcodeScanning
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Deferred
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 import org.greenrobot.eventbus.Subscribe
 
 
@@ -63,16 +72,79 @@ class AddNewProductPresenter(val view: AddNewProductView, val model: AddNewProdu
 
     @Subscribe
     fun onSomeViewAction(event: AddNewProductView.NewProductAdded) {
-
         Log.d(TAG, "onSomeViewAction: XXXX - got new product")
-        activity.lifecycleScope.launch {
-            try {
-                model.addNewProductToDatabase(event.date, event.name, event.type,ingredients, nutriments, imageUrl, db)
-            } catch (e: Exception) {
-                Log.d(TAG, "onSomeViewAction: $e")
-                // handler error
-            }
+        //newtype is shortened version of type (openfoodfacts api sometimes returns type as a longer description)
+        val newType: String
+        if(event.type.contains(",")){
+            newType = event.type.substring( 0, event.type.indexOf(","))
+        }else{
+            newType = event.type
         }
+            try {
+                Log.d(TAG, "translateIfNeeded: product type: $newType")
+                //translating type to english for searching recipe purpose
+                val languageIdentifier = LanguageIdentification.getClient()
+                languageIdentifier.identifyLanguage(newType)
+                    .addOnSuccessListener { languageCode ->
+                        if (languageCode !="und"){
+                            Log.d(TAG, "translateIfNeeded: languagecode is not und. It's: $languageCode")
+
+                            // Create a translator to English:
+                            val options = TranslateLanguage.POLISH.let {
+                                TranslatorOptions.Builder()
+                                    .setSourceLanguage(it)
+                                    .setTargetLanguage(TranslateLanguage.ENGLISH)
+                                    .build()
+                            }
+                            val translatorToEnglish = options.let { Translation.getClient(it) }
+                            val conditions = DownloadConditions.Builder()
+                                .build()
+                            translatorToEnglish.downloadModelIfNeeded(conditions).addOnSuccessListener {
+                                // Model downloaded successfully. Okay to start translating.
+                                //translating text (FINALLY!)
+                                translatorToEnglish.translate(newType)
+                                    .addOnSuccessListener { translatedText ->
+                                        // Translation successful.
+                                        activity.lifecycleScope.launch {
+                                            model.addNewProductToDatabase(event.date, event.name, newType,translatedText,ingredients, nutriments, imageUrl, db)
+                                        }
+                                        Log.d(TAG, "translateIfNeeded: TRANSLATED TEXT: $translatedText")
+                                        translatorToEnglish.close()
+                                    }.addOnFailureListener { exception ->
+                                        // Error.
+                                        Log.d(TAG, "translateIfNeeded: Can't translate! $exception")
+                                        activity.lifecycleScope.launch {
+                                            model.addNewProductToDatabase(event.date, event.name, newType,"",ingredients, nutriments, imageUrl, db)
+                                        }
+                                        translatorToEnglish.close()
+                                    }
+                            }.addOnFailureListener { exception ->
+                                // Model couldn’t be downloaded or other internal error.
+                                Log.d(TAG, "translateIfNeeded: Need another language model but can't download it!: $exception")
+                                translatorToEnglish.close()
+                            }
+                            Log.i(TAG, "Language: $languageCode")
+                        }else{
+                            activity.lifecycleScope.launch {
+                                model.addNewProductToDatabase(event.date, event.name, newType,"",ingredients, nutriments, imageUrl, db)
+                            }
+                        }
+                    }
+                    .addOnFailureListener {
+                        Log.d(TAG, "addNewProductToDatabase: $it")
+                        // Model couldn’t be loaded or other internal error.
+                        activity.lifecycleScope.launch {
+                            model.addNewProductToDatabase(event.date, event.name, newType,"",ingredients, nutriments, imageUrl, db)
+                        }
+                    }
+
+            } catch (e: Exception) {
+                activity.lifecycleScope.launch {
+                    model.addNewProductToDatabase(event.date, event.name, newType,"",ingredients, nutriments, imageUrl, db)
+                }
+                Log.d(TAG, "translateIfNeeded: $e")
+            }
+
 
     }
 
@@ -87,7 +159,7 @@ class AddNewProductPresenter(val view: AddNewProductView, val model: AddNewProdu
 
     @Subscribe
     fun onSomeModelAction(event: AddNewProductModel.ProductAdded) {
-        Log.d(TAG, "onSomeModelAction: XXXX - ProductsAdded")
+        Log.d(TAG, "onSomeModelAction: XXXX - ProductsAdded. Product info: ${event.product}")
         activity.finish()
     }
 

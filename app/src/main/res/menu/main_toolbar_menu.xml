@@ -15,6 +15,12 @@
                 android:id="@+id/my_recepies"
                 android:title="@string/moje_przepisy"
                 app:showAsAction="never" />
+
+            <item
+                android:id="@+id/food_preferences"
+                android:title="@string/food_preferences"
+                app:showAsAction="never"
+                />
         </menu>
     </item>
 

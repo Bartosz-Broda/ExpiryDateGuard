@@ -1,22 +1,28 @@
 package com.bbroda.expirydateguard.ui.mvp.view
 
+import android.annotation.SuppressLint
 import android.content.ContentValues.TAG
 import android.content.Context
-import android.graphics.Color
 import android.util.Log
 import android.view.MenuItem
 import android.view.View
+import android.widget.ImageButton
+import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.Toolbar
+import androidx.cardview.widget.CardView
 import androidx.core.view.GravityCompat
+import androidx.core.widget.NestedScrollView
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bbroda.expirydateguard.R
 import com.bbroda.expirydateguard.ui.activities.MainMenuActivity
-import com.bbroda.expirydateguard.ui.adapters.RecyclerAdapter
+import com.bbroda.expirydateguard.ui.adapters.ProductsRecyclerAdapter
+import com.bbroda.expirydateguard.ui.classes.foodPreferencesDatabase.Preference
 import com.bbroda.expirydateguard.ui.classes.productdatabase.Product
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.navigation.NavigationView
@@ -33,13 +39,19 @@ class MainMenuView(var activity: MainMenuActivity, val bus: EventBus) : Navigati
     private val toolbar: Toolbar? = activity.findViewById(R.id.my_toolbar)
     private var recyclerView: RecyclerView? = activity.findViewById(R.id.my_products_recycler)
     private val fabAddProduct: FloatingActionButton? = activity.findViewById(R.id.FAB_Add_product)
+    private val nestedScrollView: NestedScrollView? = activity.findViewById(R.id.nestedScrollView)
+    private val ingredientsCardView: CardView? = activity.findViewById(R.id.ingredients_for_meal)
+    private val ingredientsForMealTextView: TextView? = activity.findViewById(R.id.ingredients_for_meal_textview)
+    private val approveProductsForMealImageButton: ImageButton? = activity.findViewById(R.id.approve_products_for_meal)
 
-    lateinit var adapter: RecyclerAdapter
+
+    lateinit var adapter: ProductsRecyclerAdapter
 
     init {
         navigationView?.bringToFront()
         activity.setSupportActionBar(toolbar)
         toolbar?.title = ""
+        //ingredientsCardView?.visibility = View.GONE
 
         val toggle = ActionBarDrawerToggle(
             activity, drawerLayout, toolbar,
@@ -51,20 +63,37 @@ class MainMenuView(var activity: MainMenuActivity, val bus: EventBus) : Navigati
         navigationView?.bringToFront()
         navigationView!!.setNavigationItemSelectedListener(this)
 
+
         fabAddProduct?.bringToFront()
         fabAddProduct?.setOnClickListener {
             Log.d(TAG, "FAB: CLICKED!xxxxx")
             bus.post(AddProduct())
         }
 
-        Log.d(TAG, "iniT UI: XXXXXX")
+        approveProductsForMealImageButton?.setOnClickListener {
+            bus.post(ApproveProductsForMeal())
+/*            ingredientsCardView?.visibility = View.GONE
+            recyclerView?.setPadding(0,0,0,0)
+            bus.post(ClearProductsInListDatabase())
+            bus.post(SetSharedPrefTo0())
+            bus.post(ReloadProducts())*/
 
+        }
+
+        Log.d(TAG, "iniT UI: XXXXXX")
+        bus.post(ClearProductsInListDatabase())
 
     }
 
     fun initRecyclerView(products: MutableList<Product>) {
+        //bringing back original UI
+        ingredientsCardView?.visibility = View.GONE
+        recyclerView?.setPadding(0,0,0,0)
+        bus.post(ClearProductsInListDatabase())
+        bus.post(SetSharedPrefTo0())
+
         Log.d(TAG, "initRecyclerView: xxxx INIT RECYCLERVIEW")
-        adapter = RecyclerAdapter(products, activity)
+        adapter = ProductsRecyclerAdapter(products, activity)
         recyclerView!!.layoutManager = LinearLayoutManager(activity)
         recyclerView!!.adapter = adapter
         recyclerView!!.visibility = View.VISIBLE
@@ -82,19 +111,50 @@ class MainMenuView(var activity: MainMenuActivity, val bus: EventBus) : Navigati
     private fun addProductsToDish() {
         //change trashcan icons to plus icons
         try {
+            //changing elements of recyclerview
             val itemCount = recyclerView?.adapter?.itemCount
             for (i in 0 until itemCount!!) {
                 val holder = recyclerView?.findViewHolderForAdapterPosition(i)
                 if (holder != null) {
-                    holder.itemView.setBackgroundColor(Color.LTGRAY)
-                    val deleteButton =
-                        holder.itemView.findViewById<View>(R.id.delete_product_button)
-                    deleteButton.visibility = View.GONE
-                    val addButton =
-                        holder.itemView.findViewById<View>(R.id.add_product_to_meal_button)
-                    addButton.visibility = View.VISIBLE
+                    if(adapter.dataSet[holder.adapterPosition].englishType==""){
+                        val infoButton = holder.itemView.findViewById<View>(R.id.info_button_product)
+                        infoButton.visibility = View.VISIBLE
+                        val deleteButton =
+                            holder.itemView.findViewById<View>(R.id.delete_product_button)
+                        deleteButton.visibility = View.GONE
+                        val addButton =
+                            holder.itemView.findViewById<View>(R.id.add_product_to_meal_button)
+                        addButton.visibility = View.GONE
+
+                        holder.itemView.setBackgroundResource(R.drawable.recycler_item_no_background)
+                        val minusButton =
+                            holder.itemView.findViewById<View>(R.id.delete_product_from_meal_button)
+                        minusButton.visibility = View.GONE
+                    }else {
+                        holder.itemView.setBackgroundResource(R.drawable.recycler_item_no_background)
+                        val minusButton =
+                            holder.itemView.findViewById<View>(R.id.delete_product_from_meal_button)
+                        minusButton.visibility = View.GONE
+
+                        val infoButton = holder.itemView.findViewById<View>(R.id.info_button_product)
+                        infoButton.visibility = View.GONE
+                        //holder.itemView.setBackgroundResource(R.drawable.recycler_tem_bg_green)
+                        val deleteButton =
+                            holder.itemView.findViewById<View>(R.id.delete_product_button)
+                        deleteButton.visibility = View.GONE
+                        val addButton =
+                            holder.itemView.findViewById<View>(R.id.add_product_to_meal_button)
+                        addButton.visibility = View.VISIBLE
+                    }
                 }
             }
+
+            //changing other UI elements
+            recyclerView?.clipToPadding = false
+            recyclerView?.setPadding(0,0,0,270)
+            ingredientsCardView?.visibility = View.VISIBLE
+            changeNumberOfProductsOnList(0)
+
         }catch(e: java.lang.Exception){
             Log.d(TAG, "addProductsToDish: EXCEPTION: $e")
         }
@@ -122,6 +182,73 @@ class MainMenuView(var activity: MainMenuActivity, val bus: EventBus) : Navigati
         mDialog.show()
     }
 
+    fun showFoodPreferences(foodPreferences: List<Preference>){
+            // Set up the alert builder
+            val builder = AlertDialog.Builder(activity)
+            builder.setTitle(activity.getText(R.string.food_preferences))
+
+            Log.d(TAG, "showFoodPreferences: ${foodPreferences}")
+
+            val keys = arrayListOf<Int>()
+            val booleanValues = arrayListOf<Boolean>()
+            val preferencesList = arrayListOf<String>()
+
+            //retrieving food preferences in adequate language
+            for (i in foodPreferences) {
+                val key = i.stringID
+                if (key != null) {
+                    keys.add(key)
+                }
+                booleanValues.add(i.isChecked)
+                preferencesList.add(activity.getString(key!!))
+                /*val mKey = i.toString().split("=")[0]
+                val intKey = mKey.toInt()
+                keys.add(intKey)
+                Log.d(TAG, "showFoodPreferences item: $i")
+                preferencesList.add(activity.getString(intKey))*/
+            }
+
+            val typedArray = preferencesList.toTypedArray()
+
+            // Add a checkbox list
+            builder.setMultiChoiceItems(
+                typedArray,
+                booleanValues.toBooleanArray()
+            ) { dialog, which, isChecked ->
+
+                // The user checked or unchecked a box
+                val clickedItem = typedArray[which]
+                Log.d(TAG, "showFoodPreferences: Clicked on $clickedItem")
+
+
+                for (i in foodPreferences) {
+                    val mKey = i.stringID
+                    if (activity.getString(mKey) == clickedItem) {
+                        i.isChecked = isChecked
+                        Log.d(
+                            TAG,
+                            "showFoodPreferences: GET STRING (ITEM) = ${activity.getString(mKey)}"
+                        )
+                        Log.d(
+                            TAG,
+                            "showFoodPreferences: CHANGED ITEM: ${i.apiLabel} VALUE: ${i.isChecked}"
+                        )
+                    }
+                }
+            }
+
+            builder.setPositiveButton("OK") { dialog, which ->
+                bus.post(StoreFoodPrefInSharedPref(foodPreferences))
+            }
+
+            builder.setNegativeButton("Cancel", null)
+
+
+            val dialog = builder.create()
+            dialog.show()
+
+    }
+
     fun notifyAdapter(){
         //poprawić potem na coś wydajniejszego
         recyclerView?.adapter?.notifyDataSetChanged()
@@ -131,28 +258,23 @@ class MainMenuView(var activity: MainMenuActivity, val bus: EventBus) : Navigati
     fun getContext():Context{
         return activity
     }
-    class AddProduct{}
 
-    class DeleteProduct(var product: Product){}
+    @SuppressLint("SetTextI18n")
+    fun changeNumberOfProductsOnList(numberOfProducts: Int){
+        ingredientsForMealTextView?.text = "${activity.getString(R.string.cardview_tekst)} $numberOfProducts"
+    }
 
-    class InitRecyclerView{}
+    fun showToast(text: String){
+        Toast.makeText(activity, text, Toast.LENGTH_LONG).show()
+    }
 
-    class ReloadProducts
-
-    class AddProductToDish
-
-    class DeleteProductFromDish
-
-    class OpenProductDetails(val primaryKey: Int)
-
-    class ShowLanguageChoice
-
-    class ChangeLanguage(val lang: String)
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.new_recipe_with_my_products) {
             drawerLayout?.closeDrawer(GravityCompat.START)
             addProductsToDish()
+            bus.post(UserIsAddingProductsToMeal())
+            bus.post(ClearProductsInListDatabase())
         }
 
         if(item.itemId == R.id.my_recepies){
@@ -164,7 +286,29 @@ class MainMenuView(var activity: MainMenuActivity, val bus: EventBus) : Navigati
             Log.d(TAG, "onNavigationItemSelected: click!")
         }
 
+        if(item.itemId == R.id.food_preferences){
+            bus.post(GetFoodPrefFromSharedPref())
+        }
        return true
     }
+
+
+
+    class AddProduct{}
+    class DeleteProduct(var product: Product){}
+    class InitRecyclerView{}
+    class ReloadProducts
+    class AddProductToRecipe(val product: Product)
+    class UserIsAddingProductsToMeal
+    class DeleteProductFromDish(val product: Product)
+    class OpenProductDetails(val primaryKey: Int)
+    class ShowLanguageChoice
+    class ChangeLanguage(val lang: String)
+    class ClearProductsInListDatabase
+    class SetSharedPrefTo0()
+    class ApproveProductsForMeal()
+    class GetFoodPrefFromSharedPref
+    class StoreFoodPrefInSharedPref(val foodPreferences: List<Preference>)
+
 }
 

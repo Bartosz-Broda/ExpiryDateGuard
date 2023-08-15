@@ -1,11 +1,17 @@
 package com.bbroda.expirydateguard.ui.mvp.presenter
 
+import android.content.ContentValues
 import android.util.Log
 import androidx.lifecycle.lifecycleScope
 import com.bbroda.expirydateguard.ui.activities.ProductScreenActivity
 import com.bbroda.expirydateguard.ui.classes.productdatabase.ProductsDatabase
 import com.bbroda.expirydateguard.ui.mvp.model.ProductScreenModel
 import com.bbroda.expirydateguard.ui.mvp.view.ProductScreenView
+import com.google.mlkit.common.model.DownloadConditions
+import com.google.mlkit.nl.languageid.LanguageIdentification
+import com.google.mlkit.nl.translate.TranslateLanguage
+import com.google.mlkit.nl.translate.Translation
+import com.google.mlkit.nl.translate.TranslatorOptions
 import kotlinx.coroutines.launch
 import org.greenrobot.eventbus.EventBus.TAG
 import org.greenrobot.eventbus.Subscribe
@@ -46,8 +52,113 @@ class ProductScreenPresenter(val view: ProductScreenView, val model: ProductScre
 
     @Subscribe
     fun tryingToChangeProductInfo(event: ProductScreenView.SaveNewProductInfo){
-        activity.lifecycleScope.launch {
-            model.changeProductInfo(event.productName,event.productType,event.expiryDate,uid,db)
+
+        try {
+            Log.d(ContentValues.TAG, "translateIfNeeded: product type: ${event.productType}")
+            //translating type to english for searching recipe purpose
+            val languageIdentifier = LanguageIdentification.getClient()
+            languageIdentifier.identifyLanguage(event.productType)
+                .addOnSuccessListener { languageCode ->
+                    if (languageCode !="und"){
+                        Log.d(ContentValues.TAG, "translateIfNeeded: languagecode is not en. It's: $languageCode")
+
+                        // Create a translator to English:
+                        val options = TranslateLanguage.fromLanguageTag(languageCode).let {
+                            TranslatorOptions.Builder()
+                                .setSourceLanguage(it!!)
+                                .setTargetLanguage(TranslateLanguage.ENGLISH)
+                                .build()
+                        }
+                        val translatorToEnglish = options.let { Translation.getClient(it) }
+                        val conditions = DownloadConditions.Builder()
+                            .build()
+                        translatorToEnglish.downloadModelIfNeeded(conditions).addOnSuccessListener {
+                            // Model downloaded successfully. Okay to start translating.
+                            //translating text (FINALLY!)
+                            translatorToEnglish.translate(event.productType)
+                                .addOnSuccessListener { translatedText ->
+                                    // Translation successful.
+                                    activity.lifecycleScope.launch {
+                                        model.changeProductInfo(event.productName,event.productType,translatedText,event.expiryDate,uid,db)
+                                    }
+                                    Log.d(ContentValues.TAG, "translateIfNeeded: TRANSLATED TEXT: $translatedText")
+                                    translatorToEnglish.close()
+                                }.addOnFailureListener { exception ->
+                                    // Error.
+                                    Log.d(ContentValues.TAG, "translateIfNeeded: Can't translate! $exception")
+                                    activity.lifecycleScope.launch {
+                                        model.changeProductInfo(event.productName,event.productType,"",event.expiryDate,uid,db)
+                                    }
+                                    translatorToEnglish.close()
+                                }
+                        }.addOnFailureListener { exception ->
+                            // Model couldn’t be downloaded or other internal error.
+                            activity.lifecycleScope.launch {
+                                model.changeProductInfo(event.productName,event.productType,"",event.expiryDate,uid,db)
+                            }
+                            Log.d(ContentValues.TAG, "translateIfNeeded: Need another language model but can't download it!: $exception")
+                            translatorToEnglish.close()
+                        }
+                        Log.i(ContentValues.TAG, "Language: $languageCode")
+                    }else{
+                        //if translator cannot detect language, we assume for testing purpouse that it was in polish
+                        Log.d(ContentValues.TAG, "translateIfNeeded: languagecode is not en. It's: $languageCode")
+
+                        // Create a translator to English:
+                        val options = TranslateLanguage.POLISH.let {
+                            TranslatorOptions.Builder()
+                                .setSourceLanguage(it)
+                                .setTargetLanguage(TranslateLanguage.ENGLISH)
+                                .build()
+                        }
+                        val translatorToEnglish = options.let { Translation.getClient(it) }
+                        val conditions = DownloadConditions.Builder()
+                            .build()
+                        translatorToEnglish.downloadModelIfNeeded(conditions).addOnSuccessListener {
+                            // Model downloaded successfully. Okay to start translating.
+                            //translating text (FINALLY!)
+                            translatorToEnglish.translate(event.productType)
+                                .addOnSuccessListener { translatedText ->
+                                    // Translation successful.
+                                    activity.lifecycleScope.launch {
+                                        model.changeProductInfo(event.productName,event.productType,translatedText,event.expiryDate,uid,db)
+                                    }
+                                    Log.d(ContentValues.TAG, "translateIfNeeded: TRANSLATED TEXT: $translatedText")
+                                    translatorToEnglish.close()
+                                }.addOnFailureListener { exception ->
+                                    // Error.
+                                    Log.d(ContentValues.TAG, "translateIfNeeded: Can't translate! $exception")
+                                    activity.lifecycleScope.launch {
+                                        model.changeProductInfo(event.productName,event.productType,"",event.expiryDate,uid,db)
+                                    }
+                                    translatorToEnglish.close()
+                                }
+                        }.addOnFailureListener { exception ->
+                            // Model couldn’t be downloaded or other internal error.
+                            activity.lifecycleScope.launch {
+                                model.changeProductInfo(event.productName,event.productType,"",event.expiryDate,uid,db)
+                            }
+                            Log.d(ContentValues.TAG, "translateIfNeeded: Need another language model but can't download it!: $exception")
+                            translatorToEnglish.close()
+                        }
+                        Log.i(ContentValues.TAG, "Language: $languageCode")
+
+                        Log.d(TAG, "tryingToChangeProductInfo: TranslateIfNeeded: LanguageCode: UND")
+                    }
+                }
+                .addOnFailureListener {
+                    Log.d(ContentValues.TAG, "translateifneeded: $it")
+                    // Model couldn’t be loaded or other internal error.
+                    activity.lifecycleScope.launch {
+                        model.changeProductInfo(event.productName,event.productType,"",event.expiryDate,uid,db)
+                    }
+                }
+
+        } catch (e: Exception) {
+            activity.lifecycleScope.launch {
+                model.changeProductInfo(event.productName,event.productType,"",event.expiryDate,uid,db)
+            }
+            Log.d(ContentValues.TAG, "translateIfNeeded: $e")
         }
     }
 

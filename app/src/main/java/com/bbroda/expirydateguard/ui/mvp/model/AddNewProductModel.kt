@@ -3,11 +3,11 @@ package com.bbroda.expirydateguard.ui.mvp.model
 import android.annotation.SuppressLint
 import android.content.ContentValues.TAG
 import android.util.Log
+import com.bbroda.expirydateguard.ui.classes.groceryRetrofit.CallResult
+import com.bbroda.expirydateguard.ui.classes.groceryRetrofit.OpenFoodFactsAPI
+import com.bbroda.expirydateguard.ui.classes.groceryRetrofit.RetrofitHelper
 import com.bbroda.expirydateguard.ui.classes.productdatabase.Product
 import com.bbroda.expirydateguard.ui.classes.productdatabase.ProductsDatabase
-import com.bbroda.expirydateguard.ui.classes.retrofit.CallResult
-import com.bbroda.expirydateguard.ui.classes.retrofit.OpenFoodFactsAPI
-import com.bbroda.expirydateguard.ui.classes.retrofit.RetrofitHelper
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.greenrobot.eventbus.EventBus
@@ -16,15 +16,13 @@ import java.time.LocalDate
 
 class AddNewProductModel(var bus: EventBus) {
 
-    suspend fun addNewProductToDatabase(localDate: LocalDate, name: String, type: String, ingredients:String, nutriments:String, imageUrl:String, database: ProductsDatabase) {
+    suspend fun addNewProductToDatabase(localDate: LocalDate, name: String, type: String, englishType:String, ingredients:String, nutriments:String, imageUrl:String, database: ProductsDatabase) {
+
         try{
-            Log.d(TAG, "addNewProductToDatabase: Adding new product - xxxx")
-            val product = Product(0,name, type, localDate, ingredients, nutriments, imageUrl)
-            Log.d(TAG, "addNewProductToDatabase: Adding new product2 - xxxx")
+            val product = Product(0,name, type ,englishType,localDate, ingredients, nutriments, imageUrl)
             database.productDao().insertAll(product)
-            Log.d(TAG, "addNewProductToDatabase: Adding new product3 - xxxx")
-            Log.d(TAG, "addNewProductToDatabase: ingredients: ${product.ingredients}")
-            bus.post(ProductAdded())
+            Log.d(TAG, "addNewProductToDatabase: $product")
+            bus.post(ProductAdded(product))
         }
         catch(e: java.lang.Exception){
             Log.d(TAG, "addNewProductToDatabase xxxx: ERROR: $e")
@@ -60,7 +58,7 @@ class AddNewProductModel(var bus: EventBus) {
 
     }
 
-    class ProductAdded
+    class ProductAdded(val product: Product)
     class BarcodeScanned(val response: Response<CallResult>)
     class BarcodeFailed
 }

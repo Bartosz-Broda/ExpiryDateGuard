@@ -26,7 +26,7 @@
     <string name="language_choice">Choose language</string>
     <string name="dodaj_nowy_produkt">Add new product</string>
     <string name="data_przydatno_ci_do_spo_ycia">Expiration date:</string>
-    <string name="typ_produktu_np_ketchup">Product type (e.g. ketchup)</string>
+    <string name="typ_produktu_np_ketchup">Product type (e.g. noodle)</string>
     <string name="nazwa_produku_np_marka">Product name (e.g. brand)</string>
     <string name="dd">DD</string>
     <string name="mm">MM</string>
@@ -40,4 +40,52 @@
     <string name="edytuj_produkt">Edit product</string>
     <string name="jezyk_pl">Polish</string>
     <string name="jezyk_en">English</string>
+    <string name="cardview_tekst">Number of chosen products: </string>
+    <string name="toast_brak_produktów">You have to choose at least one product!</string>
+    <string name="info_button">You can\'t add this product to your list. Fill in the product type.</string>
+    <string name="delete_product_button">Do you want to remove this product from your fridge?</string>
+    <string name="main_menu_api_failed">There was a problem with fetching recipies. Try again later or choose different products.</string>
+    <string name="brakuje_ci">You are missing</string>
+    <string name="produktów">ingredients</string>
+    <string name="no_recipies_found">No recipes found with the ingredients listed.</string>
+    <string name="food_preferences">Food preferences</string>
+    <string name = "AlcoholFree">Alcohol Free </string>
+    <string name = "CeleryFree">Celery Free </string>
+    <string name = "CrustceanFree"> Crustcean Free</string>
+    <string name = "DairyFree">Dairy Free </string>
+    <string name = "EggFree"> Egg Free</string>
+    <string name = "FishFree">Fish Free </string>
+    <string name = "FODMAPFree">FODMAP Free </string>
+    <string name = "GlutenFree"> Gluten Free</string>
+    <string name = "ImmunoSupportive">Immuno Supportive </string>
+    <string name = "KetoFriendly">Keto Friendly </string>
+    <string name = "KidneyFriendly"> Kidney Friendly</string>
+    <string name = "Kosher">Kosher </string>
+    <string name = "LowPotassium">Low Potassium </string>
+    <string name = "LowSugar">Low Sugar </string>
+    <string name = "LupineFree">Lupine Free" </string>
+    <string name = "MolluskFree">Mollusk Free </string>
+    <string name = "MustardFree"> Mustard Free </string>
+    <string name = "Nooiladded"> No oil added </string>
+    <string name = "Paleo">Paleo </string>
+    <string name = "PeanutFree">Peanut Free </string>
+    <string name = "Pescatarian">Pescatarian </string>
+    <string name = "PorkFree">Pork Free </string>
+    <string name = "RedMeatFree">Red Meat Free </string>
+    <string name = "SesameFree">Sesame Free </string>
+    <string name = "ShellfishFree"> Shellfish Free</string>
+    <string name = "SoyFree"> Soy Free</string>
+    <string name = "SugarConscious"> Sugar Conscious </string>
+    <string name = "SulfiteFree">Sulfite Free</string>
+    <string name = "TreeNutFree"> Tree Nut Free </string>
+    <string name = "Vegan"> Vegan </string>
+    <string name = "Vegetarian"> Vegetarian </string>
+    <string name = "WheatFree"> Wheat Free </string>
+    <string name="ingredients">Ingredients</string>
+    <string name="mealType">Meal type</string>
+    <string name="prepareTime">Preparation time</string>
+    <string name="minutes">minutes</string>
+
+
+
 </resources>

@@ -102,7 +102,7 @@ dependencies {
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
 
     // GSON
-    //implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
 
     //JacksonConverter
     implementation("com.squareup.retrofit2:converter-jackson:2.9.0")
@@ -112,4 +112,15 @@ dependencies {
 
     //Glide implementation
     implementation 'com.github.bumptech.glide:glide:4.15.1'
+
+    //ML Kit for language recognition
+    implementation 'com.google.mlkit:language-id:17.0.4'
+
+    //ML Kit for language translation
+    implementation 'com.google.mlkit:translate:17.0.1'
+
+    //implementing guava for mapping different values with the same key
+    implementation 'com.google.guava:guava:31.0.1-jre'
+
+
 }

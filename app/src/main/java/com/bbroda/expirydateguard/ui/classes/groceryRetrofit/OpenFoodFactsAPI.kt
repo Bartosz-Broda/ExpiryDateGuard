@@ -1,4 +1,4 @@
-package com.bbroda.expirydateguard.ui.classes.retrofit
+package com.bbroda.expirydateguard.ui.classes.groceryRetrofit
 
 import retrofit2.Response
 import retrofit2.http.GET

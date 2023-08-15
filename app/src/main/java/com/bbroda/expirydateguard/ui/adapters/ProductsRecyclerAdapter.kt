@@ -1,8 +1,9 @@
 package com.bbroda.expirydateguard.ui.adapters
 
+import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.Context
-import android.graphics.Color
+import android.graphics.Typeface
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -18,13 +19,8 @@ import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.EventBus.TAG
 import java.time.LocalDate
 
-class RecyclerAdapter(private val dataSet: MutableList<Product>, val activityContext: Context) :
-    RecyclerView.Adapter<RecyclerAdapter.ViewHolder>() {
-
-    /**
-     * Provide a reference to the type of views that you are using
-     * (custom ViewHolder)
-     */
+class ProductsRecyclerAdapter(val dataSet: MutableList<Product>, val activityContext: Context) :
+    RecyclerView.Adapter<ProductsRecyclerAdapter.ViewHolder>() {
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val nameTextView: TextView
         val typeTextView: TextView
@@ -33,6 +29,7 @@ class RecyclerAdapter(private val dataSet: MutableList<Product>, val activityCon
         val deleteProductButton: ImageButton
         val deleteProductFromMealButton: ImageButton
         val parentLayout: View
+        val infoButton: ImageButton
 
         init {
             // Define click listener for the ViewHolder's View
@@ -43,6 +40,7 @@ class RecyclerAdapter(private val dataSet: MutableList<Product>, val activityCon
             addProductToMealButton = view.findViewById(R.id.add_product_to_meal_button)
             deleteProductFromMealButton = view.findViewById(R.id.delete_product_from_meal_button)
             parentLayout = view.findViewById(R.id.parent_layout)
+            infoButton = view.findViewById(R.id.info_button_product)
         }
     }
 
@@ -56,27 +54,25 @@ class RecyclerAdapter(private val dataSet: MutableList<Product>, val activityCon
     }
 
     // Replace the contents of a view (invoked by the layout manager)
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
-
-        // Get element from your dataset at this position and replace the
-        // contents of the view with that element
         viewHolder.nameTextView.text = dataSet[position].name
         viewHolder.typeTextView.text = dataSet[position].type
         viewHolder.dateTextView.text = dataSet[position].expiryDate.toString()
         val current = LocalDate.now()
         if(dataSet[position].expiryDate < current){
-            viewHolder.parentLayout.setBackgroundResource(R.drawable.recycler_item_bg_red)
+            viewHolder.dateTextView.text = "${viewHolder.dateTextView.text} !"
+            viewHolder.dateTextView.setTextColor(activityContext.getColor(R.color.textRed))
+            viewHolder.dateTextView.setTypeface(null, Typeface.BOLD)
         }
 
-        //Setting onclicklistener for button
+        //Setting onclicklistener for trashcan button
         viewHolder.deleteProductButton.setOnClickListener {
-
             val builder = AlertDialog.Builder(activityContext)
             builder.setTitle("Alert")
-            builder.setMessage("Czy na pewno chcesz usunąć ten produkt ze swojej lodówki?")
+            builder.setMessage(R.string.delete_product_button)
 
             builder.setPositiveButton("Usuń") { dialog, which ->
-
                 EventBus.getDefault().post(MainMenuView.DeleteProduct(dataSet[position]))
                 //dataSet.removeAt(position)
                 dataSet.remove(dataSet[position])
@@ -90,34 +86,49 @@ class RecyclerAdapter(private val dataSet: MutableList<Product>, val activityCon
                 dialog.dismiss()
             }
             builder.show()
-
         }
 
+        // + button
         viewHolder.addProductToMealButton.setOnClickListener{
             viewHolder.addProductToMealButton.visibility = View.GONE
             viewHolder.deleteProductFromMealButton.visibility = View.VISIBLE
-            viewHolder.itemView.setBackgroundColor(Color.WHITE)
-            EventBus.getDefault().post(MainMenuView.AddProductToDish())
+            viewHolder.parentLayout.setBackgroundResource(R.drawable.recycler_tem_bg_green)
+            EventBus.getDefault().post(MainMenuView.AddProductToRecipe(dataSet[position]))
         }
 
+        // - button
         viewHolder.deleteProductFromMealButton.setOnClickListener {
             viewHolder.addProductToMealButton.visibility = View.VISIBLE
             viewHolder.deleteProductFromMealButton.visibility = View.GONE
-            viewHolder.itemView.setBackgroundColor(Color.LTGRAY)
-            EventBus.getDefault().post(MainMenuView.DeleteProductFromDish())
+            if(dataSet[position].expiryDate < current){
+                viewHolder.parentLayout.setBackgroundResource(R.drawable.recycler_item_no_background)
+            }else{
+                viewHolder.parentLayout.setBackgroundResource(R.drawable.recycler_item_no_background)
+            }
+            EventBus.getDefault().post(MainMenuView.DeleteProductFromDish(dataSet[position]))
         }
 
-        viewHolder.parentLayout.setOnClickListener { 
-            EventBus.getDefault().post(MainMenuView.OpenProductDetails(dataSet[position].uid))
-            Log.d(TAG, "onBindViewHolder: ${dataSet[position].uid}")
+        //info button
+        viewHolder.infoButton.setOnClickListener {
+            val builder = AlertDialog.Builder(activityContext)
+            builder.setTitle("Info")
+            builder.setMessage(R.string.info_button)
+
+            builder.setNegativeButton("Ok") { dialog, which ->
+                dialog.dismiss()
+            }
+            builder.show()
+        }
+
+        viewHolder.parentLayout.setOnClickListener {
+            //if statement prevents opening product details when user is in proccess of adding products to list for a recipes
+            //if(!activityContext.getSharedPreferences("UI", Context.MODE_PRIVATE).getBoolean("Recipies_1", false)) {
+                EventBus.getDefault().post(MainMenuView.OpenProductDetails(dataSet[position].uid))
+                Log.d(TAG, "onBindViewHolder: ${dataSet[position].uid}")
+            //}
         }
     }
 
     // Return the size of your dataset (invoked by the layout manager)
     override fun getItemCount() = dataSet.size
-
-    fun showPlusButton(){
-
-    }
-
 }

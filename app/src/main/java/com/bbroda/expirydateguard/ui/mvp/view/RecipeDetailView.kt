@@ -1,19 +1,14 @@
 package com.bbroda.expirydateguard.ui.mvp.view
 
-import com.bbroda.expirydateguard.ui.activities.OCRCameraActivity
+import com.bbroda.expirydateguard.ui.activities.RecipeDetailsActivity
 import org.greenrobot.eventbus.EventBus
 
-class OCRCameraView(activity: OCRCameraActivity, bus: EventBus) {
+class RecipeDetailView(activity: RecipeDetailsActivity, bus: EventBus) {
 
     init{
-
     }
-
-
-
     fun doSomething() {
         //Update UI
     }
-
     class SomeViewActionEvent
 }

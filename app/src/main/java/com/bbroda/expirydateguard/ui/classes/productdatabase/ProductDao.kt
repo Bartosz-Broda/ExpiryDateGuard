@@ -21,4 +21,8 @@ interface ProductDao {
 
     @Delete
     suspend fun delete(products: Product)
+
+    @Query("DELETE FROM Product")
+    suspend fun nukeTable()
+
 }

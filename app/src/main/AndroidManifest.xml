@@ -12,6 +12,8 @@
         android:screenOrientation="portrait"
         android:supportsRtl="true"
         android:theme="@style/Theme.ExpiryDateGuard" >
+		<activity android:name="com.bbroda.expirydateguard.ui.activities.RecipesScreenActivity">
+		</activity>
         <activity
             android:name=".ui.activities.SplashActivity"
             android:exported="true"
@@ -31,7 +33,7 @@
             tools:ignore="LockedOrientationActivity">
         </activity>
         <activity
-            android:name=".ui.activities.OCRCameraActivity"
+            android:name=".ui.activities.RecipeDetailsActivity"
             android:exported="true"
             android:screenOrientation="sensorPortrait"
             tools:ignore="LockedOrientationActivity">

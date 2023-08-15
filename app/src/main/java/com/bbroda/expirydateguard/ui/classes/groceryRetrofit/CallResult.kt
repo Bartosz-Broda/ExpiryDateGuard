@@ -1,9 +1,11 @@
-package com.bbroda.expirydateguard.ui.classes.retrofit
+package com.bbroda.expirydateguard.ui.classes.groceryRetrofit
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonProperty
 
 //data class CallResult
 //According to JSON response
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class CallResult(
     @JsonProperty ("count") val count: Int?,
     @JsonProperty ("page") val page: Int?,

@@ -1,7 +1,9 @@
-package com.bbroda.expirydateguard.ui.classes.retrofit
+package com.bbroda.expirydateguard.ui.classes.groceryRetrofit
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonProperty
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class Products(
     @JsonProperty("code") val code: String,
     @JsonProperty ("product_name") val product_name: String,
