@@ -2,12 +2,12 @@ package com.bbroda.expirydateguard.ui.activities
 
 
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.bbroda.expirydateguard.R
 import com.bbroda.expirydateguard.ui.mvp.model.AddNewProductModel
 import com.bbroda.expirydateguard.ui.mvp.presenter.AddNewProductPresenter
 import com.bbroda.expirydateguard.ui.mvp.view.AddNewProductView
-import com.bbroda.expirydateguard.ui.mvp.view.MainMenuView
 import org.greenrobot.eventbus.EventBus
 
 class AddNewProductActivity : AppCompatActivity() {
@@ -26,7 +26,8 @@ class AddNewProductActivity : AppCompatActivity() {
         )
 
         EventBus.getDefault().register(presenter)
-        bus.post(MainMenuView.InitRecyclerView())
+
+        bus.post(AddNewProductView.ViewInint())
     }
 
     public override fun onResume() {
@@ -42,7 +43,12 @@ class AddNewProductActivity : AppCompatActivity() {
     }
 
     public override fun onDestroy() {
-
+        Log.d(EventBus.TAG, "onDestroy: ACTIVITY NEWPRODUCT DESTROY")
         super.onDestroy()
+    }
+
+    override fun onStop() {
+        Log.d(EventBus.TAG, "onDestroy: ACTIVITY NEWPRODUCT STOP")
+        super.onStop()
     }
 }

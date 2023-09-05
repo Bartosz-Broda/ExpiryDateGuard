@@ -1,6 +1,7 @@
 package com.bbroda.expirydateguard.ui.mvp.model
 
 import android.content.ContentValues.TAG
+import android.content.Context
 import android.util.Log
 import com.bbroda.expirydateguard.R
 import com.bbroda.expirydateguard.ui.classes.foodPreferencesDatabase.Preference
@@ -131,6 +132,14 @@ class MainMenuModel(var bus: EventBus){
 
     }
 
+    fun retrieveNotificationPreferences(activity: Context){
+        val sharedPreferences = activity.getSharedPreferences("NotificationSettings", Context.MODE_PRIVATE)
+        val notifications = sharedPreferences.getBoolean("Notifications",true)
+
+        bus.post(NotificationPreferencesObtained(notifications))
+
+    }
+
     suspend fun SaveFoodPreferences(foodPreferences: List<Preference>, database: PreferenceDatabase){
         for(i in foodPreferences){
             database.preferenceDao().updatePreference(i)
@@ -188,5 +197,6 @@ class MainMenuModel(var bus: EventBus){
     class ObtainedProductsForMeal(val productsForMeal: List<Product>)
 
     class FoodPreferencesObtained(val foodPreferences: List<Preference>)
+    class NotificationPreferencesObtained(val isNotificationEnabled: Boolean)
 
 }

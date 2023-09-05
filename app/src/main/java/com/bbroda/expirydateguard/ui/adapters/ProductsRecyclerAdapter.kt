@@ -61,8 +61,13 @@ class ProductsRecyclerAdapter(val dataSet: MutableList<Product>, val activityCon
         viewHolder.dateTextView.text = dataSet[position].expiryDate.toString()
         val current = LocalDate.now()
         if(dataSet[position].expiryDate < current){
-            viewHolder.dateTextView.text = "${viewHolder.dateTextView.text} !"
+            viewHolder.dateTextView.text = "${viewHolder.dateTextView.text} ${activityContext.getString(R.string.expired)}"
             viewHolder.dateTextView.setTextColor(activityContext.getColor(R.color.textRed))
+            viewHolder.dateTextView.setTypeface(null, Typeface.BOLD)
+        }
+        else if(dataSet[position].expiryDate < current.plusDays(3)){
+            viewHolder.dateTextView.text = "${viewHolder.dateTextView.text} ${activityContext.getString(R.string.expiration_close)}"
+            viewHolder.dateTextView.setTextColor(activityContext.getColor(R.color.textOrange))
             viewHolder.dateTextView.setTypeface(null, Typeface.BOLD)
         }
 
@@ -79,7 +84,7 @@ class ProductsRecyclerAdapter(val dataSet: MutableList<Product>, val activityCon
                 notifyItemRemoved(position)
 
                 Toast.makeText(activityContext,
-                    "Usunięto", Toast.LENGTH_SHORT).show()
+                    activityContext.getString(R.string.usunięto), Toast.LENGTH_SHORT).show()
             }
 
             builder.setNegativeButton("Anuluj") { dialog, which ->
@@ -92,7 +97,7 @@ class ProductsRecyclerAdapter(val dataSet: MutableList<Product>, val activityCon
         viewHolder.addProductToMealButton.setOnClickListener{
             viewHolder.addProductToMealButton.visibility = View.GONE
             viewHolder.deleteProductFromMealButton.visibility = View.VISIBLE
-            viewHolder.parentLayout.setBackgroundResource(R.drawable.recycler_tem_bg_green)
+            //viewHolder.parentLayout.setBackgroundResource(R.drawable.recycler_tem_bg_green)
             EventBus.getDefault().post(MainMenuView.AddProductToRecipe(dataSet[position]))
         }
 

@@ -35,6 +35,7 @@ class ProductScreenActivity : AppCompatActivity() {
         }
 
         bus.post(ProductScreenView.GetInfoAboutProduct())
+        bus.post(ProductScreenView.ViewInit())
 
     }
 

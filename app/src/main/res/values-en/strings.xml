@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">ExpiryDateGuard</string>
+    <string name="app_name">Expiry Date Guard</string>
     <string name="moja_lod_wka">My Frigde</string>
     <string name="nazwa_produktu">Product name</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
@@ -18,7 +18,7 @@
     <string name="collapse_title">Your fridge</string>
     <string name="przepisy_kulinarne">Recipes</string>
     <string name="wyszukaj_przepis_z_moimi_produktami">Search for recipes with my products</string>
-    <string name="moje_przepisy">My recipes</string>
+    <string name="moje_przepisy">Favourite recipies</string>
     <string name="ustawienia">Settings</string>
     <string name="zmie_j_zyk">Change language</string>
     <string name="angielski">English</string>
@@ -42,7 +42,7 @@
     <string name="jezyk_en">English</string>
     <string name="cardview_tekst">Number of chosen products: </string>
     <string name="toast_brak_produktów">You have to choose at least one product!</string>
-    <string name="info_button">You can\'t add this product to your list. Fill in the product type.</string>
+    <string name="info_button">You can\'t add this product to your list. Go to product details and fill in or change the product type. Try using types suggested by application.</string>
     <string name="delete_product_button">Do you want to remove this product from your fridge?</string>
     <string name="main_menu_api_failed">There was a problem with fetching recipies. Try again later or choose different products.</string>
     <string name="brakuje_ci">You are missing</string>
@@ -51,11 +51,9 @@
     <string name="food_preferences">Food preferences</string>
     <string name = "AlcoholFree">Alcohol Free </string>
     <string name = "CeleryFree">Celery Free </string>
-    <string name = "CrustceanFree"> Crustcean Free</string>
     <string name = "DairyFree">Dairy Free </string>
     <string name = "EggFree"> Egg Free</string>
     <string name = "FishFree">Fish Free </string>
-    <string name = "FODMAPFree">FODMAP Free </string>
     <string name = "GlutenFree"> Gluten Free</string>
     <string name = "ImmunoSupportive">Immuno Supportive </string>
     <string name = "KetoFriendly">Keto Friendly </string>
@@ -67,15 +65,13 @@
     <string name = "MolluskFree">Mollusk Free </string>
     <string name = "MustardFree"> Mustard Free </string>
     <string name = "Nooiladded"> No oil added </string>
-    <string name = "Paleo">Paleo </string>
     <string name = "PeanutFree">Peanut Free </string>
-    <string name = "Pescatarian">Pescatarian </string>
     <string name = "PorkFree">Pork Free </string>
     <string name = "RedMeatFree">Red Meat Free </string>
     <string name = "SesameFree">Sesame Free </string>
     <string name = "ShellfishFree"> Shellfish Free</string>
     <string name = "SoyFree"> Soy Free</string>
-    <string name = "SugarConscious"> Sugar Conscious </string>
+    <string name = "SugarConscious"> Low sugar content </string>
     <string name = "SulfiteFree">Sulfite Free</string>
     <string name = "TreeNutFree"> Tree Nut Free </string>
     <string name = "Vegan"> Vegan </string>
@@ -85,6 +81,1133 @@
     <string name="mealType">Meal type</string>
     <string name="prepareTime">Preparation time</string>
     <string name="minutes">minutes</string>
+    <string name="other">Other</string>
+    <string name="about">About</string>
+    <string name="recipeAdded">Recipe added to favourites</string>
+    <string name="recipeNotAdded">Recipe couldn\'t be added to favourites</string>
+    <string name="author">Author: Bartosz Broda [Copyright (©)]</string>
+    <string name="groceryApi">All data about scanned products comes from OpenFoodFacts.org</string>
+    <string name="recipeApi">All recipes shown in the application are provided by Edamam.com </string>
+    <string name="icons">The icons are provided by Icons8.com</string>
+    <string name="notification_text_on_expiration">Your product %1$s has expired.</string>
+    <string name="notification_text_before_expiration">Your product %1$s will expire soon. Check out the recipes, in which you will use it!</string>
+    <string name="notification_text_on_expiration2">Your product has expired.</string>
+    <string name="notification_text_before_expiration2">One of your grocery products will expire soon. Check out the recipes, in which you will use it!</string>
+    <string name="powiadomienia">Notifications</string>
+    <string name="expiration_close">(Close to expiration date!)</string>
+    <string name="expired">(Expired!)</string>
+    <string name="no_favourite_recipies">No favorite recipes. Search for recipes using items from your fridge to add them to your favourites.</string>
+    <string name="usunięto">Removed</string>
+    <string name="usunięto_ulubione">Removed from favourites</string>
+    <string name="dialog_alert_usun_z_ulubionych">Do you want to remove this recipe from favourites?</string>
+    <string name="recipe_alredy_added">Recipe has already been added to your favourites</string>
+    <string name="ustawienia_powiadomien">Notification options</string>
+    <string name="wlacz_powiadomienia">Enable notifications</string>
+    <string name="cancel">Cancel</string>
+    <string name="dalle2">Drawings were created with the help of DALL·E 2 - https://openai.com/dall-e-2</string>
+    <string name="copyright">Copyright (©)</string>
+
+
+    <string-array name="ingredients">
+
+        <item>AppleCider</item>
+        <item>AppleJuice</item>
+        <item>Tonic</item>
+        <item>HotChocolate</item>
+        <item>Cocoa</item>
+        <item>Juice</item>
+        <item>Coffee</item>
+        <item>Cola</item>
+        <item>DietCola</item>
+        <item>Eggnog</item>
+        <item>Fruits</item>
+        <item>GingerAle</item>
+        <item>InstantCoffee</item>
+        <item>Soda</item>
+        <item>Lemonade</item>
+        <item>OrangeJuice</item>
+        <item>PineappleJuice</item>
+        <item>TomatoJuice</item>
+        <item>Bagels</item>
+        <item>Bread</item>
+        <item>BreadDough</item>
+        <item>Buns</item>
+        <item>CornBread</item>
+        <item>Panko</item>
+        <item>Crumbs</item>
+        <item>Muffins</item>
+        <item>FlatBread</item>
+        <item>FrenchBread</item>
+        <item>Rolls</item>
+        <item>IceCreamCones</item>
+        <item>ItalianBread</item>
+        <item>PieCrust</item>
+        <item>Pita</item>
+        <item>PizzaCrust</item>
+        <item>Biscuits</item>
+        <item>RyeBread</item>
+        <item>Tortilla</item>
+        <item>GrainBread</item>
+        <item>WhiteBread</item>
+        <item>WontonWrappers</item>
+        <item>BakedBeans</item>
+        <item>Bean</item>
+        <item>Beans</item>
+        <item>Boullion</item>
+        <item>BeefBroth</item>
+        <item>BeefSoup</item>
+        <item>BlackBeans</item>
+        <item>CannedCorn</item>
+        <item>CannedTomatoes</item>
+        <item>CheeseSoup</item>
+        <item>ChickenStock</item>
+        <item>ChickenBroth</item>
+        <item>Chili</item>
+        <item>CornedBeefHash</item>
+        <item>CrabBisque</item>
+        <item>CreamofCelery</item>
+        <item>CreamofChicken</item>
+        <item>CreamofCorn</item>
+        <item>CreamofMushroom</item>
+        <item>CreamofOnion</item>
+        <item>CreamofShrimp</item>
+        <item>CreamofVeggie</item>
+        <item>FrenchOnionSoup</item>
+        <item>GarbanzoBeans</item>
+        <item>Gumbo</item>
+        <item>KidneyBeans</item>
+        <item>LimaBeans</item>
+        <item>Minnestrone</item>
+        <item>PorkandBeans</item>
+        <item>RefriedBeans</item>
+        <item>TomatoPaste</item>
+        <item>TomatoSoup</item>
+        <item>VegetableStock</item>
+        <item>Cereal</item>
+        <item>FlakesCereal</item>
+        <item>Applesauce</item>
+        <item>BarbecueSauce</item>
+        <item>BrownMustard</item>
+        <item>HotSauce</item>
+        <item>BurgandyWine</item>
+        <item>Caramel</item>
+        <item>CheeseSauce</item>
+        <item>ChiliSauce</item>
+        <item>ChocolateSyrup</item>
+        <item>CocktailSauce</item>
+        <item>CornSyrup</item>
+        <item>CranberrySauce</item>
+        <item>CurrySauce</item>
+        <item>WhiteWine</item>
+        <item>GarlicSauce</item>
+        <item>GrapeJelly</item>
+        <item>Gravy</item>
+        <item>Guacamole</item>
+        <item>Honey</item>
+        <item>HoneyMustard</item>
+        <item>Horseradish</item>
+        <item>ItalianDressing</item>
+        <item>Jelly</item>
+        <item>Ketchup</item>
+        <item>MarsalaWine</item>
+        <item>Mayonnaise</item>
+        <item>Molasses</item>
+        <item>Mustard</item>
+        <item>Nutella</item>
+        <item>OrangeJelly</item>
+        <item>OysterSauce</item>
+        <item>PeanutButter</item>
+        <item>Pesto</item>
+        <item>PoppySeedDressing</item>
+        <item>RanchDressing</item>
+        <item>RedWine</item>
+        <item>Salsa</item>
+        <item>Sherry</item>
+        <item>SoySauce</item>
+        <item>MeatSauce</item>
+        <item>SyrupMaple</item>
+        <item>Enchilada</item>
+        <item>TeriakySauce</item>
+        <item>ThousandIsland</item>
+        <item>Tobasco</item>
+        <item>TomatoSauce</item>
+        <item>Vermouth</item>
+        <item>Vinaigrette</item>
+        <item>Vinegar</item>
+        <item>VinegarBalsamic</item>
+        <item>VinegarCider</item>
+        <item>VinegarRed</item>
+        <item>VinegarRedWine</item>
+        <item>VinegarWhite</item>
+        <item>WhipCream</item>
+        <item>WhiteSauce</item>
+        <item>AmericanCheese</item>
+        <item>BlueCheese</item>
+        <item>Margarine</item>
+        <item>Buttermilk</item>
+        <item>CheddarCheese</item>
+        <item>Cheese</item>
+        <item>ChocolateMilk</item>
+        <item>CoconutMilk</item>
+        <item>CondensedMilk</item>
+        <item>CottageCheese</item>
+        <item>Cream</item>
+        <item>CreamCheese</item>
+        <item>Eggs</item>
+        <item>FetaCheese</item>
+        <item>GoatCheese</item>
+        <item>HeavyCream</item>
+        <item>IceCream</item>
+        <item>Milk</item>
+        <item>MonterayJack</item>
+        <item>MozzarellaCheese</item>
+        <item>ParmesanCheese</item>
+        <item>ProveloneCheese</item>
+        <item>RicottaCheese</item>
+        <item>RomanoCheese</item>
+        <item>SourCream</item>
+        <item>SwissCheese</item>
+        <item>Velveeta</item>
+        <item>Yogurt</item>
+        <item>AllSpice</item>
+        <item>AlmondExtract</item>
+        <item>BakingChocolate</item>
+        <item>BakingPowder</item>
+        <item>BarbecueSeasoning</item>
+        <item>Basil</item>
+        <item>BayLeaves</item>
+        <item>BlackPepper</item>
+        <item>BrownSugar</item>
+        <item>Cajun</item>
+        <item>CanolaOil</item>
+        <item>CayennePepper</item>
+        <item>CelerySalt</item>
+        <item>ChiliPowder</item>
+        <item>ChiliSeasoning</item>
+        <item>Chives</item>
+        <item>ChocolateChips</item>
+        <item>Pudding</item>
+        <item>Cilantro</item>
+        <item>Cinnamon</item>
+        <item>Cloves</item>
+        <item>CoconutExtract</item>
+        <item>CookingSpray</item>
+        <item>CornOil</item>
+        <item>CornStarch</item>
+        <item>CreoleSeasoning</item>
+        <item>Cumin</item>
+        <item>CurryPowder</item>
+        <item>Dill</item>
+        <item>DryMustard</item>
+        <item>FennelSeed</item>
+        <item>Flour</item>
+        <item>GarlicPowder</item>
+        <item>GarlicSalt</item>
+        <item>Ginger</item>
+        <item>ItalianSeasoning</item>
+        <item>LemonJuice</item>
+        <item>LemonPepper</item>
+        <item>LimeJuice</item>
+        <item>MeatSeasoning</item>
+        <item>MintLeaves</item>
+        <item>Nutmeg</item>
+        <item>OliveOil</item>
+        <item>OnionPowder</item>
+        <item>OnionSoupMix</item>
+        <item>Oregano</item>
+        <item>Pancake</item>
+        <item>Paprika</item>
+        <item>Parsley</item>
+        <item>PeanutOil</item>
+        <item>Peppercorns</item>
+        <item>Poppyseeds</item>
+        <item>PowderedSugar</item>
+        <item>PumpkinPieFilling</item>
+        <item>PumpkinPieSpice</item>
+        <item>RanchMixpacket</item>
+        <item>RedPepper</item>
+        <item>Rosemary</item>
+        <item>Salt</item>
+        <item>SaltandPepper</item>
+        <item>SeasoningSalt</item>
+        <item>SesameOil</item>
+        <item>SesameSeeds</item>
+        <item>Oil</item>
+        <item>Splenda</item>
+        <item>Sugar</item>
+        <item>TacoSeasoning</item>
+        <item>Thyme</item>
+        <item>TurkeyPanDrippings</item>
+        <item>VanillaExtract</item>
+        <item>VanillaPudding</item>
+        <item>VegetableOil</item>
+        <item>WhitePepper</item>
+        <item>Yeast</item>
+        <item>YellowCakeMix</item>
+        <item>Baileys</item>
+        <item>Beer</item>
+        <item>Brandy</item>
+        <item>Gin</item>
+        <item>GranMarnier</item>
+        <item>Kahlua</item>
+        <item>PaleAle</item>
+        <item>PuckerRaspberry</item>
+        <item>Rum</item>
+        <item>Stout</item>
+        <item>Tequila</item>
+        <item>TripleSec</item>
+        <item>Vodka</item>
+        <item>Whiskey</item>
+        <item>Bacon</item>
+        <item>Beef</item>
+        <item>Bologna</item>
+        <item>Brisket</item>
+        <item>CannedChicken</item>
+        <item>ChickenBreast</item>
+        <item>CornedBeef</item>
+        <item>GroundBeef</item>
+        <item>GroundMeat</item>
+        <item>GroundPork</item>
+        <item>GroundTurkey</item>
+        <item>GroundVeal</item>
+        <item>Ham</item>
+        <item>HotDog</item>
+        <item>Kielbasa</item>
+        <item>Lamb</item>
+        <item>MeatBalls</item>
+        <item>Pepperoni</item>
+        <item>PolishSausage</item>
+        <item>PorkChops</item>
+        <item>PorkRoast</item>
+        <item>PorkTenderloin</item>
+        <item>Prosciutto</item>
+        <item>RoastBeef</item>
+        <item>Salami</item>
+        <item>SlicedChicken</item>
+        <item>SlicedHam</item>
+        <item>SlicedRoastBeef</item>
+        <item>SlicedTurkey</item>
+        <item>Steak</item>
+        <item>TurkeyBreast</item>
+        <item>TurkeyLegs</item>
+        <item>AngelHair</item>
+        <item>Barley</item>
+        <item>BlackRice</item>
+        <item>BowtiePasta</item>
+        <item>BrownRice</item>
+        <item>EggNoodles</item>
+        <item>ElbowMacaroni</item>
+        <item>FettuccineNoodles</item>
+        <item>Gnocchi</item>
+        <item>Granola</item>
+        <item>LasagnaNoodles</item>
+        <item>MacandCheese</item>
+        <item>Oatmeal</item>
+        <item>Orzo</item>
+        <item>PastaNoodles</item>
+        <item>Ramen</item>
+        <item>Rice</item>
+        <item>Rigatoni</item>
+        <item>RotiniNoodles</item>
+        <item>Noodles</item>
+        <item>Spaghetti</item>
+        <item>SpaghettiNoodles</item>
+        <item>Tortellini</item>
+        <item>WhiteRice</item>
+        <item>Ravioli</item>
+        <item>Apples</item>
+        <item>Artichokes</item>
+        <item>Asparagus</item>
+        <item>Avocado</item>
+        <item>Banana</item>
+        <item>BlackOlives</item>
+        <item>Blueberries</item>
+        <item>Broccoli</item>
+        <item>BrusselSprouts</item>
+        <item>ButternutSquash</item>
+        <item>Cabbage</item>
+        <item>Carrots</item>
+        <item>Cauliflower</item>
+        <item>Celery</item>
+        <item>Cherries</item>
+        <item>CherryTomatoes</item>
+        <item>Chilis</item>
+        <item>Coconut</item>
+        <item>Corn</item>
+        <item>Cranberries</item>
+        <item>Cucumber</item>
+        <item>Eggplant</item>
+        <item>Fruit</item>
+        <item>Garlic</item>
+        <item>Grapefruit</item>
+        <item>Grapes</item>
+        <item>GreenBeans</item>
+        <item>GreenChilis</item>
+        <item>GreenOlives</item>
+        <item>GreenOnions</item>
+        <item>GreenPeppers</item>
+        <item>Jalapenos</item>
+        <item>ChipotlePeppers</item>
+        <item>Lemons</item>
+        <item>Lettuce</item>
+        <item>Limes</item>
+        <item>Mango</item>
+        <item>Mushrooms</item>
+        <item>Olives</item>
+        <item>Shallots</item>
+        <item>Onions</item>
+        <item>Oranges</item>
+        <item>Peaches</item>
+        <item>Pears</item>
+        <item>Peppers</item>
+        <item>Pickles</item>
+        <item>Pineapple</item>
+        <item>Potatoes</item>
+        <item>PotatoesRed</item>
+        <item>PotatoesSweet</item>
+        <item>Pumpkin</item>
+        <item>Raspberries</item>
+        <item>RedPeppers</item>
+        <item>Saurkraut</item>
+        <item>Squash</item>
+        <item>Strawberries</item>
+        <item>Tomatoes</item>
+        <item>Turnip</item>
+        <item>Vegetables</item>
+        <item>Watermelon</item>
+        <item>YellowPeppers</item>
+        <item>Zucchini</item>
+        <item>Kale</item>
+        <item>CannedTuna</item>
+        <item>Catfish</item>
+        <item>Clams</item>
+        <item>Cod</item>
+        <item>Crab</item>
+        <item>Fish</item>
+        <item>Haddock</item>
+        <item>Salmon</item>
+        <item>Scallops</item>
+        <item>Shrimp</item>
+        <item>Swordfish</item>
+        <item>Tilapia</item>
+        <item>Tuna</item>
+        <item>Almonds</item>
+        <item>Cashew</item>
+        <item>ChocolateBar</item>
+        <item>Crackers</item>
+        <item>Jello</item>
+        <item>Marshmallows</item>
+        <item>Nuts</item>
+        <item>Peanuts</item>
+        <item>Pecans</item>
+        <item>Popcorn</item>
+        <item>PotatoChips</item>
+        <item>Pretzels</item>
+        <item>Saltines</item>
+        <item>CornChips</item>
+        <item>Walnuts</item>
+        <item>Mackerel</item>
+        <item>Sardines</item>
+        <item>Apricots</item>
+        <item>Bananas</item>
+        <item>BeefRibs</item>
+        <item>BeefTenderloin</item>
+        <item>Buckwheat</item>
+        <item>Bulgur</item>
+        <item>Chicken</item>
+        <item>ChickenBreasts</item>
+        <item>ChickenLegs</item>
+        <item>ChickenThighs</item>
+        <item>ChickenWings</item>
+        <item>Chocolate</item>
+        <item>CornFlour</item>
+        <item>CornishHens</item>
+        <item>Duck</item>
+        <item>FlaxSeeds</item>
+        <item>Goat</item>
+        <item>GroundChicken</item>
+        <item>Millet</item>
+        <item>Mushroom</item>
+        <item>Nectarines</item>
+        <item>OatFlour</item>
+        <item>Oats</item>
+        <item>Pineapples</item>
+        <item>Plums</item>
+        <item>Pomegranates</item>
+        <item>Pork</item>
+        <item>PorkRibs</item>
+        <item>PorkShoulder</item>
+        <item>PrimeRib</item>
+        <item>Quinoa</item>
+        <item>Sausage</item>
+        <item>Seafood</item>
+        <item>Shellfish</item>
+        <item>Spelt</item>
+        <item>TapiocaFlour</item>
+        <item>Turkey</item>
+        <item>Veal</item>
+        <item>Venison</item>
+        <item>WhiteRiceFlour</item>
+        <item>WildGame</item>
+        <item>Allpurposeflour</item>
+        <item>Almond</item>
+        <item>Anise</item>
+        <item>Apple</item>
+        <item>Apricot</item>
+        <item>Artichoke</item>
+        <item>Arugula</item>
+        <item>Aubergine</item>
+        <item>Avocadooil</item>
+        <item>Babybackribs</item>
+        <item>Bayleaf</item>
+        <item>Beansprouts</item>
+        <item>Beetroot</item>
+        <item>Bellpepper</item>
+        <item>Blackberry</item>
+        <item>Blueberry</item>
+        <item>Bokchoy</item>
+        <item>Breadflour</item>
+        <item>Brie</item>
+        <item>Brusselssprouts</item>
+        <item>Butter</item>
+        <item>Cakeflour</item>
+        <item>Caper</item>
+        <item>Cardamom</item>
+        <item>Cherry</item>
+        <item>Chiaseed</item>
+        <item>Chickenthigh</item>
+        <item>Chickenwing</item>
+        <item>Chickpeaflour</item>
+        <item>Chickpeas</item>
+        <item>Clove</item>
+        <item>Cocoapowder</item>
+        <item>Coconutoil</item>
+        <item>Coriander</item>
+        <item>Corianderseed</item>
+        <item>Cornkernel</item>
+        <item>Cotijacheese</item>
+        <item>Courgette</item>
+        <item>Cranberry</item>
+        <item>Daikon</item>
+        <item>Dairy</item>
+        <item>Date</item>
+        <item>Dutchcocoapowder</item>
+        <item>Fennel</item>
+        <item>Fenugreek</item>
+        <item>Flanksteak</item>
+        <item>Garammasala</item>
+        <item>Ghee</item>
+        <item>Grape</item>
+        <item>Habanero</item>
+        <item>Jalapeño</item>
+        <item>Lavender</item>
+        <item>Leek</item>
+        <item>Lemon</item>
+        <item>Lemongrass</item>
+        <item>Lentils</item>
+        <item>Lime</item>
+        <item>Liquidsmoke</item>
+        <item>Melon</item>
+        <item>Mint</item>
+        <item>Montereyjackcheese</item>
+        <item>Oat</item>
+        <item>Olive</item>
+        <item>Onion</item>
+        <item>Orange</item>
+        <item>Oyster</item>
+        <item>Pea</item>
+        <item>Peach</item>
+        <item>Peanut</item>
+        <item>Pear</item>
+        <item>Pecan</item>
+        <item>Pepper</item>
+        <item>Peppercorn</item>
+        <item>Peppermint</item>
+        <item>Pintobeans</item>
+        <item>Plum</item>
+        <item>Pomegranate</item>
+        <item>Porkbelly</item>
+        <item>Porkchop</item>
+        <item>Potato</item>
+        <item>Prawns</item>
+        <item>Provolonecheese</item>
+        <item>Quesofresco</item>
+        <item>Radish</item>
+        <item>Raisin</item>
+        <item>Raspberry</item>
+        <item>Redcabbage</item>
+        <item>Rose</item>
+        <item>Saffron</item>
+        <item>Sage</item>
+        <item>Selfrisingflour</item>
+        <item>Sesameseed</item>
+        <item>Shallot</item>
+        <item>Spinach</item>
+        <item>Srirachasauce</item>
+        <item>Staranise</item>
+        <item>Strawberry</item>
+        <item>Sweetpotato</item>
+        <item>Tenderloin</item>
+        <item>Tomato</item>
+        <item>Turmeric</item>
+        <item>Vanilla</item>
+        <item>Vanillabean</item>
+        <item>Wholegrain</item>
+        <item>Carrot</item>
+        <item>Pasta</item>
+        <item>EnergyDrink</item>
+
+    </string-array>
+
+
+    <string name="AppleCider">Apple Cider</string>
+    <string name="AppleJuice">Apple Juice</string>
+    <string name="Tonic">Tonic</string>
+    <string name="HotChocolate">Hot Chocolate</string>
+    <string name="Cocoa">Cocoa</string>
+    <string name="Juice">Juice</string>
+    <string name="Coffee">Coffee</string>
+    <string name="Cola">Cola</string>
+    <string name="DietCola">Diet Cola</string>
+    <string name="Eggnog">Eggnog</string>
+    <string name="Fruits">Fruits</string>
+    <string name="GingerAle">Ginger Ale</string>
+    <string name="InstantCoffee">Instant Coffee</string>
+    <string name="Soda">Soda</string>
+    <string name="Lemonade">Lemonade</string>
+    <string name="OrangeJuice">Orange Juice</string>
+    <string name="PineappleJuice">Pineapple Juice</string>
+    <string name="TomatoJuice">Tomato Juice</string>
+    <string name="Bagels">Bagels</string>
+    <string name="Bread">Bread</string>
+    <string name="BreadDough">Bread Dough</string>
+    <string name="Buns">Buns</string>
+    <string name="CornBread">Corn Bread</string>
+    <string name="Panko">Panko</string>
+    <string name="Crumbs">Crumbs</string>
+    <string name="Muffins">Muffins</string>
+    <string name="FlatBread">Flat Bread</string>
+    <string name="FrenchBread">French Bread</string>
+    <string name="Rolls">Rolls</string>
+    <string name="IceCreamCones">Ice Cream Cones</string>
+    <string name="ItalianBread">Italian Bread</string>
+    <string name="PieCrust">Pie Crust</string>
+    <string name="Pita">Pita</string>
+    <string name="PizzaCrust">Pizza Crust</string>
+    <string name="Biscuits">Biscuits</string>
+    <string name="RyeBread">Rye Bread</string>
+    <string name="Tortilla">Tortilla</string>
+    <string name="GrainBread">Grain Bread</string>
+    <string name="WhiteBread">White Bread</string>
+    <string name="WontonWrappers">Wonton Wrappers</string>
+    <string name="BakedBeans">Baked Beans</string>
+    <string name="Bean">Bean</string>
+    <string name="Beans">Beans</string>
+    <string name="Boullion">Boullion</string>
+    <string name="BeefBroth">Beef Broth</string>
+    <string name="BeefSoup">Beef Soup</string>
+    <string name="BlackBeans">Black Beans</string>
+    <string name="CannedCorn">Canned Corn</string>
+    <string name="CannedTomatoes">Canned Tomatoes</string>
+    <string name="CheeseSoup">Cheese Soup</string>
+    <string name="ChickenStock">Chicken Stock</string>
+    <string name="ChickenBroth">Chicken Broth</string>
+    <string name="Chili">Chili</string>
+    <string name="CornedBeefHash">Corned Beef Hash</string>
+    <string name="CrabBisque">Crab Bisque</string>
+    <string name="CreamofCelery">Cream of Celery</string>
+    <string name="CreamofChicken">Cream of Chicken</string>
+    <string name="CreamofCorn">Cream of Corn</string>
+    <string name="CreamofMushroom">Cream of Mushroom</string>
+    <string name="CreamofOnion">Cream of Onion</string>
+    <string name="CreamofShrimp">Cream of Shrimp</string>
+    <string name="CreamofVeggie">Cream of Veggie</string>
+    <string name="FrenchOnionSoup">French Onion Soup</string>
+    <string name="GarbanzoBeans">Garbanzo Beans</string>
+    <string name="Gumbo">Gumbo</string>
+    <string name="KidneyBeans">Kidney Beans</string>
+    <string name="LimaBeans">Lima Beans</string>
+    <string name="Minnestrone">Minnestrone</string>
+    <string name="PorkandBeans">Pork and Beans</string>
+    <string name="RefriedBeans">Refried Beans</string>
+    <string name="TomatoPaste">Tomato Paste</string>
+    <string name="TomatoSoup">Tomato Soup</string>
+    <string name="VegetableStock">Vegetable Stock</string>
+    <string name="Cereal">Cereal</string>
+    <string name="FlakesCereal">Flakes Cereal</string>
+    <string name="Applesauce">Applesauce</string>
+    <string name="BarbecueSauce">Barbecue Sauce</string>
+    <string name="BrownMustard">Brown Mustard</string>
+    <string name="HotSauce">Hot Sauce</string>
+    <string name="BurgandyWine">Burgandy Wine</string>
+    <string name="Caramel">Caramel</string>
+    <string name="CheeseSauce">Cheese Sauce</string>
+    <string name="ChiliSauce">Chili Sauce</string>
+    <string name="ChocolateSyrup">Chocolate Syrup</string>
+    <string name="CocktailSauce">Cocktail Sauce</string>
+    <string name="CornSyrup">Corn Syrup</string>
+    <string name="CranberrySauce">Cranberry Sauce</string>
+    <string name="CurrySauce">Curry Sauce</string>
+    <string name="WhiteWine">White Wine</string>
+    <string name="GarlicSauce">Garlic Sauce</string>
+    <string name="GrapeJelly">Grape Jelly</string>
+    <string name="Gravy">Gravy</string>
+    <string name="Guacamole">Guacamole</string>
+    <string name="Honey">Honey</string>
+    <string name="HoneyMustard">Honey Mustard</string>
+    <string name="Horseradish">Horseradish</string>
+    <string name="ItalianDressing">Italian Dressing</string>
+    <string name="Jelly">Jelly</string>
+    <string name="Ketchup">Ketchup</string>
+    <string name="MarsalaWine">Marsala Wine</string>
+    <string name="Mayonnaise">Mayonnaise</string>
+    <string name="Molasses">Molasses</string>
+    <string name="Mustard">Mustard</string>
+    <string name="Nutella">Nutella</string>
+    <string name="OrangeJelly">Orange Jelly</string>
+    <string name="OysterSauce">Oyster Sauce</string>
+    <string name="PeanutButter">Peanut Butter</string>
+    <string name="Pesto">Pesto</string>
+    <string name="PoppySeedDressing">Poppy Seed Dressing</string>
+    <string name="RanchDressing">Ranch Dressing</string>
+    <string name="RedWine">Red Wine</string>
+    <string name="Salsa">Salsa</string>
+    <string name="Sherry">Sherry</string>
+    <string name="SoySauce">Soy Sauce</string>
+    <string name="MeatSauce">Meat Sauce</string>
+    <string name="SyrupMaple">Syrup Maple</string>
+    <string name="Enchilada">Enchilada</string>
+    <string name="TeriakySauce">Teriaky Sauce</string>
+    <string name="ThousandIsland">Thousand Island</string>
+    <string name="Tobasco">Tobasco Sauce</string>
+    <string name="TomatoSauce">Tomato Sauce</string>
+    <string name="Vermouth">Vermouth</string>
+    <string name="Vinaigrette">Vinaigrette Dressing</string>
+    <string name="Vinegar">Vinegar</string>
+    <string name="VinegarBalsamic">Vinegar Balsamic</string>
+    <string name="VinegarCider">Vinegar Cider</string>
+    <string name="VinegarRed">Vinegar Red</string>
+    <string name="VinegarRedWine">Vinegar Red Wine</string>
+    <string name="VinegarWhite">Vinegar White</string>
+    <string name="WhipCream">Whip Cream</string>
+    <string name="WhiteSauce">White Sauce</string>
+    <string name="AmericanCheese">American Cheese</string>
+    <string name="BlueCheese">Blue Cheese</string>
+    <string name="Margarine">Margarine</string>
+    <string name="Buttermilk">Buttermilk</string>
+    <string name="CheddarCheese">Cheddar Cheese</string>
+    <string name="Cheese">Cheese</string>
+    <string name="ChocolateMilk">Chocolate Milk</string>
+    <string name="CoconutMilk">Coconut Milk</string>
+    <string name="CondensedMilk">Condensed Milk</string>
+    <string name="CottageCheese">Cottage Cheese</string>
+    <string name="Cream">Cream</string>
+    <string name="CreamCheese">Cream Cheese</string>
+    <string name="Eggs">Eggs</string>
+    <string name="FetaCheese">Feta Cheese</string>
+    <string name="GoatCheese">Goat Cheese</string>
+    <string name="HeavyCream">Heavy Cream</string>
+    <string name="IceCream">Ice Cream</string>
+    <string name="Milk">Milk</string>
+    <string name="MonterayJack">Monteray Jack</string>
+    <string name="MozzarellaCheese">Mozzarella Cheese</string>
+    <string name="ParmesanCheese">Parmesan Cheese</string>
+    <string name="ProveloneCheese">Provelone Cheese</string>
+    <string name="RicottaCheese">Ricotta Cheese</string>
+    <string name="RomanoCheese">Romano Cheese</string>
+    <string name="SourCream">Sour Cream</string>
+    <string name="SwissCheese">Swiss Cheese</string>
+    <string name="Velveeta">Velveeta</string>
+    <string name="Yogurt">Yogurt</string>
+    <string name="AllSpice">AllSpice</string>
+    <string name="AlmondExtract">Almond Extract</string>
+    <string name="BakingChocolate">Baking Chocolate</string>
+    <string name="BakingPowder">Baking Powder</string>
+    <string name="BarbecueSeasoning">Barbecue Seasoning</string>
+    <string name="Basil">Basil</string>
+    <string name="BayLeaves">Bay Leaves</string>
+    <string name="BlackPepper">Black Pepper</string>
+    <string name="BrownSugar">Brown Sugar</string>
+    <string name="Cajun">Cajun</string>
+    <string name="CanolaOil">Canola Oil</string>
+    <string name="CayennePepper">Cayenne Pepper</string>
+    <string name="CelerySalt">Celery Salt</string>
+    <string name="ChiliPowder">Chili Powder</string>
+    <string name="ChiliSeasoning">Chili Seasoning</string>
+    <string name="Chives">Chives</string>
+    <string name="ChocolateChips">Chocolate Chips</string>
+    <string name="Pudding">Pudding</string>
+    <string name="Cilantro">Cilantro</string>
+    <string name="Cinnamon">Cinnamon</string>
+    <string name="Cloves">Cloves</string>
+    <string name="CoconutExtract">Coconut Extract</string>
+    <string name="CookingSpray">Cooking Spray</string>
+    <string name="CornOil">Corn Oil</string>
+    <string name="CornStarch">Corn Starch</string>
+    <string name="CreoleSeasoning">Creole Seasoning</string>
+    <string name="Cumin">Cumin</string>
+    <string name="CurryPowder">Curry Powder</string>
+    <string name="Dill">Dill</string>
+    <string name="DryMustard">Dry Mustard</string>
+    <string name="FennelSeed">Fennel Seed</string>
+    <string name="Flour">Flour</string>
+    <string name="GarlicPowder">Garlic Powder</string>
+    <string name="GarlicSalt">Garlic Salt</string>
+    <string name="Ginger">Ginger</string>
+    <string name="ItalianSeasoning">Italian Seasoning</string>
+    <string name="LemonJuice">Lemon Juice</string>
+    <string name="LemonPepper">Lemon Pepper</string>
+    <string name="LimeJuice">Lime Juice</string>
+    <string name="MeatSeasoning">Meat Seasoning</string>
+    <string name="MintLeaves">Mint Leaves</string>
+    <string name="Nutmeg">Nutmeg</string>
+    <string name="OliveOil">Olive Oil</string>
+    <string name="OnionPowder">Onion Powder</string>
+    <string name="OnionSoupMix">Onion Soup Mix</string>
+    <string name="Oregano">Oregano</string>
+    <string name="Pancake">Pancake</string>
+    <string name="Paprika">Paprika</string>
+    <string name="Parsley">Parsley</string>
+    <string name="PeanutOil">Peanut Oil</string>
+    <string name="Peppercorns">Peppercorns</string>
+    <string name="Poppyseeds">Poppyseeds</string>
+    <string name="PowderedSugar">Powdered Sugar</string>
+    <string name="PumpkinPieFilling">Pumpkin Pie Filling</string>
+    <string name="PumpkinPieSpice">Pumpkin Pie Spice</string>
+    <string name="RanchMixpacket">Ranch Mixpacket</string>
+    <string name="RedPepper">Red Pepper</string>
+    <string name="Rosemary">Rosemary</string>
+    <string name="Salt">Salt</string>
+    <string name="SaltandPepper">Salt and Pepper</string>
+    <string name="SeasoningSalt">Seasoning Salt</string>
+    <string name="SesameOil">Sesame Oil</string>
+    <string name="SesameSeeds">Sesame Seeds</string>
+    <string name="Oil">Oil</string>
+    <string name="Splenda">Splenda</string>
+    <string name="Sugar">Sugar</string>
+    <string name="TacoSeasoning">Taco Seasoning</string>
+    <string name="Thyme">Thyme</string>
+    <string name="TurkeyPanDrippings">Turkey Pan Drippings</string>
+    <string name="VanillaExtract">Vanilla Extract</string>
+    <string name="VanillaPudding">Vanilla Pudding</string>
+    <string name="VegetableOil">Vegetable Oil</string>
+    <string name="WhitePepper">White Pepper</string>
+    <string name="Yeast">Yeast</string>
+    <string name="YellowCakeMix">Yellow Cake Mix</string>
+    <string name="Baileys">Baileys</string>
+    <string name="Beer">Beer</string>
+    <string name="Brandy">Brandy</string>
+    <string name="Gin">Gin</string>
+    <string name="GranMarnier">Gran Marnier</string>
+    <string name="Kahlua">Kahlua</string>
+    <string name="PaleAle">Pale Ale</string>
+    <string name="PuckerRaspberry">Pucker Raspberry</string>
+    <string name="Rum">Rum</string>
+    <string name="Stout">Stout</string>
+    <string name="Tequila">Tequila</string>
+    <string name="TripleSec">Triple Sec</string>
+    <string name="Vodka">Vodka</string>
+    <string name="Whiskey">Whiskey</string>
+    <string name="Bacon">Bacon</string>
+    <string name="Beef">Beef</string>
+    <string name="Bologna">Bologna</string>
+    <string name="Brisket">Brisket</string>
+    <string name="CannedChicken">Canned Chicken</string>
+    <string name="ChickenBreast">Chicken Breast</string>
+    <string name="CornedBeef">Corned Beef</string>
+    <string name="GroundBeef">Ground Beef</string>
+    <string name="GroundMeat">Ground Meat</string>
+    <string name="GroundPork">Ground Pork</string>
+    <string name="GroundTurkey">Ground Turkey</string>
+    <string name="GroundVeal">Ground Veal</string>
+    <string name="Ham">Ham</string>
+    <string name="HotDog">Hot Dog</string>
+    <string name="Kielbasa">Keilbasa</string>
+    <string name="Lamb">Lamb</string>
+    <string name="MeatBalls">Meat Balls</string>
+    <string name="Pepperoni">Pepperoni</string>
+    <string name="PolishSausage">Polish Sausage</string>
+    <string name="PorkChops">Pork Chops</string>
+    <string name="PorkRoast">Pork Roast</string>
+    <string name="PorkTenderloin">Pork Tenderloin</string>
+    <string name="Prosciutto">Prosciutto</string>
+    <string name="RoastBeef">Roast Beef</string>
+    <string name="Salami">Salami</string>
+    <string name="SlicedChicken">Sliced Chicken</string>
+    <string name="SlicedHam">Sliced Ham</string>
+    <string name="SlicedRoastBeef">Sliced Roast Beef</string>
+    <string name="SlicedTurkey">Sliced Turkey</string>
+    <string name="Steak">Steak</string>
+    <string name="TurkeyBreast">Turkey Breast</string>
+    <string name="TurkeyLegs">Turkey Legs</string>
+    <string name="AngelHair">Angel Hair</string>
+    <string name="Barley">Barley</string>
+    <string name="BlackRice">Black Rice</string>
+    <string name="BowtiePasta">Bowtie Pasta</string>
+    <string name="BrownRice">Brown Rice</string>
+    <string name="EggNoodles">Egg Noodles</string>
+    <string name="ElbowMacaroni">Elbow Macaroni</string>
+    <string name="FettuccineNoodles">Fettuccine Noodles</string>
+    <string name="Gnocchi">Gnocchi</string>
+    <string name="Granola">Granola</string>
+    <string name="LasagnaNoodles">Lasagna Noodles</string>
+    <string name="MacandCheese">Mac and Cheese</string>
+    <string name="Oatmeal">Oatmeal</string>
+    <string name="Orzo">Orzo</string>
+    <string name="PastaNoodles">Pasta Noodles</string>
+    <string name="Ramen">Ramen</string>
+    <string name="Rice">Rice</string>
+    <string name="Rigatoni">Rigatoni</string>
+    <string name="RotiniNoodles">Rotini Noodles</string>
+    <string name="Noodles">Noodles</string>
+    <string name="Spaghetti">Spaghetti</string>
+    <string name="SpaghettiNoodles">Spaghetti Noodles</string>
+    <string name="Tortellini">Tortellini</string>
+    <string name="WhiteRice">White Rice</string>
+    <string name="Ravioli">Ravioli</string>
+    <string name="Apples">Apples</string>
+    <string name="Artichokes">Artichokes</string>
+    <string name="Asparagus">Asparagus</string>
+    <string name="Avocado">Avocado</string>
+    <string name="Banana">Banana</string>
+    <string name="BlackOlives">Black Olives</string>
+    <string name="Blueberries">Blueberries</string>
+    <string name="Broccoli">Broccoli</string>
+    <string name="BrusselSprouts">Brussel Sprouts</string>
+    <string name="ButternutSquash">Butternut Squash</string>
+    <string name="Cabbage">Cabbage</string>
+    <string name="Carrots">Carrots</string>
+    <string name="Cauliflower">Cauliflower</string>
+    <string name="Celery">Celery</string>
+    <string name="Cherries">Cherries</string>
+    <string name="CherryTomatoes">Cherry Tomatoes</string>
+    <string name="Chilis">Chilis</string>
+    <string name="Coconut">Coconut</string>
+    <string name="Corn">Corn</string>
+    <string name="Cranberries">Cranberries</string>
+    <string name="Cucumber">Cucumber</string>
+    <string name="Eggplant">Eggplant</string>
+    <string name="Fruit">Fruit</string>
+    <string name="Garlic">Garlic</string>
+    <string name="Grapefruit">Grapefruit</string>
+    <string name="Grapes">Grapes</string>
+    <string name="GreenBeans">Green Beans</string>
+    <string name="GreenChilis">Green Chilis</string>
+    <string name="GreenOlives">Green Olives</string>
+    <string name="GreenOnions">Green Onions</string>
+    <string name="GreenPeppers">Green Peppers</string>
+    <string name="Jalapenos">Jalapenos</string>
+    <string name="ChipotlePeppers">Chipotle Peppers</string>
+    <string name="Lemons">Lemons</string>
+    <string name="Lettuce">Lettuce</string>
+    <string name="Limes">Limes</string>
+    <string name="Mango">Mango</string>
+    <string name="Mushrooms">Mushrooms</string>
+    <string name="Olives">Olives</string>
+    <string name="Shallots">Shallots</string>
+    <string name="Onions">Onions</string>
+    <string name="Oranges">Oranges</string>
+    <string name="Peaches">Peaches</string>
+    <string name="Pears">Pears</string>
+    <string name="Peppers">Peppers</string>
+    <string name="Pickles">Pickles</string>
+    <string name="Pineapple">Pineapple</string>
+    <string name="Potatoes">Potatoes</string>
+    <string name="PotatoesRed">Red Potatoes</string>
+    <string name="PotatoesSweet">Sweet Potatoes</string>
+    <string name="Pumpkin">Pumpkin</string>
+    <string name="Raspberries">Raspberries</string>
+    <string name="RedPeppers">Red Peppers</string>
+    <string name="Saurkraut">Saurkraut</string>
+    <string name="Squash">Squash</string>
+    <string name="Strawberries">Strawberries</string>
+    <string name="Tomatoes">Tomatoes</string>
+    <string name="Turnip">Turnip</string>
+    <string name="Vegetables">Vegetables</string>
+    <string name="Watermelon">Watermelon</string>
+    <string name="YellowPeppers">Yellow Peppers</string>
+    <string name="Zucchini">Zucchini</string>
+    <string name="Kale">Kale</string>
+    <string name="CannedTuna">Canned Tuna</string>
+    <string name="Catfish">Catfish</string>
+    <string name="Clams">Clams</string>
+    <string name="Cod">Cod</string>
+    <string name="Crab">Crab</string>
+    <string name="Fish">Fish</string>
+    <string name="Haddock">Haddock</string>
+    <string name="Salmon">Salmon</string>
+    <string name="Scallops">Scallops</string>
+    <string name="Shrimp">Shrimp</string>
+    <string name="Swordfish">Swordfish</string>
+    <string name="Tilapia">Tilapia</string>
+    <string name="Tuna">Tuna</string>
+    <string name="Almonds">Almonds</string>
+    <string name="Cashew">Cashew</string>
+    <string name="ChocolateBar">Chocolate Bar</string>
+    <string name="Crackers">Crackers</string>
+    <string name="Jello">Jello</string>
+    <string name="Marshmallows">Marshmallows</string>
+    <string name="Nuts">Nuts</string>
+    <string name="Peanuts">Peanuts</string>
+    <string name="Pecans">Pecans</string>
+    <string name="Popcorn">Popcorn</string>
+    <string name="PotatoChips">Potato Chips</string>
+    <string name="Pretzels">Pretzels</string>
+    <string name="Saltines">Saltines</string>
+    <string name="CornChips">Corn Chips</string>
+    <string name="Walnuts">Walnuts</string>
+    <string name="Mackerel">Mackerel</string>
+    <string name="Sardines">Sardines</string>
+    <string name="Apricots">Apricots</string>
+    <string name="Bananas">Bananas</string>
+    <string name="BeefRibs">Beef Ribs</string>
+    <string name="BeefTenderloin">Beef Tenderloin</string>
+    <string name="Buckwheat">Buckwheat</string>
+    <string name="Bulgur">Bulgur</string>
+    <string name="Chicken">Chicken</string>
+    <string name="ChickenBreasts">Chicken Breasts</string>
+    <string name="ChickenLegs">Chicken Legs</string>
+    <string name="ChickenThighs">Chicken Thighs</string>
+    <string name="ChickenWings">Chicken Wings</string>
+    <string name="Chocolate">Chocolate</string>
+    <string name="CornFlour">Corn Flour</string>
+    <string name="CornishHens">Cornish Hens</string>
+    <string name="Duck">Duck</string>
+    <string name="FlaxSeeds">Flax Seeds</string>
+    <string name="Goat">Goat</string>
+    <string name="GroundChicken">Ground Chicken</string>
+    <string name="Millet">Millet</string>
+    <string name="Mushroom">Mushroom</string>
+    <string name="Nectarines">Nectarines</string>
+    <string name="OatFlour">Oat Flour</string>
+    <string name="Oats">Oats</string>
+    <string name="Pineapples">Pineapples</string>
+    <string name="Plums">Plums</string>
+    <string name="Pomegranates">Pomegranates</string>
+    <string name="Pork">Pork</string>
+    <string name="PorkRibs">Pork Ribs</string>
+    <string name="PorkShoulder">Pork Shoulder</string>
+    <string name="PrimeRib">Prime Rib</string>
+    <string name="Quinoa">Quinoa</string>
+    <string name="Sausage">Sausage</string>
+    <string name="Seafood">Seafood</string>
+    <string name="Shellfish">Shellfish</string>
+    <string name="Spelt">Spelt</string>
+    <string name="TapiocaFlour">Tapioca Flour</string>
+    <string name="Turkey">Turkey</string>
+    <string name="Veal">Veal</string>
+    <string name="Venison">Venison</string>
+    <string name="WhiteRiceFlour">White Rice Flour</string>
+    <string name="WildGame">Wild Game</string>
+    <string name="Allpurposeflour">All purpose flour</string>
+    <string name="Almond">Almond</string>
+    <string name="Anise">Anise</string>
+    <string name="Apple">Apple</string>
+    <string name="Apricot">Apricot</string>
+    <string name="Artichoke">Artichoke</string>
+    <string name="Arugula">Arugula</string>
+    <string name="Aubergine">Aubergine</string>
+    <string name="Avocadooil">Avocado oil</string>
+    <string name="Babybackribs">Baby back ribs</string>
+    <string name="Bayleaf">Bay leaf</string>
+    <string name="Beansprouts">Bean sprouts</string>
+    <string name="Beetroot">Beetroot</string>
+    <string name="Bellpepper">Bell pepper</string>
+    <string name="Blackberry">Blackberry</string>
+    <string name="Blueberry">Blueberry</string>
+    <string name="Bokchoy">Bok choy</string>
+    <string name="Breadflour">Bread flour</string>
+    <string name="Brie">Brie</string>
+    <string name="Brusselssprouts">Brussels sprouts</string>
+    <string name="Butter">Butter</string>
+    <string name="Cakeflour">Cake flour</string>
+    <string name="Caper">Caper</string>
+    <string name="Cardamom">Cardamom</string>
+    <string name="Cherry">Cherry</string>
+    <string name="Chiaseed">Chia seed</string>
+    <string name="Chickenthigh">Chicken thigh</string>
+    <string name="Chickenwing">Chicken wing</string>
+    <string name="Chickpeaflour">Chickpea flour</string>
+    <string name="Chickpeas">Chickpeas</string>
+    <string name="Clove">Clove</string>
+    <string name="Cocoapowder">Cocoa powder</string>
+    <string name="Coconutoil">Coconut oil</string>
+    <string name="Coriander">Coriander</string>
+    <string name="Corianderseed">Coriander seed</string>
+    <string name="Cornkernel">Corn kernel</string>
+    <string name="Cotijacheese">Cotija cheese</string>
+    <string name="Courgette">Courgette</string>
+    <string name="Cranberry">Cranberry</string>
+    <string name="Daikon">Daikon</string>
+    <string name="Dairy">Dairy</string>
+    <string name="Date">Date</string>
+    <string name="Dutchcocoapowder">Dutch cocoa powder</string>
+    <string name="Fennel">Fennel</string>
+    <string name="Fenugreek">Fenugreek</string>
+    <string name="Flanksteak">Flank steak</string>
+    <string name="Garammasala">Garam masala</string>
+    <string name="Ghee">Ghee</string>
+    <string name="Grape">Grape</string>
+    <string name="Habanero">Habanero</string>
+    <string name="Jalapeño">Jalapeño</string>
+    <string name="Lavender">Lavender</string>
+    <string name="Leek">Leek</string>
+    <string name="Lemon">Lemon</string>
+    <string name="Lemongrass">Lemongrass</string>
+    <string name="Lentils">Lentils</string>
+    <string name="Lime">Lime</string>
+    <string name="Liquidsmoke">Liquid smoke</string>
+    <string name="Melon">Melon</string>
+    <string name="Mint">Mint</string>
+    <string name="Montereyjackcheese">Monterey jack cheese</string>
+    <string name="Oat">Oat</string>
+    <string name="Olive">Olive</string>
+    <string name="Onion">Onion</string>
+    <string name="Orange">Orange</string>
+    <string name="Oyster">Oyster</string>
+    <string name="Pea">Pea</string>
+    <string name="Peach">Peach</string>
+    <string name="Peanut">Peanut</string>
+    <string name="Pear">Pear</string>
+    <string name="Pecan">Pecan</string>
+    <string name="Pepper">Pepper</string>
+    <string name="Peppercorn">Peppercorn</string>
+    <string name="Peppermint">Peppermint</string>
+    <string name="Pintobeans">Pinto beans</string>
+    <string name="Plum">Plum</string>
+    <string name="Pomegranate">Pomegranate</string>
+    <string name="Porkbelly">Pork belly</string>
+    <string name="Porkchop">Pork chop</string>
+    <string name="Potato">Potato</string>
+    <string name="Prawns">Prawns</string>
+    <string name="Provolonecheese">Provolone cheese</string>
+    <string name="Quesofresco">Queso fresco</string>
+    <string name="Radish">Radish</string>
+    <string name="Raisin">Raisin</string>
+    <string name="Raspberry">Raspberry</string>
+    <string name="Redcabbage">Red cabbage</string>
+    <string name="Rose">Rose</string>
+    <string name="Saffron">Saffron</string>
+    <string name="Sage">Sage</string>
+    <string name="Selfrisingflour">Self rising flour</string>
+    <string name="Sesameseed">Sesame seed</string>
+    <string name="Shallot">Shallot</string>
+    <string name="Spinach">Spinach</string>
+    <string name="Srirachasauce">Sriracha sauce</string>
+    <string name="Staranise">Star anise</string>
+    <string name="Strawberry">Strawberry</string>
+    <string name="Sweetpotato">Sweet potato</string>
+    <string name="Tenderloin">Tenderloin</string>
+    <string name="Tomato">Tomato</string>
+    <string name="Turmeric">Turmeric</string>
+    <string name="Vanilla">Vanilla</string>
+    <string name="Vanillabean">Vanilla bean</string>
+    <string name="Wholegrain">Whole grain</string>
+    <string name="Carrot">Carrot</string>
+    <string name="Pasta">Pasta</string>
+    <string name="EnergyDrink">Energy Drink</string>
+
+
 
 
 

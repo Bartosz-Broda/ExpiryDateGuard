@@ -103,7 +103,7 @@
         <androidx.cardview.widget.CardView
             android:id="@+id/ingredients_for_meal"
             android:layout_width="match_parent"
-            android:layout_height="80dp"
+            android:layout_height="110dp"
             android:layout_marginHorizontal="25dp"
             app:layout_anchor="@id/nestedScrollView"
             app:layout_anchorGravity="bottom|center_horizontal"
@@ -116,19 +116,18 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="20sp"
-                android:text="test test test test test test"
                 android:layout_gravity="start|center_vertical"
                 android:layout_marginStart="12dp"/>
 
             <ImageButton
                 android:id="@+id/approve_products_for_meal"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_width="65dp"
+                android:layout_height="65dp"
                 android:layout_gravity="end|center_vertical"
                 android:layout_marginEnd="10dp"
-                android:background="@color/white"
+                android:background="?android:attr/selectableItemBackground"
                 android:clickable="true"
-                android:src="@drawable/ic_outline_check_green" />
+                android:src="@drawable/icons8_check_100" />
         </androidx.cardview.widget.CardView>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -137,7 +136,8 @@
             android:layout_height="wrap_content"
             android:baselineAlignBottom="false"
             android:clickable="true"
-            android:src="@drawable/ic_baseline_add_30"
+            android:src="@drawable/ic_baseline_add_20"
+            android:foregroundTint="@color/white"
             app:fabSize="normal"
             app:layout_anchor="@id/appbar"
             app:layout_anchorGravity="end|bottom"

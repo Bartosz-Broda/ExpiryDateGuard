@@ -31,6 +31,20 @@
                 android:id="@+id/change_language"
                 android:title="@string/zmie_j_zyk"
                 app:showAsAction="never"/>
+            <item
+                android:id="@+id/notifications"
+                android:title="@string/powiadomienia"
+                app:showAsAction="never"/>
+        </menu>
+    </item>
+
+    <item android:title="@string/other"
+        android:orderInCategory="1">
+        <menu>
+            <item
+                android:id="@+id/about"
+                android:title="@string/about"
+                app:showAsAction="never"/>
         </menu>
     </item>
 

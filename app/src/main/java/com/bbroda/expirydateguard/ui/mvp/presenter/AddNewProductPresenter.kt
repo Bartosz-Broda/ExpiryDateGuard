@@ -1,10 +1,12 @@
 package com.bbroda.expirydateguard.ui.mvp.presenter
 
+import android.content.ContentValues
 import android.content.ContentValues.TAG
 import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
 import com.bbroda.expirydateguard.ui.activities.AddNewProductActivity
+import com.bbroda.expirydateguard.ui.classes.FoodTypesDatabase.FoodTypesDatabase
 import com.bbroda.expirydateguard.ui.classes.productdatabase.ProductsDatabase
 import com.bbroda.expirydateguard.ui.mvp.model.AddNewProductModel
 import com.bbroda.expirydateguard.ui.mvp.view.AddNewProductView
@@ -21,6 +23,7 @@ import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
+import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 
 
@@ -30,8 +33,9 @@ class AddNewProductPresenter(val view: AddNewProductView, val model: AddNewProdu
     var ingredients: String = ""
     var nutriments: String = ""
     var imageUrl: String = ""
+    val foodDb = FoodTypesDatabase.getDatabase(activity)
 
-    init{
+    init {
         //It solves the problem of not opening scanner
         val moduleInstallClient = ModuleInstall.getClient(activity)
         val optionalModuleApi = GmsBarcodeScanning.getClient(activity)
@@ -71,23 +75,75 @@ class AddNewProductPresenter(val view: AddNewProductView, val model: AddNewProdu
     }
 
     @Subscribe
-    fun onSomeViewAction(event: AddNewProductView.NewProductAdded) {
+    fun onSaveClicked(event: AddNewProductView.NewProductAdded) {
         Log.d(TAG, "onSomeViewAction: XXXX - got new product")
-        //newtype is shortened version of type (openfoodfacts api sometimes returns type as a longer description)
-        val newType: String
-        if(event.type.contains(",")){
-            newType = event.type.substring( 0, event.type.indexOf(","))
-        }else{
-            newType = event.type
+        var engType = ""
+
+        //if type in textview is equal to one of types from list, just save it
+        for(type in event.list){
+            val label = activity.getString(type.stringID)
+            if(event.type.lowercase() == label.lowercase()){
+                engType = type.typeLabelEn
+                Log.d(TAG, "onSomeViewAction: ENG_TYPE: $engType")
+
+                activity.lifecycleScope.launch {
+                    model.addNewProductToDatabase(event.date, event.name, event.type, engType, ingredients, nutriments, imageUrl, db)
+                }
+            }
         }
+
+        //didn't find this type in database, so we translate it with translator to prevent errors
+        if(engType == ""){
+            Log.d(EventBus.TAG, "tryingToChangeProductInfo: ENGTYPE IS EMPTY")
             try {
-                Log.d(TAG, "translateIfNeeded: product type: $newType")
+                Log.d(ContentValues.TAG, "translateIfNeeded: product type: ${event.type}")
                 //translating type to english for searching recipe purpose
                 val languageIdentifier = LanguageIdentification.getClient()
-                languageIdentifier.identifyLanguage(newType)
+                languageIdentifier.identifyLanguage(event.type)
                     .addOnSuccessListener { languageCode ->
                         if (languageCode !="und"){
-                            Log.d(TAG, "translateIfNeeded: languagecode is not und. It's: $languageCode")
+                            Log.d(ContentValues.TAG, "translateIfNeeded: languagecode is not und. It's: $languageCode")
+
+                            // Create a translator to English:
+                            val options = TranslateLanguage.fromLanguageTag(languageCode).let {
+                                TranslatorOptions.Builder()
+                                    .setSourceLanguage(it!!)
+                                    .setTargetLanguage(TranslateLanguage.ENGLISH)
+                                    .build()
+                            }
+                            val translatorToEnglish = options.let { Translation.getClient(it) }
+                            val conditions = DownloadConditions.Builder()
+                                .build()
+                            translatorToEnglish.downloadModelIfNeeded(conditions).addOnSuccessListener {
+                                // Model downloaded successfully. Okay to start translating.
+                                //translating text (FINALLY!)
+                                translatorToEnglish.translate(event.type)
+                                    .addOnSuccessListener { translatedText ->
+                                        // Translation successful.
+                                        activity.lifecycleScope.launch {
+                                            model.addNewProductToDatabase(event.date, event.name, event.type, translatedText, ingredients, nutriments, imageUrl, db)
+                                        }
+                                        Log.d(ContentValues.TAG, "translateIfNeeded: TRANSLATED TEXT: $translatedText")
+                                        translatorToEnglish.close()
+                                    }.addOnFailureListener { exception ->
+                                        // Error.
+                                        Log.d(ContentValues.TAG, "translateIfNeeded: Can't translate! $exception")
+                                        activity.lifecycleScope.launch {
+                                            model.addNewProductToDatabase(event.date, event.name, event.type, engType, ingredients, nutriments, imageUrl, db)                                         }
+                                        translatorToEnglish.close()
+                                    }
+                            }.addOnFailureListener { exception ->
+                                // Model couldn’t be downloaded or other internal error.
+                                activity.lifecycleScope.launch {
+                                    model.addNewProductToDatabase(event.date, event.name, event.type, engType, ingredients, nutriments, imageUrl, db)
+                                }
+                                Log.d(ContentValues.TAG, "translateIfNeeded: Need another language model but can't download it!: $exception")
+                                translatorToEnglish.close()
+                            }
+                            Log.i(ContentValues.TAG, "Language: $languageCode")
+                        }else{
+                            //if translator cannot detect language, we assume for testing purpouse that it was in polish
+                            Log.d(ContentValues.TAG, "translateIfNeeded: languagecode is not en. It's: $languageCode")
 
                             // Create a translator to English:
                             val options = TranslateLanguage.POLISH.let {
@@ -102,51 +158,63 @@ class AddNewProductPresenter(val view: AddNewProductView, val model: AddNewProdu
                             translatorToEnglish.downloadModelIfNeeded(conditions).addOnSuccessListener {
                                 // Model downloaded successfully. Okay to start translating.
                                 //translating text (FINALLY!)
-                                translatorToEnglish.translate(newType)
+                                translatorToEnglish.translate(event.type)
                                     .addOnSuccessListener { translatedText ->
                                         // Translation successful.
                                         activity.lifecycleScope.launch {
-                                            model.addNewProductToDatabase(event.date, event.name, newType,translatedText,ingredients, nutriments, imageUrl, db)
+                                            model.addNewProductToDatabase(event.date, event.name, event.type, engType, ingredients, nutriments, imageUrl, db)
                                         }
-                                        Log.d(TAG, "translateIfNeeded: TRANSLATED TEXT: $translatedText")
+                                        Log.d(ContentValues.TAG, "translateIfNeeded: TRANSLATED TEXT: $translatedText")
                                         translatorToEnglish.close()
                                     }.addOnFailureListener { exception ->
                                         // Error.
-                                        Log.d(TAG, "translateIfNeeded: Can't translate! $exception")
+                                        Log.d(ContentValues.TAG, "translateIfNeeded: Can't translate! $exception")
                                         activity.lifecycleScope.launch {
-                                            model.addNewProductToDatabase(event.date, event.name, newType,"",ingredients, nutriments, imageUrl, db)
+                                            model.addNewProductToDatabase(event.date, event.name, event.type, engType, ingredients, nutriments, imageUrl, db)
                                         }
                                         translatorToEnglish.close()
                                     }
                             }.addOnFailureListener { exception ->
                                 // Model couldn’t be downloaded or other internal error.
-                                Log.d(TAG, "translateIfNeeded: Need another language model but can't download it!: $exception")
+                                activity.lifecycleScope.launch {
+                                    model.addNewProductToDatabase(event.date, event.name, event.type, engType, ingredients, nutriments, imageUrl, db)
+                                }
+                                Log.d(ContentValues.TAG, "translateIfNeeded: Need another language model but can't download it!: $exception")
                                 translatorToEnglish.close()
                             }
-                            Log.i(TAG, "Language: $languageCode")
-                        }else{
-                            activity.lifecycleScope.launch {
-                                model.addNewProductToDatabase(event.date, event.name, newType,"",ingredients, nutriments, imageUrl, db)
-                            }
+                            Log.i(ContentValues.TAG, "Language: $languageCode")
+
+                            Log.d(EventBus.TAG, "tryingToChangeProductInfo: TranslateIfNeeded: LanguageCode: UND")
                         }
                     }
                     .addOnFailureListener {
-                        Log.d(TAG, "addNewProductToDatabase: $it")
+                        Log.d(ContentValues.TAG, "translateifneeded: $it")
                         // Model couldn’t be loaded or other internal error.
                         activity.lifecycleScope.launch {
-                            model.addNewProductToDatabase(event.date, event.name, newType,"",ingredients, nutriments, imageUrl, db)
+                            model.addNewProductToDatabase(event.date, event.name, event.type, engType, ingredients, nutriments, imageUrl, db)
                         }
                     }
 
             } catch (e: Exception) {
                 activity.lifecycleScope.launch {
-                    model.addNewProductToDatabase(event.date, event.name, newType,"",ingredients, nutriments, imageUrl, db)
+                    model.addNewProductToDatabase(event.date, event.name, event.type, engType, ingredients, nutriments, imageUrl, db)
                 }
-                Log.d(TAG, "translateIfNeeded: $e")
+                Log.d(ContentValues.TAG, "translateIfNeeded: $e")
             }
-
+        }
 
     }
+
+    @Subscribe
+    fun onFoodTypesFetchedFromDatabase(event:AddNewProductModel.FoodTypesFetched){
+        view.saveProduct(event.typesList)
+    }
+
+    @Subscribe
+    fun userWantsToSaveProduct(event: AddNewProductView.UserWantsToSave){
+        activity.lifecycleScope.launch{model.getFoodTypesFromDatabase(foodDb)}
+    }
+
 
     @Subscribe
     fun onScanProduct(event: AddNewProductView.ScanProduct) {
@@ -164,69 +232,104 @@ class AddNewProductPresenter(val view: AddNewProductView, val model: AddNewProdu
     }
 
     @Subscribe
-    fun apiCallSuccessful(event: AddNewProductModel.BarcodeScanned){
+    fun apiCallSuccessful(event: AddNewProductModel.BarcodeScanned) {
         val result = event.response.body().toString()
         //On successful call i fetch name and type of scanned product from API
-        try{
+        try {
             ingredients = event.response.body()?.products?.get(0)?.ingredients_text.toString()
 
             //Getting nutriments in a string form, converting to Map and filtering by "100g" key
-            val originalNutriments: Map<String, Any> = event.response.body()?.products?.get(0)?.nutriments!!.allNutriments
-            val mutableMapNutriments : MutableMap<String,Any> = mutableMapOf()
-            for (i in originalNutriments.keys){
-                if (i.contains("100g")){
+            val originalNutriments: Map<String, Any> =
+                event.response.body()?.products?.get(0)?.nutriments!!.allNutriments
+            val mutableMapNutriments: MutableMap<String, Any> = mutableMapOf()
+            for (i in originalNutriments.keys) {
+                if (i.contains("100g")) {
                     originalNutriments[i]?.let { mutableMapNutriments.put(i, it) }
                 }
-                if (i.contains("energy_100g")||i.contains("fruits-vegetables-nuts-estimate")||i.contains("nutrition-sscore")||i.contains("nova-group")){
-                    originalNutriments[i]?.let { mutableMapNutriments.remove(i) }}
+                if (i.contains("energy_100g") || i.contains("fruits-vegetables-nuts-estimate") || i.contains(
+                        "nutrition-sscore"
+                    ) || i.contains("nova-group")
+                ) {
+                    originalNutriments[i]?.let { mutableMapNutriments.remove(i) }
+                }
 
-                if (i.contains("energy-kj_100g")){
+                if (i.contains("energy-kj_100g")) {
                     originalNutriments[i]?.let { mutableMapNutriments.remove(i) }
                     originalNutriments[i]?.let { mutableMapNutriments.put("energy (kJ)", "$it kJ") }
                 }
 
-                if (i.contains("energy-kcal_100g")){
+                if (i.contains("energy-kcal_100g")) {
                     originalNutriments[i]?.let { mutableMapNutriments.remove(i) }
-                    originalNutriments[i]?.let { mutableMapNutriments.put("energy (kcal)", "$it kcal") }
+                    originalNutriments[i]?.let {
+                        mutableMapNutriments.put(
+                            "energy (kcal)",
+                            "$it kcal"
+                        )
+                    }
                 }
             }
             //Editing nutriments for better look
             nutriments = mutableMapNutriments.toString()
-            nutriments = nutriments.replace("{"," ")
+            nutriments = nutriments.replace("{", " ")
             nutriments = nutriments.removeSuffix("}")
-            nutriments = nutriments.replace("_", " in ",true)
-            nutriments = nutriments.replace("kJ,","kJ\n",false)
-            nutriments = nutriments.replace(",","g\n",false)
-            nutriments = nutriments.replace("=",": ",false)
-            nutriments = nutriments.replace("-"," ",false)
+            nutriments = nutriments.replace("_", " in ", true)
+            nutriments = nutriments.replace("kJ,", "kJ\n", false)
+            nutriments = nutriments.replace(",", "g\n", false)
+            nutriments = nutriments.replace("=", ": ", false)
+            nutriments = nutriments.replace("-", " ", false)
 
             Log.d(TAG, "apiCallSuccessful: NUTRIMENTSs: $nutriments")
 
 
             val name = event.response.body()?.products?.get(0)?.product_name.toString()
-            var type = event.response.body()?.products?.get(0)?.category_properties?.ciqual_food_name.toString()
-            if(type == "null"){
-                type = ""
-            }
-            imageUrl = event.response.body()!!.products[0].imageUrl.toString()
-            view.onApiSuccessfulCall(result, name, type)
+            var type =
+                event.response.body()?.products?.get(0)?.category_properties?.ciqual_food_name.toString()
+            val newType: String
 
-        }
-        catch (e: java.lang.Exception){
+            if (type == "null") {
+                newType = ""
+            } else if (type.contains(",")) {
+                newType = type.substring(0, type.indexOf(","))
+            } else if (type.contains("-")) {
+                newType = type.substring(0, type.indexOf("-"))
+            } else if (type.contains("(")) {
+                newType = type.substring(0, type.indexOf("("))
+            } else if (type.contains("/")) {
+                newType = type.substring(0, type.indexOf("/"))
+            } else if (type.contains("[")) {
+                newType = type.substring(0, type.indexOf("["))
+            } else {
+                newType = type
+            }
+
+            imageUrl = event.response.body()!!.products[0].imageUrl.toString()
+            view.onApiSuccessfulCall(result, name, newType)
+
+        } catch (e: java.lang.Exception) {
             view.displayToastOnApiFailure()
             Log.d(TAG, "apiCallSuccessfull: Api Call not successfull: $e")
         }
 
         view.changeVisibilityOfProgressBar(false)
     }
+
     @Subscribe
-    fun apiCallFailed(event: AddNewProductModel.BarcodeFailed){
+    fun apiCallFailed(event: AddNewProductModel.BarcodeFailed) {
         view.displayToastOnApiFailure()
         view.changeVisibilityOfProgressBar(false)
     }
 
-    private fun scanBarcode(){
+    @Subscribe
+    fun onViewInitiated(event: AddNewProductView.ViewInint){
+        activity.lifecycleScope.launch { model.initFoodTypes(activity, foodDb) }
+    }
 
+    @Subscribe
+    fun onTypesFetched(event: AddNewProductModel.FoodTypesInitiated){
+        view.setAutoCompleteTextView(event.typesList)
+    }
+
+    private fun scanBarcode() {
         val scanner = GmsBarcodeScanning.getClient(activity)
         scanner.startScan()
             .addOnSuccessListener { barcode ->
@@ -238,7 +341,7 @@ class AddNewProductPresenter(val view: AddNewProductView, val model: AddNewProdu
                     val mResult: Deferred<Unit> = async { model.makeApiCall(rawValue) }
                     mResult.await()
                 }
-                view.changeVisibilityOfProgressBar(false)
+                view.changeVisibilityOfProgressBar(true)
             }
             .addOnCanceledListener {
                 // Task canceled
@@ -250,8 +353,9 @@ class AddNewProductPresenter(val view: AddNewProductView, val model: AddNewProdu
                 Log.d(TAG, "BARCODE FAILURE xxxx: $e")
                 view.changeVisibilityOfProgressBar(false)
             }
-        view.changeVisibilityOfProgressBar(true)
     }
+
+
 
 
 }

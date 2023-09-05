@@ -151,7 +151,7 @@ class MainMenuView(var activity: MainMenuActivity, val bus: EventBus) : Navigati
 
             //changing other UI elements
             recyclerView?.clipToPadding = false
-            recyclerView?.setPadding(0,0,0,270)
+            recyclerView?.setPadding(0,0,0,330)
             ingredientsCardView?.visibility = View.VISIBLE
             changeNumberOfProductsOnList(0)
 
@@ -178,6 +178,37 @@ class MainMenuView(var activity: MainMenuActivity, val bus: EventBus) : Navigati
                 dialog.dismiss()
             }
         }
+        val mDialog = mBuilder.create()
+        mDialog.show()
+    }
+
+    fun showNotificationOptions(isEnabled: Boolean) {
+
+        val options = arrayOf(activity.getString(R.string.wlacz_powiadomienia))
+        val isEnabled = booleanArrayOf(isEnabled)
+        var isNotificationEnabled = true
+
+        val mBuilder = AlertDialog.Builder(activity)
+        mBuilder.setTitle(activity.getString(R.string.ustawienia_powiadomien))
+        mBuilder.setMultiChoiceItems(options,isEnabled){ dialog, which, isChecked ->
+            // The user checked or unchecked a notification on/off box
+            if(which==0){
+                isNotificationEnabled = isChecked
+            }
+        }
+        mBuilder.setPositiveButton("Ok"){ dialog, which ->
+            val editor = activity.getSharedPreferences("NotificationSettings", Context.MODE_PRIVATE).edit()
+            editor.putBoolean("Notifications", isNotificationEnabled)
+            editor.apply()
+
+            //FOR LOGGING PURPOSE
+            val sharedPreferences = activity.getSharedPreferences("NotificationSettings", Context.MODE_PRIVATE)
+            val notifications = sharedPreferences.getBoolean("Notifications",true)
+            Log.d(TAG, "showNotificationOptions: IS NOTIFICATION ENABLED: $notifications")
+        }
+
+        mBuilder.setNegativeButton(activity.getString(R.string.cancel), null)
+        
         val mDialog = mBuilder.create()
         mDialog.show()
     }
@@ -278,7 +309,7 @@ class MainMenuView(var activity: MainMenuActivity, val bus: EventBus) : Navigati
         }
 
         if(item.itemId == R.id.my_recepies){
-
+            bus.post(ShowMyRecipies())
         }
 
         if(item.itemId == R.id.change_language){
@@ -286,8 +317,17 @@ class MainMenuView(var activity: MainMenuActivity, val bus: EventBus) : Navigati
             Log.d(TAG, "onNavigationItemSelected: click!")
         }
 
+        if(item.itemId == R.id.notifications){
+            bus.post(ShowNotificationOptions())
+            Log.d(TAG, "onNavigationItemSelected: click!")
+        }
+
         if(item.itemId == R.id.food_preferences){
             bus.post(GetFoodPrefFromSharedPref())
+        }
+
+        if(item.itemId == R.id.about){
+            bus.post(ShowAboutScreen())
         }
        return true
     }
@@ -309,6 +349,9 @@ class MainMenuView(var activity: MainMenuActivity, val bus: EventBus) : Navigati
     class ApproveProductsForMeal()
     class GetFoodPrefFromSharedPref
     class StoreFoodPrefInSharedPref(val foodPreferences: List<Preference>)
+    class ShowAboutScreen()
+    class ShowNotificationOptions
+    class ShowMyRecipies
 
 }
 

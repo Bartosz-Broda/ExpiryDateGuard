@@ -2,7 +2,13 @@ package com.bbroda.expirydateguard.ui.mvp.model
 
 import android.annotation.SuppressLint
 import android.content.ContentValues.TAG
+import android.content.Context
+import android.content.res.Configuration
+import android.content.res.Resources
 import android.util.Log
+import com.bbroda.expirydateguard.R
+import com.bbroda.expirydateguard.ui.classes.FoodTypesDatabase.FoodTypesDatabase
+import com.bbroda.expirydateguard.ui.classes.FoodTypesDatabase.Type
 import com.bbroda.expirydateguard.ui.classes.groceryRetrofit.CallResult
 import com.bbroda.expirydateguard.ui.classes.groceryRetrofit.OpenFoodFactsAPI
 import com.bbroda.expirydateguard.ui.classes.groceryRetrofit.RetrofitHelper
@@ -13,6 +19,10 @@ import kotlinx.coroutines.withContext
 import org.greenrobot.eventbus.EventBus
 import retrofit2.Response
 import java.time.LocalDate
+import java.util.Locale
+
+
+
 
 class AddNewProductModel(var bus: EventBus) {
 
@@ -58,7 +68,56 @@ class AddNewProductModel(var bus: EventBus) {
 
     }
 
+    @SuppressLint("DiscouragedApi")
+    suspend fun initFoodTypes(activityContext: Context, database: FoodTypesDatabase){
+
+        //TODO: ZAIMPLEMENTOWAC GETLOCALIZEDRESOURCES ŻEBY MIEĆ ANGIELSKIE NAZWY I TWORZYĆ OBIEKTY DO BAZY Z TYPAMI.
+
+        Log.d(TAG, "initFoodTypes: started")
+        val types = activityContext.resources.getStringArray(R.array.ingredients)
+        val packageName = activityContext.packageName
+        val typesList = mutableListOf<Type>()
+
+        val plLocale = Locale("pl")
+        val enLocale = Locale ("en")
+        val polResources = getLocalizedResources(activityContext, plLocale)
+        val enResources = getLocalizedResources(activityContext, enLocale)
+
+        for(type in types){
+            val id = activityContext.resources.getIdentifier(type, "string", packageName)
+            val labelPol = polResources?.getString(id)
+            val labelEn = enResources?.getString(id)
+
+            val typeObj = Type(0, labelPol!!,id, labelEn!!)
+            typesList.add(typeObj)
+            Log.d(TAG, "initFoodTypes: type loaded: ${activityContext.getString(id)}")
+        }
+
+        //Adding types to database so i can retrieve them when and where i need to
+        if(database.typesDao().getAll().size != typesList.size){
+            database.typesDao().nukeTable()
+            database.typesDao().insertAll(typesList)
+        }
+
+        Log.d(TAG, "initFoodTypes: loading finished")
+        bus.post(FoodTypesInitiated(typesList))
+    }
+
+    suspend fun getFoodTypesFromDatabase(database: FoodTypesDatabase){
+        val types = database.typesDao().getAll()
+        bus.post(FoodTypesFetched(types))
+    }
+    fun getLocalizedResources(context: Context, desiredLocale: Locale?): Resources? {
+        var conf: Configuration = context.resources.configuration
+        conf = Configuration(conf)
+        conf.setLocale(desiredLocale)
+        val localizedContext = context.createConfigurationContext(conf)
+        return localizedContext.resources
+    }
+
     class ProductAdded(val product: Product)
     class BarcodeScanned(val response: Response<CallResult>)
     class BarcodeFailed
+    class FoodTypesInitiated(val typesList: MutableList<Type>)
+    class FoodTypesFetched(val typesList: List<Type>)
 }

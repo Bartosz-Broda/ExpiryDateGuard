@@ -7,9 +7,14 @@ import android.content.Context
 import android.util.Log
 import com.bbroda.expirydateguard.ui.classes.foodPreferencesDatabase.Preference
 import com.bbroda.expirydateguard.ui.classes.foodPreferencesDatabase.PreferenceDatabase
+import com.bbroda.expirydateguard.ui.classes.productdatabase.Product
+import com.bbroda.expirydateguard.ui.classes.productdatabase.ProductsDatabase
 import com.bbroda.expirydateguard.ui.classes.recipeRetrofit.EdamamRecipeSearchAPI
 import com.bbroda.expirydateguard.ui.classes.recipeRetrofit.RecipeCallResult
 import com.bbroda.expirydateguard.ui.classes.recipeRetrofit.RecipeRetrofitHelper
+import com.bbroda.expirydateguard.ui.classes.recipeRetrofit.Recipes
+import com.bbroda.expirydateguard.ui.classes.recipedatabase.Recipe
+import com.bbroda.expirydateguard.ui.classes.recipedatabase.RecipeDatabase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.greenrobot.eventbus.EventBus
@@ -19,7 +24,7 @@ import retrofit2.Response
 class RecipesScreenModel (var bus: EventBus, val activityContext: Context){
 
     @SuppressLint("SuspiciousIndentation")
-    suspend fun makeRecipeApiCall(ingredients: String ,database: PreferenceDatabase){
+    suspend fun makeRecipeApiCall(ingredients: String ,database: PreferenceDatabase, productDatabase: ProductsDatabase){
         Log.d(ContentValues.TAG, "makeApiCall: Calling for recipe with products: $ingredients")
         val edamamRecipeSearchAPI = RecipeRetrofitHelper.getInstance().create(EdamamRecipeSearchAPI::class.java)
 
@@ -30,7 +35,8 @@ class RecipesScreenModel (var bus: EventBus, val activityContext: Context){
                 "type" to "public",
                 "q" to ingredients,
                 "app_id" to "4c4124f3",
-                "app_key" to "2b5df08a3ad4610d5404bde688ea9100"
+                "app_key" to "2b5df08a3ad4610d5404bde688ea9100",
+                "random" to "true"
             )
 
             val healthParameters = retrieveFoodPreferences(database)
@@ -57,8 +63,10 @@ class RecipesScreenModel (var bus: EventBus, val activityContext: Context){
 
             Log.d(ContentValues.TAG, "makeRecipeApiCall: SUCCESS! RESULT: ${result.body()}")
 
+            val products = productDatabase.productDao().getAll()
+
             withContext(Dispatchers.Main) {
-                bus.post(ApiCallSuccessful(result))
+                bus.post(ApiCallSuccessful(result, products))
             }
 
         } catch (e: java.lang.Exception) {
@@ -77,7 +85,49 @@ class RecipesScreenModel (var bus: EventBus, val activityContext: Context){
         }
 
 
+    suspend fun addRecipeToFavourites(database: RecipeDatabase, recipe: Recipes){
+        
+        val recipiesInDatabase = database.recipeDao().getAll()
+        val onlineRecipe = recipe.recipe
+        
+        
+        val newRecipe = Recipe(0, onlineRecipe?.label,
+            onlineRecipe?.image,
+            onlineRecipe?.calories,
+            onlineRecipe?.healthLabels,
+            onlineRecipe?.ingredientLines,
+            onlineRecipe?.source,
+            onlineRecipe?.url,
+            onlineRecipe?.dietLabels,
+            onlineRecipe?.cautions,
+            onlineRecipe?.mealType,
+            onlineRecipe?.time
+        )
 
-    class ApiCallSuccessful(val result: Response<RecipeCallResult>)
+        try{
+            for (i in recipiesInDatabase){
+                if(i.url == onlineRecipe?.url){
+                    Log.d(TAG, "addRecipeToFavourites: BREAK")
+                    bus.post(RecipeAlreadyAdded())
+                    return
+                }
+            }
+            
+            database.recipeDao().insertAll(newRecipe)
+            Log.d(TAG, "addRecipeToFavourites: RECIPE ADDED TO DATABASE. DATABASE CONTENT: ${database.recipeDao().getAll()}")
+            bus.post(RecipeAddedToFavourites())
+
+        }catch(e:Exception){
+            Log.d(TAG, "addRecipeToFavourites: NOT ADDED: $e")
+            bus.post(RecipeNotAddedToFavourites())
+        }
+
+    }
+
+
+    class ApiCallSuccessful(val result: Response<RecipeCallResult>, val products: List<Product>)
     class ApiCallFailed
+    class RecipeNotAddedToFavourites
+    class RecipeAddedToFavourites
+    class RecipeAlreadyAdded
 }

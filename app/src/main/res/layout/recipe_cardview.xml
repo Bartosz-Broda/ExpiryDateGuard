@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="5dp"
@@ -12,6 +13,7 @@
         android:layout_height="wrap_content"
         app:cardCornerRadius="30dp"
         android:padding="10dp"
+        android:background="?android:attr/selectableItemBackground"
         android:layout_marginVertical="5dp"
         android:layout_marginHorizontal="5dp">
 
@@ -28,14 +30,15 @@
             android:layout_height="match_parent"
             android:padding="5dp">
 
+
             <ImageView
                 android:id="@+id/recipe_image_imageview"
-                android:layout_width="120dp"
+                android:layout_width="116dp"
+                android:layout_height="126dp"
+                android:layout_centerVertical="true"
                 android:layout_marginStart="5dp"
                 android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"
-                android:layout_height="120dp"
-                android:layout_centerVertical="true"/>
+                android:layout_marginBottom="5dp" />
 
             <TextView
                 android:id="@+id/recipe_title"
@@ -73,6 +76,38 @@
 
 
         </RelativeLayout>
+
+
+            <ImageButton
+                android:id="@+id/add_to_favourite_fab"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_marginEnd="7dp"
+                android:layout_marginTop="5dp"
+                android:clickable="true"
+                android:foreground="@drawable/icons8_add_to_favorites_99"
+                android:background="@drawable/recycler_item_no_background"
+                android:backgroundTint="@drawable/recycler_item_no_background"
+                app:shapeAppearance="@null"
+                android:layout_alignParentEnd="true"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cardview_relative_layout" />
+
+            <ImageButton
+                android:id="@+id/remove_from_favourite_fab"
+                android:visibility="gone"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_marginEnd="7dp"
+                android:layout_marginTop="5dp"
+                android:clickable="true"
+                android:foreground="@drawable/icons8_remove_from_favorites"
+                android:background="@drawable/recycler_item_no_background"
+                android:backgroundTint="@drawable/recycler_item_no_background"
+                app:shapeAppearance="@null"
+                android:layout_alignParentEnd="true"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cardview_relative_layout" />
 
             <TextView
                 android:id="@+id/mealTypeTitle"

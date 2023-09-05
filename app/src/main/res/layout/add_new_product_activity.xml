@@ -29,116 +29,130 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/cardview"
         android:layout_width="350dp"
-        android:layout_height="290dp"
+        android:layout_height="300dp"
         android:layout_alignTop="@+id/title_text_view"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="100dp"
-        app:cardBackgroundColor="@color/teal_200"
+        app:cardBackgroundColor="@color/white"
         app:cardPreventCornerOverlap="false"
         app:cardCornerRadius="30dp">
 
-        <TextView
-            android:id="@+id/textview_in_card"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="125dp"
-            android:text="@string/data_przydatno_ci_do_spo_ycia"
-            android:textAlignment="center"
-            android:textColor="@color/black"
-            android:textSize="20sp" />
+            android:layout_height="match_parent"
+            android:background="@drawable/add_prod_bg"
 
-        <EditText
-            android:id="@+id/product_type_edittext"
-            android:layout_width="300dp"
-            android:layout_height="40dp"
-            android:layout_marginStart="25dp"
-            android:layout_marginTop="65dp"
-            android:autofillHints=""
-            android:textCursorDrawable="@drawable/cursor_black"
-            android:background="@drawable/edittext_bg"
-            android:hint="@string/typ_produktu_np_ketchup"
-            android:padding="10dp" />
+            >
 
-        <EditText
-        android:id="@+id/product_name_edittext"
-        android:layout_width="300dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="25dp"
-        android:layout_marginTop="15dp"
-        android:autofillHints=""
-        android:background="@drawable/edittext_bg"
-        android:hint="@string/nazwa_produku_np_marka"
-        android:padding="10dp"
-        android:textCursorDrawable="@drawable/cursor_black" />
+            <TextView
+                android:id="@+id/textview_in_card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/product_type_autocomplete_textview"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="20dp"
+                android:text="@string/data_przydatno_ci_do_spo_ycia"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="20sp" />
+
+            <AutoCompleteTextView
+                android:id="@+id/product_type_autocomplete_textview"
+                android:layout_width="300dp"
+                android:layout_height="40dp"
+                android:layout_below="@+id/product_name_edittext"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp"
+                android:autofillHints=""
+                android:background="@drawable/edittext_bg"
+                android:hint="@string/typ_produktu_np_ketchup"
+                android:padding="10dp"
+                android:textCursorDrawable="@drawable/cursor_black" />
+
+            <EditText
+                android:id="@+id/product_name_edittext"
+                android:layout_width="300dp"
+                android:layout_height="40dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="15dp"
+                android:autofillHints=""
+                android:background="@drawable/edittext_bg"
+                android:hint="@string/nazwa_produku_np_marka"
+                android:padding="10dp"
+                android:textCursorDrawable="@drawable/cursor_black" />
 
 
-        <EditText
-            android:id="@+id/expiry_date_edittext_Day"
-            android:layout_width="80dp"
-            android:layout_height="40dp"
-            android:layout_below="@+id/product_name_edittext"
-            android:layout_alignStart="@+id/product_name_edittext"
-            android:layout_marginStart="40dp"
-            android:layout_marginTop="160dp"
-            android:autofillHints="."
-            android:background="@drawable/edittext_bg"
-            android:ems="10"
-            android:hint="@string/dd"
-            android:inputType="datetime"
-            android:padding="10dp"
-            android:textCursorDrawable="@drawable/cursor_black" />
+            <EditText
+                android:id="@+id/expiry_date_edittext_Day"
+                android:layout_width="80dp"
+                android:layout_height="40dp"
+                android:layout_below="@+id/textview_in_card"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="15dp"
+                android:layout_toStartOf="@+id/expiry_date_edittext_Month"
+                android:autofillHints="."
+                android:background="@drawable/edittext_bg"
+                android:ems="10"
+                android:hint="@string/dd"
+                android:inputType="datetime"
+                android:padding="10dp"
+                android:textCursorDrawable="@drawable/cursor_black" />
 
-        <EditText
-            android:id="@+id/expiry_date_edittext_Month"
-            android:layout_width="80dp"
-            android:layout_height="40dp"
-            android:layout_below="@+id/product_name_edittext"
-            android:layout_marginStart="137dp"
-            android:layout_marginTop="160dp"
-            android:layout_toEndOf="@+id/expiry_date_edittext_Day"
-            android:autofillHints="."
-            android:background="@drawable/edittext_bg"
-            android:ems="10"
-            android:hint="@string/mm"
-            android:inputType="datetime"
-            android:padding="10dp"
-            android:textCursorDrawable="@drawable/cursor_black" />
+            <EditText
+                android:id="@+id/expiry_date_edittext_Month"
+                android:layout_width="80dp"
+                android:layout_height="40dp"
+                android:layout_below="@+id/textview_in_card"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp"
+                android:autofillHints="."
+                android:background="@drawable/edittext_bg"
+                android:ems="10"
+                android:hint="@string/mm"
+                android:inputType="datetime"
+                android:padding="10dp"
+                android:textCursorDrawable="@drawable/cursor_black" />
 
-        <EditText
-            android:id="@+id/expiry_date_edittext_year"
-            android:layout_width="80dp"
-            android:layout_height="40dp"
-            android:layout_below="@+id/product_name_edittext"
-            android:layout_marginStart="235dp"
-            android:layout_marginTop="160dp"
-            android:autofillHints="."
-            android:background="@drawable/edittext_bg"
-            android:ems="10"
-            android:hint="@string/rrrr"
-            android:inputType="datetime"
-            android:padding="10dp"
-            android:textCursorDrawable="@drawable/cursor_black" />
+            <EditText
+                android:id="@+id/expiry_date_edittext_year"
+                android:layout_width="80dp"
+                android:layout_height="40dp"
+                android:layout_below="@+id/textview_in_card"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="10dp"
+                android:layout_toEndOf="@+id/expiry_date_edittext_Month"
+                android:autofillHints="."
+                android:background="@drawable/edittext_bg"
+                android:ems="10"
+                android:hint="@string/rrrr"
+                android:inputType="datetime"
+                android:padding="10dp"
+                android:textCursorDrawable="@drawable/cursor_black" />
 
-        <Button
-            android:id="@+id/save_new_product_button"
-            android:layout_width="110dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="120dp"
-            android:layout_marginTop="225dp"
-            android:background="@drawable/rounded_background_gray"
-            android:text="@string/zapisz" />
+            <Button
+                android:id="@+id/save_new_product_button"
+                android:layout_width="110dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/expiry_date_edittext_Month"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="25dp"
+                android:background="@drawable/rounded_background_gray"
+                android:text="@string/zapisz" />
+
+
+        </RelativeLayout>
 
     </androidx.cardview.widget.CardView>
 
     <Button
         android:id="@+id/scanButton"
-        android:layout_width="150dp"
+        android:layout_width="160dp"
         android:layout_height="60dp"
         android:layout_below="@+id/cardview"
         android:layout_marginTop="50dp"
         android:background="@drawable/rounded_background_gray"
         android:layout_centerHorizontal="true"
+        android:elevation="100dp"
         android:text="@string/skanuj_produkt" />
 
     <ProgressBar

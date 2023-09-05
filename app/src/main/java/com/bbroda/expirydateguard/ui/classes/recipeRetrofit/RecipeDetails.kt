@@ -9,7 +9,7 @@ data class RecipeDetails(
     @JsonProperty("label") val label: String?,
     @JsonProperty("image") val image: String?,
     @JsonProperty("source") val source: String?,
-    @JsonProperty("url") val url: String?,
+    @JsonProperty("url") val url: String,
     @JsonProperty("dietLabels") val dietLabels: List<String>?,
     @JsonProperty("healthLabels") val healthLabels: List<String>?,
     @JsonProperty("cautions") val cautions: List<String>?,

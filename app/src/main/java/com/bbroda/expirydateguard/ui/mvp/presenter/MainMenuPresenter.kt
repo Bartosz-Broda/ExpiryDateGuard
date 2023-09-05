@@ -7,7 +7,9 @@ import android.util.Log
 import androidx.core.content.ContextCompat.startActivity
 import androidx.lifecycle.lifecycleScope
 import com.bbroda.expirydateguard.R
+import com.bbroda.expirydateguard.ui.activities.AboutActivity
 import com.bbroda.expirydateguard.ui.activities.AddNewProductActivity
+import com.bbroda.expirydateguard.ui.activities.FavouriteRecipesActivity
 import com.bbroda.expirydateguard.ui.activities.MainMenuActivity
 import com.bbroda.expirydateguard.ui.activities.ProductScreenActivity
 import com.bbroda.expirydateguard.ui.activities.RecipesScreenActivity
@@ -16,6 +18,7 @@ import com.bbroda.expirydateguard.ui.classes.productdatabase.ProductsDatabase
 import com.bbroda.expirydateguard.ui.classes.productdatabase.ProductsInListDatabase
 import com.bbroda.expirydateguard.ui.mvp.model.MainMenuModel
 import com.bbroda.expirydateguard.ui.mvp.view.MainMenuView
+import com.bbroda.expirydateguard.ui.workers.NotificationWorker
 import kotlinx.coroutines.launch
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -31,6 +34,12 @@ class MainMenuPresenter(val view: MainMenuView, val model: MainMenuModel, val ac
         activity.lifecycleScope.launch {
             model.downloadLanguageModelsIfNeeded()
         }
+
+        val appContext = activity.applicationContext
+
+        val sharedPreferences = activity.getSharedPreferences("NotificationSettings", Context.MODE_PRIVATE)
+        val notifications = sharedPreferences.getBoolean("Notifications",true)
+        if(notifications){NotificationWorker.schedule(appContext, 9, 0, 0)}
     }
 
     @Subscribe
@@ -220,8 +229,33 @@ class MainMenuPresenter(val view: MainMenuView, val model: MainMenuModel, val ac
     fun onFoodPreferencesRetrieved(event:MainMenuModel.FoodPreferencesObtained){
         view.showFoodPreferences(event.foodPreferences)
     }
+
     fun createFoodPreferences(){
        activity.lifecycleScope.launch{model.createFoodPreferences(preferenceDB)}
+    }
+
+    @Subscribe
+    fun showAboutScreen(event: MainMenuView.ShowAboutScreen){
+        val intent = Intent(activity.baseContext, AboutActivity::class.java)
+        startActivity(activity, intent, null)
+        activity.onPause()
+    }
+
+    @Subscribe
+    fun onMyRecipiesClicked(event: MainMenuView.ShowMyRecipies){
+        val intent = Intent(activity.baseContext, FavouriteRecipesActivity::class.java)
+        startActivity(activity, intent, null)
+        activity.onPause()
+    }
+
+    @Subscribe
+    fun onShowNotificationOptions(event:MainMenuView.ShowNotificationOptions){
+         model.retrieveNotificationPreferences(activity)
+    }
+
+    @Subscribe
+    fun onNotificationSettingsObtained(event: MainMenuModel.NotificationPreferencesObtained){
+        view.showNotificationOptions(event.isNotificationEnabled)
     }
 
 

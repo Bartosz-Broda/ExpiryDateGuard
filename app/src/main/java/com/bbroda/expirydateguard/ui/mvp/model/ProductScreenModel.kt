@@ -2,6 +2,8 @@ package com.bbroda.expirydateguard.ui.mvp.model
 
 import android.content.ContentValues
 import android.util.Log
+import com.bbroda.expirydateguard.ui.classes.FoodTypesDatabase.FoodTypesDatabase
+import com.bbroda.expirydateguard.ui.classes.FoodTypesDatabase.Type
 import com.bbroda.expirydateguard.ui.classes.productdatabase.Product
 import com.bbroda.expirydateguard.ui.classes.productdatabase.ProductsDatabase
 import com.google.mlkit.common.model.DownloadConditions
@@ -89,6 +91,21 @@ class ProductScreenModel (var bus: EventBus) {
         return englishTranslation
     }
 
+    suspend fun getFoodTypesFromDatabase(database: FoodTypesDatabase){
+        val types = database.typesDao().getAll()
+        bus.post(FoodTypesFetched(types))
+    }
+
+    suspend fun getFoodTypesForAutoCompleteTxtView(database: FoodTypesDatabase){
+        val types = database.typesDao().getAll()
+        bus.post(TypesFetched(types))
+    }
+
+
+
+
     class ProductInfoFetched(val productName:String?, val productType:String?, val expiryDate:String, val ingredients:String?, val nutritionInfo:String?, val imageUrl:String?)
     class ProductInfoNotChanged()
+    class FoodTypesFetched(val list: List<Type>)
+    class TypesFetched(val list: List<Type>)
 }

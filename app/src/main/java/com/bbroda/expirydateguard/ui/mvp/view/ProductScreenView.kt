@@ -4,11 +4,21 @@ import android.content.ContentValues
 import android.content.Context
 import android.util.Log
 import android.view.View
-import android.widget.*
+import android.widget.ArrayAdapter
+import android.widget.AutoCompleteTextView
+import android.widget.Button
+import android.widget.EditText
+import android.widget.ImageButton
+import android.widget.ImageView
+import android.widget.ProgressBar
+import android.widget.ScrollView
+import android.widget.TextView
+import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.net.toUri
 import com.bbroda.expirydateguard.R
 import com.bbroda.expirydateguard.ui.activities.ProductScreenActivity
+import com.bbroda.expirydateguard.ui.classes.FoodTypesDatabase.Type
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import org.greenrobot.eventbus.EventBus
@@ -21,7 +31,7 @@ class ProductScreenView(val activity: ProductScreenActivity, val bus: EventBus) 
     private val productImage:ImageView = activity.findViewById(R.id.product_image)
     private var productNameTextView:TextView = activity.findViewById(R.id.product_name_product_screen)
     private var productTypeTextView:TextView = activity.findViewById(R.id.product_type_textview_productscreen)
-    private val productTypeEditText: EditText = activity.findViewById(R.id.product_type_edittext_productscreen)
+    private val productTypeEditText: AutoCompleteTextView = activity.findViewById(R.id.product_type_edittext_productscreen)
     private val expiryTextView: TextView = activity.findViewById(R.id.expiry_date_textview_product_screen)
     private val expiryDateDayEditText: EditText = activity.findViewById(R.id.expiry_date_day_edittext_product_screen)
     private val expiryDateMonthEditText: EditText = activity.findViewById(R.id.expiry_date_month_edittext_product_screen)
@@ -123,34 +133,7 @@ class ProductScreenView(val activity: ProductScreenActivity, val bus: EventBus) 
         }
 
         approveEditImageButton.setOnClickListener {
-
-            try{
-                val day = if(expiryDateDayEditText.text.isEmpty()){
-                    Log.d(ContentValues.TAG, "emptyyy: ")
-                    "01".toInt()
-                }else{
-                    expiryDateDayEditText.text.toString().toInt()
-                }
-                val month = expiryDateMonthEditText.text.toString().toInt()
-                val year = expiryDateYearEditText.text.toString().toInt()
-                val localDate = LocalDate.of(year, month, day)
-
-                bus.post(SaveNewProductInfo(productNameEditText.text.toString(), productTypeEditText.text.toString(), localDate))
-
-                dismissEditImageButton.callOnClick()
-
-            }catch(exception:java.lang.Exception){
-                when(exception){
-                    is DateTimeException ->{
-                        Log.d(ContentValues.TAG, "XXXX DateTimeException!!!: ${exception.message.toString()} ")
-                        Toast.makeText(activity, exception.message.toString(), Toast.LENGTH_SHORT).show()}
-
-                    is java.lang.NumberFormatException ->{
-                        Log.d(ContentValues.TAG, "XXXX NumberFormatException!!!: ${exception.message.toString()} ")
-                        Toast.makeText(activity, "Make sure you entered the correct expiration date.", Toast.LENGTH_LONG).show()
-                    }
-                }
-            }
+            bus.post(UserWantsToChangeProductInfo())
         }
 
     }
@@ -162,7 +145,7 @@ class ProductScreenView(val activity: ProductScreenActivity, val bus: EventBus) 
         try{
         if(imageUrl.isNullOrEmpty() || imageUrl =="null") {
             Glide.with(context)
-                .load(R.drawable.grocery_generic_image)
+                .load(R.drawable.grocery_bg)
                 .apply(RequestOptions.circleCropTransform())
                 .into(productImage)
         }else{
@@ -174,7 +157,7 @@ class ProductScreenView(val activity: ProductScreenActivity, val bus: EventBus) 
             imageProgressBar.visibility = View.GONE
         }}catch(e:Exception){
             Glide.with(context)
-                .load(R.drawable.grocery_generic_image)
+                .load(R.drawable.grocery_bg)
                 .apply(RequestOptions.circleCropTransform())
                 .into(productImage)
             imageProgressBar.visibility = View.GONE
@@ -194,8 +177,55 @@ class ProductScreenView(val activity: ProductScreenActivity, val bus: EventBus) 
         Toast.makeText(activity, "Wystąpił błąd. Dane nie zostały zaktualizowane", Toast.LENGTH_LONG).show()
     }
 
-    class GetInfoAboutProduct
+    fun saveProductInfo(listOfTypes: List<Type>){
+        try{
+            val day = if(expiryDateDayEditText.text.isEmpty()){
+                Log.d(ContentValues.TAG, "emptyyy: ")
+                "01".toInt()
+            }else{
+                expiryDateDayEditText.text.toString().toInt()
+            }
+            val month = expiryDateMonthEditText.text.toString().toInt()
+            val year = expiryDateYearEditText.text.toString().toInt()
+            val localDate = LocalDate.of(year, month, day)
 
-    class SaveNewProductInfo(val productName:String, val productType:String, val expiryDate: LocalDate)
+            bus.post(SaveNewProductInfo(productNameEditText.text.toString(), productTypeEditText.text.toString(), localDate, listOfTypes))
+
+            dismissEditImageButton.callOnClick()
+
+        }catch(exception:java.lang.Exception){
+            when(exception){
+                is DateTimeException ->{
+                    Log.d(ContentValues.TAG, "XXXX DateTimeException!!!: ${exception.message.toString()} ")
+                    Toast.makeText(activity, exception.message.toString(), Toast.LENGTH_SHORT).show()}
+
+                is java.lang.NumberFormatException ->{
+                    Log.d(ContentValues.TAG, "XXXX NumberFormatException!!!: ${exception.message.toString()} ")
+                    Toast.makeText(activity, "Make sure you entered the correct expiration date.", Toast.LENGTH_LONG).show()
+                }
+            }
+        }
+    }
+
+    fun setAutoCompleteTextView(foodTypes: MutableList<Type>){
+
+        //setting autoCompleteTextView
+        val ingredients = mutableListOf<String>()
+        for (type in foodTypes){
+            val label = activity.getString(type.stringID)
+            ingredients.add(label)
+        }
+        Log.d(ContentValues.TAG, "setAutoCompleteTextView: $ingredients")
+
+        val adapter = ArrayAdapter(activity,
+            android.R.layout.simple_list_item_1, ingredients)
+        productTypeEditText.setAdapter(adapter)
+    }
+
+    class GetInfoAboutProduct
+    class UserWantsToChangeProductInfo()
+
+    class SaveNewProductInfo(val productName:String, val productType:String, val expiryDate: LocalDate, val listOfTypes: List<Type>)
+    class ViewInit()
 
 }

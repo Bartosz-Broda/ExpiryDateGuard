@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bbroda.expirydateguard.R
 import com.bbroda.expirydateguard.ui.activities.RecipesScreenActivity
 import com.bbroda.expirydateguard.ui.adapters.RecipesRecyclerViewAdapter
+import com.bbroda.expirydateguard.ui.classes.productdatabase.Product
 import com.bbroda.expirydateguard.ui.classes.recipeRetrofit.Recipes
 import org.greenrobot.eventbus.EventBus
 
@@ -30,10 +31,10 @@ class RecipesScreenView(val activity: RecipesScreenActivity, val bus: EventBus) 
         progressBar!!.visibility = View.VISIBLE
     }
 
-    fun initRecyclerView(recipes: MutableList<Recipes>, ingredientsQuantity: Int) {
+    fun initRecyclerView(recipes: MutableList<Recipes>, products: List<Product>) {
 
         Log.d(ContentValues.TAG, "initRecyclerView: INIT RECYCLERVIEW")
-        adapter = RecipesRecyclerViewAdapter(recipes, activity, ingredientsQuantity)
+        adapter = RecipesRecyclerViewAdapter(recipes, activity, products)
         recyclerView!!.layoutManager = LinearLayoutManager(activity)
         recyclerView!!.adapter = adapter
         recyclerView!!.visibility = View.VISIBLE
@@ -48,7 +49,7 @@ class RecipesScreenView(val activity: RecipesScreenActivity, val bus: EventBus) 
     }
 
     fun showToast(text: String){
-        Toast.makeText(activity, text, Toast.LENGTH_LONG).show()
+        Toast.makeText(activity, text, Toast.LENGTH_SHORT).show()
     }
 
     fun showMessage(text: String){
@@ -67,4 +68,5 @@ class RecipesScreenView(val activity: RecipesScreenActivity, val bus: EventBus) 
 
     class SomeViewActionEvent
     class OpenRecipeDetails(val recipe: Recipes)
+    class AddToFavourite(val recipe: Recipes)
 }
