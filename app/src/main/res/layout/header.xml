@@ -3,9 +3,9 @@
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
     android:layout_height="180dp"
     android:orientation="vertical"
-    android:background="@drawable/food2"
+    android:background="@drawable/add_prod_bg"
     android:gravity="bottom"
-    android:backgroundTint="#7FFFFFFF"
+    android:backgroundTint="#5FFFFFFF"
     android:backgroundTintMode="src_over"
     android:padding="20dp"
     android:id="@+id/nav_header">

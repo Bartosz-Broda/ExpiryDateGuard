@@ -16,7 +16,7 @@
     <string name="data_przydatno_ci">data przydatności</string>
     <string name="collapse_title">Twoja\nlodówka</string>
     <string name="przepisy_kulinarne">Przepisy kulinarne</string>
-    <string name="wyszukaj_przepis_z_moimi_produktami">Wyszukaj przepis z moimi produktami</string>
+    <string name="wyszukaj_przepis_z_moimi_produktami">Przepisy zawierające moje produkty</string>
     <string name="moje_przepisy">Ulubione przepisy</string>
     <string name="ustawienia">Ustawienia</string>
     <string name="zmie_j_zyk">Zmień język</string>
@@ -43,7 +43,7 @@
     <string name="toast_brak_produktów">Musisz wybrać co najmniej 1 produkt!</string>
     <string name="info_button">Nie możesz dodać tego produktu do listy. Przejdź do szczegółów produktu, a następnie uzupełnij lub zmień typ produktu. Wypróbuj typy produktów proponowane przez aplikację.</string>
     <string name="delete_product_button">Czy na pewno chcesz usunąć ten produkt ze swojej lodówki?</string>
-    <string name="main_menu_api_failed">Wystąpił problem z pobraniem przepisów. Wybierz inne produkty lub spróbuj ponownie później.</string>
+    <string name="main_menu_api_failed">Wystąpił problem z pobraniem przepisów. Wybierz inne produkty, spróbuj ponownie później lub zmień preferencje żywieniowe.</string>
     <string name="brakuje_ci">Brakuje Ci</string>
     <string name="produktów">składników</string>
     <string name="no_recipies_found">Nie znaleziono przepisów zawierających podane składniki.</string>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Expiry Date Guard</string>
-    <string name="moja_lod_wka">My Frigde</string>
+    <string name="moja_lod_wka">My Fridge</string>
     <string name="nazwa_produktu">Product name</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -17,8 +17,8 @@
     <string name="data_przydatno_ci">Expiration date</string>
     <string name="collapse_title">Your fridge</string>
     <string name="przepisy_kulinarne">Recipes</string>
-    <string name="wyszukaj_przepis_z_moimi_produktami">Search for recipes with my products</string>
-    <string name="moje_przepisy">Favourite recipies</string>
+    <string name="wyszukaj_przepis_z_moimi_produktami">Find recipes containing my products</string>
+    <string name="moje_przepisy">Favourite recipes</string>
     <string name="ustawienia">Settings</string>
     <string name="zmie_j_zyk">Change language</string>
     <string name="angielski">English</string>
@@ -44,7 +44,7 @@
     <string name="toast_brak_produktów">You have to choose at least one product!</string>
     <string name="info_button">You can\'t add this product to your list. Go to product details and fill in or change the product type. Try using types suggested by application.</string>
     <string name="delete_product_button">Do you want to remove this product from your fridge?</string>
-    <string name="main_menu_api_failed">There was a problem with fetching recipies. Try again later or choose different products.</string>
+    <string name="main_menu_api_failed">There was a problem with fetching recipes. Try again later, choose different products or change your food preferences.</string>
     <string name="brakuje_ci">You are missing</string>
     <string name="produktów">ingredients</string>
     <string name="no_recipies_found">No recipes found with the ingredients listed.</string>

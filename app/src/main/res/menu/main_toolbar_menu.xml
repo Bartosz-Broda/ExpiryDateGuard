@@ -9,7 +9,8 @@
             <item
                 android:id="@+id/new_recipe_with_my_products"
                 android:title="@string/wyszukaj_przepis_z_moimi_produktami"
-                app:showAsAction="never" />
+                app:showAsAction="never"
+                />
 
             <item
                 android:id="@+id/my_recepies"
