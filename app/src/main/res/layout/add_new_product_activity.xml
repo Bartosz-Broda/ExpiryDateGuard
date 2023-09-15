@@ -41,6 +41,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@drawable/add_prod_bg"
+            android:backgroundTint="#2FFFFFFF"
+            android:backgroundTintMode="src_over"
 
             >
 
@@ -136,7 +138,7 @@
                 android:layout_below="@+id/expiry_date_edittext_Month"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="25dp"
-                android:background="@drawable/rounded_background_gray"
+                android:background="@drawable/rounded_background_primarycolor"
                 android:text="@string/zapisz" />
 
 
@@ -150,7 +152,7 @@
         android:layout_height="60dp"
         android:layout_below="@+id/cardview"
         android:layout_marginTop="50dp"
-        android:background="@drawable/rounded_background_gray"
+        android:background="@drawable/rounded_background_primarycolor"
         android:layout_centerHorizontal="true"
         android:elevation="100dp"
         android:text="@string/skanuj_produkt" />

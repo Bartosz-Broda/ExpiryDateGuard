@@ -26,10 +26,10 @@ import java.util.Locale
 
 class AddNewProductModel(var bus: EventBus) {
 
-    suspend fun addNewProductToDatabase(localDate: LocalDate, name: String, type: String, englishType:String, ingredients:String, nutriments:String, imageUrl:String, database: ProductsDatabase) {
+    suspend fun addNewProductToDatabase(localDate: LocalDate, name: String, type: String, englishType:String, ingredients:String, nutriments:String, imageUrl:String, ingredientsTranslated:String, nutrimentsTranslated: String, database: ProductsDatabase) {
 
         try{
-            val product = Product(0,name, type ,englishType,localDate, ingredients, nutriments, imageUrl)
+            val product = Product(0,name, type ,englishType,localDate, ingredients, nutriments, imageUrl, ingredientsTranslated, nutrimentsTranslated)
             database.productDao().insertAll(product)
             Log.d(TAG, "addNewProductToDatabase: $product")
             bus.post(ProductAdded(product))
@@ -49,7 +49,7 @@ class AddNewProductModel(var bus: EventBus) {
                     Log.d(TAG, "makeApiCall: TRYING......")
                     val result = openFoodFactsApi.callForProduct(mapOf(
                         "code" to rawValue,
-                        "fields" to "code,product_name,category_properties,ingredients_text,nutriments,image_front_small_url"
+                        "fields" to "code,product_name,category_properties,ingredients_text_en,nutriments,image_front_small_url"
                     ))
                     Log.d(TAG, "makeApiCall: scanBarcode: SCANNED XXXX: ${result.body().toString()}")
                     withContext(Dispatchers.Main) {
@@ -70,8 +70,6 @@ class AddNewProductModel(var bus: EventBus) {
 
     @SuppressLint("DiscouragedApi")
     suspend fun initFoodTypes(activityContext: Context, database: FoodTypesDatabase){
-
-        //TODO: ZAIMPLEMENTOWAC GETLOCALIZEDRESOURCES ŻEBY MIEĆ ANGIELSKIE NAZWY I TWORZYĆ OBIEKTY DO BAZY Z TYPAMI.
 
         Log.d(TAG, "initFoodTypes: started")
         val types = activityContext.resources.getStringArray(R.array.ingredients)

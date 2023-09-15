@@ -14,5 +14,7 @@ data class Product(
     @ColumnInfo (name = "expiryDate") var expiryDate: LocalDate,
     @ColumnInfo (name = "ingredients_text") var ingredients: String?,
     @ColumnInfo (name = "nutriments") var nutriments: String?,
+    @ColumnInfo (name = "ingredients_text_translated") var ingredientsTranslated: String?,
+    @ColumnInfo (name = "nutriments_translated") var nutrimentsTranslated: String?,
     @ColumnInfo (name = "imageUrl") var imageUrl: String?
 )

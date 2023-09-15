@@ -7,6 +7,7 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bbroda.expirydateguard.R
@@ -22,6 +23,7 @@ class RecipesScreenView(val activity: RecipesScreenActivity, val bus: EventBus) 
     private val progressBar: ProgressBar? = activity.findViewById(R.id.loading_recipes_progressbar)
     private val recyclerView: RecyclerView? = activity.findViewById(R.id.recyclerview_recipes)
     private val noRecipesTextview: TextView? = activity.findViewById(R.id.no_recipes_found_TextView)
+    private val cardview: CardView? = activity.findViewById(R.id.recipes_screen_cardview)
 
 
 
@@ -32,12 +34,12 @@ class RecipesScreenView(val activity: RecipesScreenActivity, val bus: EventBus) 
     }
 
     fun initRecyclerView(recipes: MutableList<Recipes>, products: List<Product>) {
-
+        cardview?.visibility = View.VISIBLE
         Log.d(ContentValues.TAG, "initRecyclerView: INIT RECYCLERVIEW")
         adapter = RecipesRecyclerViewAdapter(recipes, activity, products)
         recyclerView!!.layoutManager = LinearLayoutManager(activity)
-        recyclerView!!.adapter = adapter
-        recyclerView!!.visibility = View.VISIBLE
+        recyclerView.adapter = adapter
+        recyclerView.visibility = View.VISIBLE
     }
 
 

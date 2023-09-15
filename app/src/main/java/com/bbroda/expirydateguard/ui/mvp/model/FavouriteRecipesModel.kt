@@ -11,11 +11,11 @@ import org.greenrobot.eventbus.EventBus
 class FavouriteRecipesModel(var bus:EventBus) {
 
 
-    suspend fun removeRecipeFromFavourites(database: RecipeDatabase, recipe: Recipe){
+    suspend fun removeRecipeFromFavourites(database: RecipeDatabase, recipe: Recipe, position: Int){
 
-        val databaseRecipes = database.recipeDao().getAll()
-
-        database.recipeDao().delete(recipe)
+        val databaseRecipes = database.recipeDao()
+        databaseRecipes.delete(recipe)
+        bus.post(RecipeDeleted(position))
         Log.d(ContentValues.TAG, "removeRecipeFromFavourites: RECIPE REMOVED FROM DATABASE. DATABASE CONTENT: ${database.recipeDao().getAll()}")
     }
 
@@ -26,6 +26,6 @@ class FavouriteRecipesModel(var bus:EventBus) {
     }
 
 
-    class RecipeDeleted()
+    class RecipeDeleted(val position: Int)
     class RecipesFetchedFromDatabase(val recipes: List<Recipe>, val products: List<Product>)
 }

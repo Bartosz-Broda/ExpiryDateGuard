@@ -43,7 +43,7 @@
     <string name="toast_brak_produktów">Musisz wybrać co najmniej 1 produkt!</string>
     <string name="info_button">Nie możesz dodać tego produktu do listy. Przejdź do szczegółów produktu, a następnie uzupełnij lub zmień typ produktu. Wypróbuj typy produktów proponowane przez aplikację.</string>
     <string name="delete_product_button">Czy na pewno chcesz usunąć ten produkt ze swojej lodówki?</string>
-    <string name="main_menu_api_failed">Wystąpił problem z pobraniem przepisów. Wybierz inne produkty, spróbuj ponownie później lub zmień preferencje żywieniowe.</string>
+    <string name="main_menu_api_failed">Wystąpił problem z pobraniem przepisów. Sprawdź czy masz połączenie z internetem, wybierz inne produkty lub zmień preferencje żywieniowe.</string>
     <string name="brakuje_ci">Brakuje Ci</string>
     <string name="produktów">składników</string>
     <string name="no_recipies_found">Nie znaleziono przepisów zawierających podane składniki.</string>
@@ -95,7 +95,7 @@
     <string name="expiration_close">(Blisko końca daty przydatności)</string>
     <string name="expired">(Przeterminowane!)</string>
     <string name="powiadomienia">Powiadomienia</string>
-    <string name="no_favourite_recipies">Brak ulubionych przepisów. Wyszukaj przepisy używając produktów ze swojej lodówki, aby dodać je do ulubionych.</string>
+    <string name="no_favourite_recipies">Brak ulubionych przepisów. Wybierz opcję \"Przepisy zawierające moje produkty\" z menu bocznego, aby wyszukać przepisy i dodawać je do ulubionych.</string>
     <string name="usunięto">Usunięto</string>
     <string name="usunięto_ulubione">Usunięto z ulubionych</string>
     <string name="dialog_alert_usun_z_ulubionych">Czy na pewno chcesz usunąć ten przepis z ulubionych?</string>
@@ -105,6 +105,14 @@
     <string name="cancel">Anuluj</string>
     <string name="dalle2">Grafiki zostały stworzone z pomocą DALL·E 2 - https://openai.com/dall-e-2</string>
     <string name="copyright">Copyright (©)</string>
+    <string name="przetlumacz">Przetłumacz</string>
+    <string name="original_text">Pokaż oryginalny tekst</string>
+    <string name="unable_to_translate">Nie można przetłumaczyć</string>
+    <string name="cant_fetch">Nie można pobrać informacji o tym produkcie</string>
+    <string name="product_type_exception">Musisz podać typ produktu</string>
+    <string name="no_name">Brak nazwy produktu</string>
+    <string name="recipes_cardview_text">Przepisy kulinarne, które wykorzystują wybrane przez Ciebie produkty</string>
+    <string name="no_products_main_menu_message">Aby wyszukać przepisy, musisz najpierw dodać produkt do swojej lodówki</string>
 
 
     <string-array name="ingredients">

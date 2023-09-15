@@ -6,21 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".ui.activities.ProductScreenActivity">
 
-    <ProgressBar
-        android:id="@+id/load_proressbar"
-        style="?android:attr/progressBarStyle"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:indeterminate="true"
-        android:indeterminateTint="@color/colorPrimary"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <ImageView
         android:id="@+id/product_image"
         android:layout_width="100dp"
@@ -51,7 +36,7 @@
         android:layout_height="wrap_content"
         android:maxHeight="200dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="50dp"
         android:layout_marginEnd="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/product_image"
@@ -177,8 +162,8 @@
                 android:layout_marginEnd="16dp"
                 android:gravity="start"
                 android:hint="@string/mm"
-                android:text=""
                 android:maxLength="2"
+                android:text=""
                 android:textColor="@android:color/black"
                 android:textSize="17sp"
                 android:visibility="gone"
@@ -196,11 +181,11 @@
                 android:layout_marginEnd="16dp"
                 android:gravity="start"
                 android:hint="@string/dd"
+                android:maxLength="2"
                 android:text=""
                 android:textColor="@android:color/black"
                 android:textSize="17sp"
                 android:visibility="gone"
-                android:maxLength="2"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toEndOf="@id/expiry_date_month_edittext_product_screen"
@@ -217,6 +202,23 @@
                 android:text="@string/brak_informacji_o_sk_adnikach"
                 android:textColor="@android:color/black"
                 android:textSize="17sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/expiry_date_textview_product_screen" />
+
+            <TextView
+                android:id="@+id/ingredients_textview_product_screen_polish"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="48dp"
+                android:layout_marginEnd="16dp"
+                android:gravity="start"
+                android:text="@string/brak_informacji_o_sk_adnikach"
+                android:textColor="@android:color/black"
+                android:textSize="17sp"
+                android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
@@ -260,6 +262,23 @@
                 app:layout_constraintTop_toBottomOf="@+id/ingredients_textview_product_screen" />
 
             <TextView
+                android:id="@+id/nutrition_textview_product_screen_polish"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="44dp"
+                android:layout_marginEnd="16dp"
+                android:gravity="start"
+                android:text="@string/brak_informacji_o_warto_ciach_od_ywczych"
+                android:textColor="@android:color/black"
+                android:textSize="17sp"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ingredients_textview_product_screen" />
+
+            <TextView
                 android:id="@+id/textView4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -272,9 +291,9 @@
                 android:id="@+id/edit_product_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="50dp"
+                android:layout_marginTop="65dp"
                 android:layout_marginBottom="50dp"
-                android:background="@drawable/rounded_background_gray"
+                android:background="@drawable/rounded_background_primarycolor"
                 android:padding="10dp"
                 android:text="@string/edytuj_produkt"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -282,17 +301,68 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/nutrition_textview_product_screen" />
 
+            <!--<Button
+                android:id="@+id/translate_button"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="50dp"
+                android:background="@drawable/rounded_background_primarycolor_small"
+                android:text="@string/przetlumacz"
+                android:padding="5dp"
+                android:textSize="10sp"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.049"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/nutrition_textview_product_screen"
+                app:layout_constraintVertical_bias="0.015" />
+
+            <Button
+                android:id="@+id/detranslate_button"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="50dp"
+                android:background="@drawable/rounded_background_primarycolor_small"
+                android:text="@string/original_text"
+                android:padding="5dp"
+                android:textSize="10sp"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.049"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/nutrition_textview_product_screen_polish"
+                app:layout_constraintVertical_bias="0.015" />-->
+
+            <ProgressBar
+                android:id="@+id/load_progressbar"
+                style="?android:attr/progressBarStyle"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="20dp"
+                android:indeterminate="true"
+                android:indeterminateTint="@color/colorPrimary"
+                android:visibility="visible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/edit_product_button" />
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </ScrollView>
 
     <ImageButton
-        android:id="@+id/approve_editing_product_button"
+        android:id="@+id/cancel_editing_product_button"
         android:layout_width="65dp"
         android:layout_height="65dp"
         android:cropToPadding="true"
-        android:foreground="@drawable/icons8_check_96"
+        android:foreground="@drawable/icons8_cancel_100"
         android:layout_marginStart="60dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -302,12 +372,12 @@
         android:visibility="gone"/>
 
     <ImageButton
-        android:id="@+id/cancel_editing_product_button"
+        android:id="@+id/approve_editing_product_button"
         android:layout_width="70dp"
         android:layout_height="70dp"
         android:layout_marginEnd="60dp"
         android:layout_marginBottom="50dp"
-        android:foreground="@drawable/icons8_cancel_100"
+        android:foreground="@drawable/icons8_check_96"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         android:background="@drawable/recycler_item_no_background"

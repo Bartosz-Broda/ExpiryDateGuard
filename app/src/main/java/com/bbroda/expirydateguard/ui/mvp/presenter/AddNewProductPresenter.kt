@@ -2,6 +2,7 @@ package com.bbroda.expirydateguard.ui.mvp.presenter
 
 import android.content.ContentValues
 import android.content.ContentValues.TAG
+import android.content.Context
 import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
@@ -76,6 +77,64 @@ class AddNewProductPresenter(val view: AddNewProductView, val model: AddNewProdu
 
     @Subscribe
     fun onSaveClicked(event: AddNewProductView.NewProductAdded) {
+
+        //ready to implement nutriments and ingredients translation functionality
+        var translatedIngredients = ""
+        var translatedNutriments = ""
+
+
+        /*if(!ingredients.isNullOrEmpty() || !nutriments.isNullOrEmpty()){
+
+                try {
+                    Log.d(ContentValues.TAG, "translateIfNeeded: product ingredients: ${ingredients}")
+                    //translating type to english for searching recipe purpose
+
+                                // Create a translator to Polish:
+                                val options = TranslateLanguage.fromLanguageTag("en").let {
+                                    TranslatorOptions.Builder()
+                                        .setSourceLanguage(it!!)
+                                        .setTargetLanguage(TranslateLanguage.POLISH)
+                                        .build()
+                                }
+                                val translatorToPolish = options.let { Translation.getClient(it) }
+                                val conditions = DownloadConditions.Builder()
+                                    .build()
+                                translatorToPolish.downloadModelIfNeeded(conditions).addOnSuccessListener {
+                                    // Model downloaded successfully. Okay to start translating.
+                                    //translating text (FINALLY!)
+                                    translatorToPolish.translate(ingredients)
+                                        .addOnSuccessListener { translatedText ->
+                                            // Translation successful.
+                                            Log.d(TAG, "onSaveClicked: INGREDIENTS TRANSLATED")
+                                            translatedIngredients = translatedText
+                                            Log.d(ContentValues.TAG, "translateIfNeeded: TRANSLATED TEXT: $translatedText")
+
+                                        }.addOnFailureListener { exception ->
+                                            // Error.
+                                            Log.d(ContentValues.TAG, "translateIfNeeded: Can't translate! $exception")
+                                        }
+                                    translatorToPolish.translate(nutriments)
+                                        .addOnSuccessListener { translatedText ->
+                                            // Translation successful.
+                                            Log.d(TAG, "onSaveClicked: NUTRIMENTS TRANSLATED")
+                                            translatedNutriments = translatedText
+                                            translatorToPolish.close()
+                                        }.addOnFailureListener { exception ->
+                                            // Error.
+                                            Log.d(ContentValues.TAG, "translateIfNeeded: Can't translate! $exception")
+                                            translatorToPolish.close()
+                                        }
+                                }.addOnFailureListener { exception ->
+                                    // Model couldn’t be downloaded or other internal error.
+                                    Log.d(ContentValues.TAG, "translateIfNeeded: Need another language model but can't download it!: $exception")
+                                    translatorToPolish.close()
+                                }
+
+                } catch (e: Exception) {
+                    Log.d(ContentValues.TAG, "translateIfNeeded: $e")
+                }
+            }*/
+
         Log.d(TAG, "onSomeViewAction: XXXX - got new product")
         var engType = ""
 
@@ -85,9 +144,8 @@ class AddNewProductPresenter(val view: AddNewProductView, val model: AddNewProdu
             if(event.type.lowercase() == label.lowercase()){
                 engType = type.typeLabelEn
                 Log.d(TAG, "onSomeViewAction: ENG_TYPE: $engType")
-
                 activity.lifecycleScope.launch {
-                    model.addNewProductToDatabase(event.date, event.name, event.type, engType, ingredients, nutriments, imageUrl, db)
+                    model.addNewProductToDatabase(event.date, event.name, event.type, engType, ingredients, nutriments, imageUrl, translatedIngredients ,translatedNutriments,db)
                 }
             }
         }
@@ -120,8 +178,9 @@ class AddNewProductPresenter(val view: AddNewProductView, val model: AddNewProdu
                                 translatorToEnglish.translate(event.type)
                                     .addOnSuccessListener { translatedText ->
                                         // Translation successful.
+                                        engType = translatedText
                                         activity.lifecycleScope.launch {
-                                            model.addNewProductToDatabase(event.date, event.name, event.type, translatedText, ingredients, nutriments, imageUrl, db)
+                                            model.addNewProductToDatabase(event.date, event.name, event.type, translatedText, ingredients, nutriments, imageUrl, translatedIngredients ,translatedNutriments,db)
                                         }
                                         Log.d(ContentValues.TAG, "translateIfNeeded: TRANSLATED TEXT: $translatedText")
                                         translatorToEnglish.close()
@@ -129,19 +188,21 @@ class AddNewProductPresenter(val view: AddNewProductView, val model: AddNewProdu
                                         // Error.
                                         Log.d(ContentValues.TAG, "translateIfNeeded: Can't translate! $exception")
                                         activity.lifecycleScope.launch {
-                                            model.addNewProductToDatabase(event.date, event.name, event.type, engType, ingredients, nutriments, imageUrl, db)                                         }
+                                            model.addNewProductToDatabase(event.date, event.name, event.type, engType, ingredients, nutriments, imageUrl, translatedIngredients ,translatedNutriments,db)
+                                        }
                                         translatorToEnglish.close()
                                     }
                             }.addOnFailureListener { exception ->
                                 // Model couldn’t be downloaded or other internal error.
                                 activity.lifecycleScope.launch {
-                                    model.addNewProductToDatabase(event.date, event.name, event.type, engType, ingredients, nutriments, imageUrl, db)
+                                    model.addNewProductToDatabase(event.date, event.name, event.type, engType, ingredients, nutriments, imageUrl, translatedIngredients ,translatedNutriments,db)
                                 }
                                 Log.d(ContentValues.TAG, "translateIfNeeded: Need another language model but can't download it!: $exception")
                                 translatorToEnglish.close()
                             }
                             Log.i(ContentValues.TAG, "Language: $languageCode")
                         }else{
+
                             //if translator cannot detect language, we assume for testing purpouse that it was in polish
                             Log.d(ContentValues.TAG, "translateIfNeeded: languagecode is not en. It's: $languageCode")
 
@@ -161,8 +222,9 @@ class AddNewProductPresenter(val view: AddNewProductView, val model: AddNewProdu
                                 translatorToEnglish.translate(event.type)
                                     .addOnSuccessListener { translatedText ->
                                         // Translation successful.
+                                        engType = translatedText
                                         activity.lifecycleScope.launch {
-                                            model.addNewProductToDatabase(event.date, event.name, event.type, engType, ingredients, nutriments, imageUrl, db)
+                                            model.addNewProductToDatabase(event.date, event.name, event.type, engType, ingredients, nutriments, imageUrl, translatedIngredients ,translatedNutriments,db)
                                         }
                                         Log.d(ContentValues.TAG, "translateIfNeeded: TRANSLATED TEXT: $translatedText")
                                         translatorToEnglish.close()
@@ -170,14 +232,14 @@ class AddNewProductPresenter(val view: AddNewProductView, val model: AddNewProdu
                                         // Error.
                                         Log.d(ContentValues.TAG, "translateIfNeeded: Can't translate! $exception")
                                         activity.lifecycleScope.launch {
-                                            model.addNewProductToDatabase(event.date, event.name, event.type, engType, ingredients, nutriments, imageUrl, db)
+                                            model.addNewProductToDatabase(event.date, event.name, event.type, engType, ingredients, nutriments, imageUrl, translatedIngredients ,translatedNutriments,db)
                                         }
                                         translatorToEnglish.close()
                                     }
                             }.addOnFailureListener { exception ->
                                 // Model couldn’t be downloaded or other internal error.
                                 activity.lifecycleScope.launch {
-                                    model.addNewProductToDatabase(event.date, event.name, event.type, engType, ingredients, nutriments, imageUrl, db)
+                                    model.addNewProductToDatabase(event.date, event.name, event.type, engType, ingredients, nutriments, imageUrl, translatedIngredients ,translatedNutriments,db)
                                 }
                                 Log.d(ContentValues.TAG, "translateIfNeeded: Need another language model but can't download it!: $exception")
                                 translatorToEnglish.close()
@@ -191,13 +253,13 @@ class AddNewProductPresenter(val view: AddNewProductView, val model: AddNewProdu
                         Log.d(ContentValues.TAG, "translateifneeded: $it")
                         // Model couldn’t be loaded or other internal error.
                         activity.lifecycleScope.launch {
-                            model.addNewProductToDatabase(event.date, event.name, event.type, engType, ingredients, nutriments, imageUrl, db)
+                            model.addNewProductToDatabase(event.date, event.name, event.type, engType, ingredients, nutriments, imageUrl, translatedIngredients ,translatedNutriments,db)
                         }
                     }
 
             } catch (e: Exception) {
                 activity.lifecycleScope.launch {
-                    model.addNewProductToDatabase(event.date, event.name, event.type, engType, ingredients, nutriments, imageUrl, db)
+                    model.addNewProductToDatabase(event.date, event.name, event.type, engType, ingredients, nutriments, imageUrl, translatedIngredients ,translatedNutriments,db)
                 }
                 Log.d(ContentValues.TAG, "translateIfNeeded: $e")
             }
@@ -247,7 +309,7 @@ class AddNewProductPresenter(val view: AddNewProductView, val model: AddNewProdu
                     originalNutriments[i]?.let { mutableMapNutriments.put(i, it) }
                 }
                 if (i.contains("energy_100g") || i.contains("fruits-vegetables-nuts-estimate") || i.contains(
-                        "nutrition-sscore"
+                        "nutrition-score"
                     ) || i.contains("nova-group")
                 ) {
                     originalNutriments[i]?.let { mutableMapNutriments.remove(i) }
@@ -256,6 +318,10 @@ class AddNewProductPresenter(val view: AddNewProductView, val model: AddNewProdu
                 if (i.contains("energy-kj_100g")) {
                     originalNutriments[i]?.let { mutableMapNutriments.remove(i) }
                     originalNutriments[i]?.let { mutableMapNutriments.put("energy (kJ)", "$it kJ") }
+                }
+
+                if (i.contains("score")) {
+                    originalNutriments[i]?.let { mutableMapNutriments.remove(i) }
                 }
 
                 if (i.contains("energy-kcal_100g")) {
@@ -354,8 +420,20 @@ class AddNewProductPresenter(val view: AddNewProductView, val model: AddNewProdu
                 view.changeVisibilityOfProgressBar(false)
             }
     }
-
-
-
+    private fun getlanguageFromSharedPref(context: Context):String{
+        try{
+            val sharedPreferences = context.getSharedPreferences("Settings", Context.MODE_PRIVATE)
+            val language = sharedPreferences.getString("My_Lang","")
+            return if (language.isNullOrBlank()){
+                ""
+            } else{
+                Log.d(EventBus.TAG, "getlanguageFromSharedPref: $language")
+                return language
+            }
+        }catch (e:Exception){
+            Log.d(EventBus.TAG, "getlanguageFromSharedPref: EXCEPTION: $e")
+            return ""
+        }
+    }
 
 }

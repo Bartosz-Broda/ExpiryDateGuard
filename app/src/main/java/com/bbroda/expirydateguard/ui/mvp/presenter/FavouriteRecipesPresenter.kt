@@ -19,16 +19,20 @@ class FavouriteRecipesPresenter(val view: FavouriteRecipesView, val model: Favou
     }
     @Subscribe
     fun onrecipeDeleted(event: FavouriteRecipesModel.RecipeDeleted) {
-        view.refreshRecipies()
+        view.refreshRecipies(event.position)
     }
 
     @Subscribe
     fun onRemoveFromFavouriteClicked(event: FavouriteRecipesView.RemoveFromFavourite){
-        activity.lifecycleScope.launch { model.removeRecipeFromFavourites(recipeDB,event.recipe) }
+        activity.lifecycleScope.launch { model.removeRecipeFromFavourites(recipeDB,event.recipe, event.position) }
     }
 
     @Subscribe
     fun recipesFetchedFromDatabase(event: FavouriteRecipesModel.RecipesFetchedFromDatabase){
-        view.initRecyclerView(event.recipes.toMutableList(), event.products)
+        if(!event.recipes.isNullOrEmpty()){
+            view.initRecyclerView(event.recipes.toMutableList(), event.products)
+        }else{
+            view.showNoRecipesInfo()
+        }
     }
 }

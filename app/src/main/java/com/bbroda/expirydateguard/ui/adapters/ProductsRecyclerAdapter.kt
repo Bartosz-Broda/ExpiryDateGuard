@@ -56,7 +56,12 @@ class ProductsRecyclerAdapter(val dataSet: MutableList<Product>, val activityCon
     // Replace the contents of a view (invoked by the layout manager)
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
-        viewHolder.nameTextView.text = dataSet[position].name
+        if(dataSet[position].name.isNullOrEmpty()){
+            viewHolder.nameTextView.text = activityContext.getString(R.string.no_name)
+        }else{
+            viewHolder.nameTextView.text = dataSet[position].name
+        }
+
         viewHolder.typeTextView.text = dataSet[position].type
         viewHolder.dateTextView.text = dataSet[position].expiryDate.toString()
         val current = LocalDate.now()

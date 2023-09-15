@@ -19,7 +19,7 @@ class ProductScreenModel (var bus: EventBus) {
 
     suspend fun getProductInfo(uid: Int, database: ProductsDatabase){
         val product: Product = database.productDao().loadByID(uid)
-        bus.post(ProductInfoFetched(product.name,product.type,product.expiryDate.toString(),product.ingredients, product.nutriments, product.imageUrl))
+        bus.post(ProductInfoFetched(product.name,product.type,product.expiryDate.toString(),product.ingredients, product.nutriments, product.ingredientsTranslated, product.nutrimentsTranslated, product.imageUrl))
     }
 
 
@@ -31,7 +31,7 @@ class ProductScreenModel (var bus: EventBus) {
             product.expiryDate = expiryDate
             product.englishType = englishType
             database.productDao().updateProduct(product)
-            bus.post(ProductInfoFetched(product.name,product.type,product.expiryDate.toString(),product.ingredients,product.nutriments,product.imageUrl))
+            bus.post(ProductInfoFetched(product.name,product.type,product.expiryDate.toString(),product.ingredients,product.nutriments,product.ingredientsTranslated, product.nutrimentsTranslated, product.imageUrl))
             Log.d(TAG, "changeProductInfo: Translateif... Product Info changed: $product")
         //bus.post(ProductInfoChanged(true))
         }catch (e:java.lang.Exception){
@@ -104,7 +104,7 @@ class ProductScreenModel (var bus: EventBus) {
 
 
 
-    class ProductInfoFetched(val productName:String?, val productType:String?, val expiryDate:String, val ingredients:String?, val nutritionInfo:String?, val imageUrl:String?)
+    class ProductInfoFetched(val productName:String?, val productType:String?, val expiryDate:String, val ingredients:String?, val nutritionInfo:String?, val translatedIngredients:String?, val translatedNutrition: String?, val imageUrl:String?)
     class ProductInfoNotChanged()
     class FoodTypesFetched(val list: List<Type>)
     class TypesFetched(val list: List<Type>)

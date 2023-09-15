@@ -36,8 +36,6 @@ class MainMenuActivity : AppCompatActivity() {
         EventBus.getDefault().register(presenter)
         bus.post(MainMenuView.InitRecyclerView())
 
-        //createNotificationChannel()
-
 
         //można dać opcję z sharedpref - jeśli otwarte menu boczcne to backpress robi tylko reload main menu
         onBackPressedDispatcher.addCallback(this, object: OnBackPressedCallback(true) {

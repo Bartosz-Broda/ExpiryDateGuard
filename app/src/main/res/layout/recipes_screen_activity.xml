@@ -1,16 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="10dp">
-
-    <ProgressBar
-        android:id="@+id/loading_recipes_progressbar"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_centerInParent="true"
-        />
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:paddingHorizontal="10dp">
 
     <TextView
         android:id="@+id/no_recipes_found_TextView"
@@ -23,12 +17,58 @@
         android:textSize="20sp"
         android:text="@string/no_recipies_found"/>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerview_recipes"
-        android:layout_height="match_parent"
-        android:layout_width="match_parent">
+    <ProgressBar
+        android:id="@+id/loading_recipes_progressbar"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_centerInParent="true"
+        android:visibility="visible"
+        />
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
 
-    </androidx.recyclerview.widget.RecyclerView>
+            <androidx.cardview.widget.CardView
+                android:id="@+id/recipes_screen_cardview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="30dp"
+                android:clickable="false"
+                android:visibility="gone"
+                android:background="?android:attr/selectableItemBackground"
+                android:layout_marginVertical="5dp"
+                android:layout_marginHorizontal="3dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="@string/recipes_cardview_text"
+                    android:textSize="20dp"
+                    android:textColor="@color/black"
+                    android:textAlignment="center"
+                    android:padding="10dp"/>
+
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerview_recipes"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/recipes_screen_cardview"
+                android:nestedScrollingEnabled="false">
+
+            </androidx.recyclerview.widget.RecyclerView>
+
+        </RelativeLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
 
 </RelativeLayout>

@@ -163,12 +163,8 @@ class FavouriteRecipesRecyclerViewAdapter(val dataSet: MutableList<Recipe>, val 
             builder.setMessage(R.string.delete_product_button)
 
             builder.setPositiveButton("Usuń") { dialog, which ->
-                EventBus.getDefault().post(FavouriteRecipesView.RemoveFromFavourite(dataSet[position]))
-                dataSet.remove(dataSet[position])
-                notifyItemRemoved(position)
-
-                Toast.makeText(activityContext,
-                    activityContext.getString(R.string.usunięto_ulubione), Toast.LENGTH_SHORT).show()
+                EventBus.getDefault().post(FavouriteRecipesView.RemoveFromFavourite(dataSet[position], position))
+                removeFromDataSet(position)
             }
 
             builder.setNegativeButton("Anuluj") { dialog, which ->
@@ -216,6 +212,14 @@ class FavouriteRecipesRecyclerViewAdapter(val dataSet: MutableList<Recipe>, val 
             translatorToEnglish.close()
         }
 
+    }
+
+    fun removeFromDataSet(position: Int){
+        dataSet.remove(dataSet[position])
+        notifyItemRemoved(position)
+
+        Toast.makeText(activityContext,
+            activityContext.getString(R.string.usunięto_ulubione), Toast.LENGTH_SHORT).show()
     }
 
 }

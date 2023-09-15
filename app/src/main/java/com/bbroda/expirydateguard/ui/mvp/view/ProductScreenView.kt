@@ -41,14 +41,37 @@ class ProductScreenView(val activity: ProductScreenActivity, val bus: EventBus) 
     private val editProductButton: Button = activity.findViewById(R.id.edit_product_button)
     private val approveEditImageButton: ImageButton = activity.findViewById(R.id.approve_editing_product_button)
     private val dismissEditImageButton: ImageButton = activity.findViewById(R.id.cancel_editing_product_button)
-    private val imageProgressBar:ProgressBar = activity.findViewById(R.id.load_proressbar)
+    private val imageProgressBar:ProgressBar = activity.findViewById(R.id.image_progress_bar)
+    private val loadProgressBar:ProgressBar = activity.findViewById(R.id.load_progressbar)
     private val productNameEditText:EditText = activity.findViewById(R.id.product_name_product_screen_edittext)
     private val scrollView:ScrollView = activity.findViewById(R.id.scrollView2)
+    /*private val translateButton:Button = activity.findViewById(R.id.translate_button)
+    private val originalTextButton: Button = activity.findViewById(R.id.detranslate_button)*/
+    private val textViewIngredientsPolish: TextView = activity.findViewById(R.id.ingredients_textview_product_screen_polish)
+    private val nutritionTextViewPolish: TextView = activity.findViewById(R.id.nutrition_textview_product_screen_polish)
 
     init{
 
         /*productTypeTextView.minHeight = productTypeEditText.height
         productTypeTextView.minHeight = productNameEditText.height*/
+
+        /*translateButton.setOnClickListener {
+            nutritionTextView.visibility = View.GONE
+            nutritionTextViewPolish.visibility = View.VISIBLE
+            ingredientsTextView.visibility = View.GONE
+            textViewIngredientsPolish.visibility = View.VISIBLE
+            translateButton.visibility = View.GONE
+            originalTextButton.visibility = View.VISIBLE
+        }
+
+        originalTextButton.setOnClickListener {
+            nutritionTextView.visibility = View.VISIBLE
+            nutritionTextViewPolish.visibility = View.GONE
+            ingredientsTextView.visibility = View.VISIBLE
+            textViewIngredientsPolish.visibility = View.GONE
+            translateButton.visibility = View.VISIBLE
+            originalTextButton.visibility = View.GONE
+        }*/
 
         editProductButton.setOnClickListener {
             //changing textviews into edittexts
@@ -138,10 +161,11 @@ class ProductScreenView(val activity: ProductScreenActivity, val bus: EventBus) 
 
     }
 
-    fun initiateUI(productName:String?, productType:String?, expiryDate:String, ingredients:String?, nutritionInfo:String?, imageUrl:String?, context: Context){
+    fun initiateUI(productName:String?, productType:String?, expiryDate:String, ingredients:String?, nutritionInfo:String?, translatedIngredients:String?, translatedNutrients: String?, imageUrl:String?, context: Context){
 
         //Loading food image
         Log.d(TAG, "initiateUI: image url: $imageUrl")
+        loadProgressBar.visibility = View.GONE
         try{
         if(imageUrl.isNullOrEmpty() || imageUrl =="null") {
             Glide.with(context)
@@ -168,8 +192,10 @@ class ProductScreenView(val activity: ProductScreenActivity, val bus: EventBus) 
         if (!productName.isNullOrEmpty() && productName!="null"){productNameTextView.text = productName}
         if(!productType.isNullOrEmpty() && productType != "null"){productTypeTextView.text = productType }
         expiryTextView.text = expiryDate
-        if(ingredients.isNullOrEmpty() && ingredients!="null"){ingredientsTextView.text = ingredients}
+        if(!ingredients.isNullOrEmpty() && ingredients!="null"){ingredientsTextView.text = ingredients}
         if (!nutritionInfo.isNullOrEmpty() && nutritionInfo != "null"){nutritionTextView.text = nutritionInfo }
+        if(!translatedIngredients.isNullOrEmpty() && translatedIngredients!="null"){textViewIngredientsPolish.text = translatedIngredients}
+        if (!translatedNutrients.isNullOrEmpty() && translatedNutrients != "null"){nutritionTextViewPolish.text = translatedNutrients }
     }
 
     fun productInfoWasntChanged (){
@@ -222,6 +248,21 @@ class ProductScreenView(val activity: ProductScreenActivity, val bus: EventBus) 
         productTypeEditText.setAdapter(adapter)
     }
 
+    fun progressBarVisibility(boolean: Boolean){
+        if (boolean){
+            loadProgressBar.visibility = View.VISIBLE
+        }else{
+            loadProgressBar.visibility = View.GONE
+        }
+    }
+
+    /*fun showTranslateButton(){
+        translateButton.visibility = View.VISIBLE
+    }*/
+
+    fun showToast(text: String){
+        Toast.makeText(activity, text, Toast.LENGTH_SHORT).show()
+    }
     class GetInfoAboutProduct
     class UserWantsToChangeProductInfo()
 

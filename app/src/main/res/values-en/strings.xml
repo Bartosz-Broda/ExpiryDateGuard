@@ -26,16 +26,16 @@
     <string name="language_choice">Choose language</string>
     <string name="dodaj_nowy_produkt">Add new product</string>
     <string name="data_przydatno_ci_do_spo_ycia">Expiration date:</string>
-    <string name="typ_produktu_np_ketchup">Product type (e.g. noodle)</string>
+    <string name="typ_produktu_np_ketchup">Product type (e.g. noodles)</string>
     <string name="nazwa_produku_np_marka">Product name (e.g. brand)</string>
     <string name="dd">DD</string>
     <string name="mm">MM</string>
     <string name="rrrr">YYYY</string>
     <string name="zapisz">SAVE</string>
     <string name="skanuj_produkt">SCAN BARCODE</string>
-    <string name="brak_informacji_o_sk_adnikach">No data about ingredients</string>
+    <string name="brak_informacji_o_sk_adnikach">No data on ingredients</string>
     <string name="sk_adniki">Ingredients</string>
-    <string name="brak_informacji_o_warto_ciach_od_ywczych">No data about nutriments</string>
+    <string name="brak_informacji_o_warto_ciach_od_ywczych">No data on nutriments</string>
     <string name="warto_ci_od_ywcze_w_100g_produktu">Nutriments in 100g of product</string>
     <string name="edytuj_produkt">Edit product</string>
     <string name="jezyk_pl">Polish</string>
@@ -44,7 +44,7 @@
     <string name="toast_brak_produktów">You have to choose at least one product!</string>
     <string name="info_button">You can\'t add this product to your list. Go to product details and fill in or change the product type. Try using types suggested by application.</string>
     <string name="delete_product_button">Do you want to remove this product from your fridge?</string>
-    <string name="main_menu_api_failed">There was a problem with fetching recipes. Try again later, choose different products or change your food preferences.</string>
+    <string name="main_menu_api_failed">There was a problem with fetching recipes. Check your internet connection, choose different products or change your food preferences.</string>
     <string name="brakuje_ci">You are missing</string>
     <string name="produktów">ingredients</string>
     <string name="no_recipies_found">No recipes found with the ingredients listed.</string>
@@ -96,7 +96,7 @@
     <string name="powiadomienia">Notifications</string>
     <string name="expiration_close">(Close to expiration date!)</string>
     <string name="expired">(Expired!)</string>
-    <string name="no_favourite_recipies">No favorite recipes. Search for recipes using items from your fridge to add them to your favourites.</string>
+    <string name="no_favourite_recipies">You don\'t have any favorite recipes. Choose option \"Find recipes containing my products\" from the side menu to search for recipes and add them to your favourites.</string>
     <string name="usunięto">Removed</string>
     <string name="usunięto_ulubione">Removed from favourites</string>
     <string name="dialog_alert_usun_z_ulubionych">Do you want to remove this recipe from favourites?</string>
@@ -106,6 +106,14 @@
     <string name="cancel">Cancel</string>
     <string name="dalle2">Drawings were created with the help of DALL·E 2 - https://openai.com/dall-e-2</string>
     <string name="copyright">Copyright (©)</string>
+    <string name="przetlumacz">Translate</string>
+    <string name="original_text">Show original text</string>
+    <string name="unable_to_translate">Unable to translate</string>
+    <string name="cant_fetch">Can\'t fetch information about this product</string>
+    <string name="product_type_exception">You have to fill in the product type</string>
+    <string name="no_name">No product name</string>
+    <string name="recipes_cardview_text">Cooking recipes, that use the products chosen by You</string>
+    <string name="no_products_main_menu_message">You have to add at least one product to your fridge before searching for recipes</string>
 
 
     <string-array name="ingredients">

@@ -1,6 +1,7 @@
 package com.bbroda.expirydateguard.ui.mvp.presenter
 
 import android.content.ContentValues
+import android.content.Context
 import android.util.Log
 import androidx.lifecycle.lifecycleScope
 import com.bbroda.expirydateguard.ui.activities.ProductScreenActivity
@@ -31,6 +32,11 @@ class ProductScreenPresenter(val view: ProductScreenView, val model: ProductScre
         if (extras != null) {
             uid = extras.getInt("UID")
         }
+        val lang = getlanguageFromSharedPref(activity)
+        if (lang != "en"){
+            Log.d(TAG, "LANGUAGE: $lang")
+            //view.showTranslateButton()
+        }
     }
 
     @Subscribe (threadMode = ThreadMode.MAIN)
@@ -53,7 +59,7 @@ class ProductScreenPresenter(val view: ProductScreenView, val model: ProductScre
 
     @Subscribe
     fun onProductInfoFetched(event: ProductScreenModel.ProductInfoFetched) {
-        view.initiateUI(event.productName,event.productType,event.expiryDate,event.ingredients,event.nutritionInfo,event.imageUrl, activity)
+        view.initiateUI(event.productName,event.productType,event.expiryDate,event.ingredients,event.nutritionInfo,event.translatedIngredients, event.translatedNutrition, event.imageUrl, activity)
     }
 
 
@@ -125,7 +131,7 @@ class ProductScreenPresenter(val view: ProductScreenView, val model: ProductScre
                             }
                             Log.i(ContentValues.TAG, "Language: $languageCode")
                         }else{
-                            //if translator cannot detect language, we assume for testing purpouse that it was in polish
+                            //if translator cannot detect language, we assume that it was in polish (no other language supported by this app)
                             Log.d(ContentValues.TAG, "translateIfNeeded: languagecode is not en. It's: $languageCode")
 
                             // Create a translator to English:
@@ -205,5 +211,21 @@ class ProductScreenPresenter(val view: ProductScreenView, val model: ProductScre
     @Subscribe
     fun productInfoCallback(event: ProductScreenModel.ProductInfoNotChanged){
         view.productInfoWasntChanged()
+    }
+
+    private fun getlanguageFromSharedPref(context: Context):String{
+        try{
+            val sharedPreferences = context.getSharedPreferences("Settings", Context.MODE_PRIVATE)
+            val language = sharedPreferences.getString("My_Lang","")
+            return if (language.isNullOrBlank()){
+                ""
+            } else{
+                Log.d(TAG, "getlanguageFromSharedPref: $language")
+                return language
+            }
+        }catch (e:Exception){
+            Log.d(TAG, "getlanguageFromSharedPref: EXCEPTION: $e")
+            return ""
+        }
     }
 }

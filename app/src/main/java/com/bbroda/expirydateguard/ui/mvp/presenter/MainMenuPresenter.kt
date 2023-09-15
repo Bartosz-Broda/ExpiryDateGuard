@@ -39,7 +39,7 @@ class MainMenuPresenter(val view: MainMenuView, val model: MainMenuModel, val ac
 
         val sharedPreferences = activity.getSharedPreferences("NotificationSettings", Context.MODE_PRIVATE)
         val notifications = sharedPreferences.getBoolean("Notifications",true)
-        if(notifications){NotificationWorker.schedule(appContext, 20, 15, 0)}
+        if(notifications){NotificationWorker.schedule(appContext, 9, 15, 0)}
     }
 
     @Subscribe

@@ -55,7 +55,7 @@ class AddNewProductView(var activity: AddNewProductActivity,var bus: EventBus) {
     }
 
     fun displayToastOnApiFailure(){
-        Toast.makeText(activity, "Can't fetch information about this product", Toast.LENGTH_LONG).show()
+        Toast.makeText(activity, activity.getString(R.string.cant_fetch), Toast.LENGTH_LONG).show()
     }
 
     fun setAutoCompleteTextView(foodTypes: MutableList<Type>){
@@ -84,7 +84,10 @@ class AddNewProductView(var activity: AddNewProductActivity,var bus: EventBus) {
     fun saveProduct(list: List<Type>){
         try {
             val type = productTypeAutoCompleteTextView.text.toString()
-            val name = productNameEdText.text.toString()
+            var name = productNameEdText.text.toString()
+            if(type.isNullOrEmpty()){
+                throw Exception(activity.getString(R.string.product_type_exception))
+            }
             val day = if(dayEdText.text.isEmpty()){
                 Log.d(TAG, "emptyyy: ")
                 "01".toInt()
@@ -106,6 +109,10 @@ class AddNewProductView(var activity: AddNewProductActivity,var bus: EventBus) {
                 is java.lang.NumberFormatException ->{
                     Log.d(TAG, "XXXX NumberFormatException!!!: ${exception.message.toString()} ")
                     Toast.makeText(activity, "Something went wrong. Make sure you entered the correct expiration date.", Toast.LENGTH_LONG).show()
+                }
+                is Exception ->{
+                    Log.d(TAG, "Exception!!!: ${exception.message.toString()} ")
+                    Toast.makeText(activity, exception.message.toString(), Toast.LENGTH_LONG).show()
                 }
             }
 
