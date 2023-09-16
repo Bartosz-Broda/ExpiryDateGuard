@@ -113,47 +113,59 @@ class MainMenuView(var activity: MainMenuActivity, val bus: EventBus) : Navigati
         try {
             //changing elements of recyclerview
             val itemCount = recyclerView?.adapter?.itemCount
-            for (i in 0 until itemCount!!) {
-                val holder = recyclerView?.findViewHolderForAdapterPosition(i)
-                if (holder != null) {
-                    if(adapter.dataSet[holder.adapterPosition].englishType==""){
-                        val infoButton = holder.itemView.findViewById<View>(R.id.info_button_product)
-                        infoButton.visibility = View.VISIBLE
-                        val deleteButton =
-                            holder.itemView.findViewById<View>(R.id.delete_product_button)
-                        deleteButton.visibility = View.GONE
-                        val addButton =
-                            holder.itemView.findViewById<View>(R.id.add_product_to_meal_button)
-                        addButton.visibility = View.GONE
+            if(itemCount == 0){
+                val mBuilder = AlertDialog.Builder(activity)
+                mBuilder.setMessage(activity.getString(R.string.no_products_main_menu_message))
+                mBuilder.setNegativeButton("Ok", null)
+                val mDialog = mBuilder.create()
+                mDialog.show()
+            }else{
+                bus.post(UserIsAddingProductsToMeal())
+                bus.post(ClearProductsInListDatabase())
 
-                        holder.itemView.setBackgroundResource(R.drawable.recycler_item_no_background)
-                        val minusButton =
-                            holder.itemView.findViewById<View>(R.id.delete_product_from_meal_button)
-                        minusButton.visibility = View.GONE
-                    }else {
-                        holder.itemView.setBackgroundResource(R.drawable.recycler_item_no_background)
-                        val minusButton =
-                            holder.itemView.findViewById<View>(R.id.delete_product_from_meal_button)
-                        minusButton.visibility = View.GONE
+                for (i in 0 until itemCount!!) {
+                    val holder = recyclerView?.findViewHolderForAdapterPosition(i)
+                    if (holder != null) {
+                        if(adapter.dataSet[holder.adapterPosition].englishType==""){
+                            val infoButton = holder.itemView.findViewById<View>(R.id.info_button_product)
+                            infoButton.visibility = View.VISIBLE
+                            val deleteButton =
+                                holder.itemView.findViewById<View>(R.id.delete_product_button)
+                            deleteButton.visibility = View.GONE
+                            val addButton =
+                                holder.itemView.findViewById<View>(R.id.add_product_to_meal_button)
+                            addButton.visibility = View.GONE
 
-                        val infoButton = holder.itemView.findViewById<View>(R.id.info_button_product)
-                        infoButton.visibility = View.GONE
-                        //holder.itemView.setBackgroundResource(R.drawable.recycler_tem_bg_green)
-                        val deleteButton =
-                            holder.itemView.findViewById<View>(R.id.delete_product_button)
-                        deleteButton.visibility = View.GONE
-                        val addButton =
-                            holder.itemView.findViewById<View>(R.id.add_product_to_meal_button)
-                        addButton.visibility = View.VISIBLE
+                            holder.itemView.setBackgroundResource(R.drawable.recycler_item_no_background)
+                            val minusButton =
+                                holder.itemView.findViewById<View>(R.id.delete_product_from_meal_button)
+                            minusButton.visibility = View.GONE
+                        }else {
+                            holder.itemView.setBackgroundResource(R.drawable.recycler_item_no_background)
+                            val minusButton =
+                                holder.itemView.findViewById<View>(R.id.delete_product_from_meal_button)
+                            minusButton.visibility = View.GONE
+
+                            val infoButton = holder.itemView.findViewById<View>(R.id.info_button_product)
+                            infoButton.visibility = View.GONE
+                            //holder.itemView.setBackgroundResource(R.drawable.recycler_tem_bg_green)
+                            val deleteButton =
+                                holder.itemView.findViewById<View>(R.id.delete_product_button)
+                            deleteButton.visibility = View.GONE
+                            val addButton =
+                                holder.itemView.findViewById<View>(R.id.add_product_to_meal_button)
+                            addButton.visibility = View.VISIBLE
+                        }
                     }
                 }
+
+                //changing other UI elements
+                recyclerView?.clipToPadding = false
+                recyclerView?.setPadding(0,0,0,330)
+                ingredientsCardView?.visibility = View.VISIBLE
+                changeNumberOfProductsOnList(0)
             }
 
-            //changing other UI elements
-            recyclerView?.clipToPadding = false
-            recyclerView?.setPadding(0,0,0,330)
-            ingredientsCardView?.visibility = View.VISIBLE
-            changeNumberOfProductsOnList(0)
 
         }catch(e: java.lang.Exception){
             Log.d(TAG, "addProductsToDish: EXCEPTION: $e")
@@ -304,8 +316,6 @@ class MainMenuView(var activity: MainMenuActivity, val bus: EventBus) : Navigati
         if (item.itemId == R.id.new_recipe_with_my_products) {
             drawerLayout?.closeDrawer(GravityCompat.START)
             addProductsToDish()
-            bus.post(UserIsAddingProductsToMeal())
-            bus.post(ClearProductsInListDatabase())
         }
 
         if(item.itemId == R.id.my_recepies){

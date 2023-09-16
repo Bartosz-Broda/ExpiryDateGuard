@@ -19,6 +19,9 @@ import com.bbroda.expirydateguard.ui.classes.productdatabase.ProductsInListDatab
 import com.bbroda.expirydateguard.ui.mvp.model.MainMenuModel
 import com.bbroda.expirydateguard.ui.mvp.view.MainMenuView
 import com.bbroda.expirydateguard.ui.workers.NotificationWorker
+import com.google.android.gms.common.moduleinstall.ModuleInstall
+import com.google.android.gms.common.moduleinstall.ModuleInstallRequest
+import com.google.mlkit.vision.codescanner.GmsBarcodeScanning
 import kotlinx.coroutines.launch
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -31,6 +34,11 @@ class MainMenuPresenter(val view: MainMenuView, val model: MainMenuModel, val ac
     val preferenceDB = PreferenceDatabase.getDatabase(activity)
 
     init {
+        //It solves the problem of not opening barcode scanner
+        activity.lifecycleScope.launch {
+            downloadScannerIfNeeded()
+        }
+
         activity.lifecycleScope.launch {
             model.downloadLanguageModelsIfNeeded()
         }
@@ -256,6 +264,45 @@ class MainMenuPresenter(val view: MainMenuView, val model: MainMenuModel, val ac
     @Subscribe
     fun onNotificationSettingsObtained(event: MainMenuModel.NotificationPreferencesObtained){
         view.showNotificationOptions(event.isNotificationEnabled)
+    }
+
+    private fun downloadScannerIfNeeded(){
+        val moduleInstallClient = ModuleInstall.getClient(activity)
+        val optionalModuleApi = GmsBarcodeScanning.getClient(activity)
+        moduleInstallClient
+            .areModulesAvailable(optionalModuleApi)
+            .addOnSuccessListener {
+                if (!it.areModulesAvailable()) {
+                    // Modules are not present on the device...
+
+                    val moduleInstallRequest =
+                        ModuleInstallRequest.newBuilder()
+                            .addApi(optionalModuleApi)
+                            // Add more APIs if you would like to request multiple optional modules.
+                            // .addApi(...)
+                            // Set the listener if you need to monitor the download progress.
+                            // .setListener(listener)
+                            .build()
+
+                    moduleInstallClient
+                        .installModules(moduleInstallRequest)
+                        .addOnSuccessListener {
+                            Log.d(TAG, "downloadScannerIfNeeded: SCANNER INSTALLED SUCCESSFULLY")
+                            if (it.areModulesAlreadyInstalled()) {
+                                // Modules are already installed when the request is sent.
+                                Log.d(TAG, "downloadScannerIfNeeded: SCANNER ALREADY INSTALLED")
+                            }
+                        }
+                        .addOnFailureListener {
+                            // Handle failure…
+                            Log.d(TAG, "CANNOT INSTALL SCANNER: ")
+                        }
+                }
+            }
+            .addOnFailureListener {
+                // Handle failure...
+                Log.d(TAG, "CANNOT CHECK IF SCANNER IS INSTALLED: ")
+            }
     }
 
 

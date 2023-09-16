@@ -11,8 +11,6 @@ import com.bbroda.expirydateguard.ui.classes.FoodTypesDatabase.FoodTypesDatabase
 import com.bbroda.expirydateguard.ui.classes.productdatabase.ProductsDatabase
 import com.bbroda.expirydateguard.ui.mvp.model.AddNewProductModel
 import com.bbroda.expirydateguard.ui.mvp.view.AddNewProductView
-import com.google.android.gms.common.moduleinstall.ModuleInstall
-import com.google.android.gms.common.moduleinstall.ModuleInstallRequest
 import com.google.mlkit.common.model.DownloadConditions
 import com.google.mlkit.nl.languageid.LanguageIdentification
 import com.google.mlkit.nl.translate.TranslateLanguage
@@ -37,42 +35,7 @@ class AddNewProductPresenter(val view: AddNewProductView, val model: AddNewProdu
     val foodDb = FoodTypesDatabase.getDatabase(activity)
 
     init {
-        //It solves the problem of not opening scanner
-        val moduleInstallClient = ModuleInstall.getClient(activity)
-        val optionalModuleApi = GmsBarcodeScanning.getClient(activity)
-        moduleInstallClient
-            .areModulesAvailable(optionalModuleApi)
-            .addOnSuccessListener {
-                if (it.areModulesAvailable()) {
-                    // Modules are present on the device...
-                } else {
-                    // Modules are not present on the device...
-                    val moduleInstallRequest =
-                        ModuleInstallRequest.newBuilder()
-                            .addApi(optionalModuleApi)
-                            // Add more APIs if you would like to request multiple optional modules.
-                            // .addApi(...)
-                            // Set the listener if you need to monitor the download progress.
-                            // .setListener(listener)
-                            .build()
 
-                    moduleInstallClient
-                        .installModules(moduleInstallRequest)
-                        .addOnSuccessListener {
-                            if (it.areModulesAlreadyInstalled()) {
-                                // Modules are already installed when the request is sent.
-                            }
-                        }
-                        .addOnFailureListener {
-                            // Handle failure…
-                            Log.d(TAG, "CANNOT INSTALL SCANNER: ")
-                        }
-                }
-            }
-            .addOnFailureListener {
-                // Handle failure...
-                Log.d(TAG, "CANNOT CHECK IF SCANNER IS INSTALLED: ")
-            }
     }
 
     @Subscribe
@@ -417,6 +380,8 @@ class AddNewProductPresenter(val view: AddNewProductView, val model: AddNewProdu
             .addOnFailureListener { e ->
                 // Task failed with an exception
                 Log.d(TAG, "BARCODE FAILURE xxxx: $e")
+                var toastText = e.toString().removePrefix("com.google.mlkit.common.MlKitException: ")
+                view.showToast(toastText)
                 view.changeVisibilityOfProgressBar(false)
             }
     }

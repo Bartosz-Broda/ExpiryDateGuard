@@ -8,11 +8,13 @@ import android.widget.AutoCompleteTextView
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ProgressBar
+import android.widget.TextView
 import android.widget.Toast
 import androidx.core.widget.doAfterTextChanged
 import com.bbroda.expirydateguard.R
 import com.bbroda.expirydateguard.ui.activities.AddNewProductActivity
 import com.bbroda.expirydateguard.ui.classes.FoodTypesDatabase.Type
+import com.google.android.material.snackbar.Snackbar
 import org.greenrobot.eventbus.EventBus
 import java.time.DateTimeException
 import java.time.LocalDate
@@ -117,6 +119,18 @@ class AddNewProductView(var activity: AddNewProductActivity,var bus: EventBus) {
             }
 
         }
+    }
+
+    fun showToast(text: String){
+        val SNACKBAR_MAX_LINES = 4 // Increase maximum SnackBar line limit above 2
+        val snackbar = Snackbar.make(scanProductButton, text, Snackbar.LENGTH_SHORT)
+        (snackbar.view.findViewById(com.google.android.material.R.id.snackbar_text) as TextView)
+            .run {
+                maxLines = SNACKBAR_MAX_LINES
+            }
+
+        snackbar.show()
+        //Toast.makeText(activity, text, Toast.LENGTH_LONG).show()
     }
     class NewProductAdded(val date: LocalDate, val name: String, val type: String, val list: List<Type>)
     class ScanProduct()

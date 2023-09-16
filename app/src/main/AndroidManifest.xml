@@ -68,6 +68,7 @@
         <meta-data
             android:name="com.google.mlkit.vision.DEPENDENCIES"
             android:value="barcode_ui" />
+
     </application>
 
 </manifest>
