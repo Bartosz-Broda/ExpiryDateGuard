@@ -11,7 +11,7 @@ android {
         applicationId "com.bbroda.expirydateguard"
         minSdk 29
         targetSdk 34
-        versionCode 7
+        versionCode 12
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -19,6 +19,20 @@ android {
 
     buildTypes {
         release {
+            ndk {
+                debugSymbolLevel = 'FULL'
+            }
+            // Enable code shrinking, obfuscation, optimization
+            minifyEnabled true
+
+            // Enable resource shrinking, requires minifyEnabled to be applied
+            shrinkResources true
+
+            // Specify ProGuard rules files
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+
+        debug {
             ndk {
                 debugSymbolLevel = 'FULL'
             }

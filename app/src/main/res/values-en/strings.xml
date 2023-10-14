@@ -18,7 +18,7 @@
     <string name="collapse_title">Your fridge</string>
     <string name="przepisy_kulinarne">Recipes</string>
     <string name="wyszukaj_przepis_z_moimi_produktami">Find recipes containing my products</string>
-    <string name="moje_przepisy">Favourite recipes</string>
+    <string name="moje_przepisy">My favourite recipes</string>
     <string name="ustawienia">Settings</string>
     <string name="zmie_j_zyk">Change language</string>
     <string name="angielski">English</string>
@@ -44,7 +44,7 @@
     <string name="toast_brak_produktów">You have to choose at least one product!</string>
     <string name="info_button">You can\'t add this product to your list. Go to product details and fill in or change the product type. Try using types suggested by application.</string>
     <string name="delete_product_button">Do you want to remove this product from your fridge?</string>
-    <string name="main_menu_api_failed">There was a problem with fetching recipes. Check your internet connection, choose different products or change your food preferences.</string>
+    <string name="main_menu_api_failed">There was a problem with fetching recipes. Choose different products or change your food preferences.</string>
     <string name="brakuje_ci">You are missing</string>
     <string name="produktów">ingredients</string>
     <string name="no_recipies_found">No recipes found with the ingredients listed.</string>
@@ -114,6 +114,13 @@
     <string name="no_name">No product name</string>
     <string name="recipes_cardview_text">Cooking recipes, that use the products chosen by You</string>
     <string name="no_products_main_menu_message">You have to add at least one product to your fridge before searching for recipes</string>
+    <string name="terms_conditions">Terms of use: https://github.com/Bartosz-Broda/Policies-Terms-of-use/raw/main/Expiry%20Date%20Guard%20-%20terms%20and%20conditions.docx</string>
+    <string name="check_internet_connection">There was a problem with fetching recipes. Check your internet connection.</string>
+    <string name="Terms_of_use">Terms of Use</string>
+    <string name="terms_of_use_1">By using the app, you agree to the app\'s</string>
+    <string name="terms_of_use_2"> terms of use</string>
+    <string name="dont_show_this_again">Don\'t show this again</string>
+    <string name="accept">Accept</string>
 
 
     <string-array name="ingredients">

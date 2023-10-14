@@ -7,6 +7,7 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.util.Log
 import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
@@ -17,6 +18,8 @@ object NotificationHandler {
     private const val CHANNEL_ID = "transactions_reminder_channel"
 
     fun createReminderNotification(context: Context, textContent: String, ID:Int) {
+        val TAG = "X"
+        Log.d(TAG, "createReminderNotification: CREATE NOTIFICATION ")
         //  No back-stack when launched
         val intent = Intent(context, MainMenuActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK

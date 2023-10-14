@@ -40,13 +40,13 @@ class RecipesScreenModel (var bus: EventBus, val activityContext: Context){
             )
 
             val healthParameters = retrieveFoodPreferences(database)
-            val healthPrefStingList = mutableListOf<String>()
+            val healthPrefStringList = mutableListOf<String>()
 
             if(healthParameters.isNotEmpty()) {
                 Log.d(TAG, "makeRecipeApiCall: HEALTHPARAMETERS: $healthParameters")
                 for (i in healthParameters) {
                     if(i.isChecked) {
-                        healthPrefStingList.add(i.apiLabel)
+                        healthPrefStringList.add(i.apiLabel)
                         Log.d(TAG, "makeRecipeApiCall: putting parameter ${i.apiLabel} into apicallparameters")
                         Log.d(TAG, "makeRecipeApiCall: apiCallParameters: $apiCallMapParameters")
                     }
@@ -58,7 +58,7 @@ class RecipesScreenModel (var bus: EventBus, val activityContext: Context){
 
             Log.d(TAG, "makeRecipeApiCall: APICALLMAPPARAMETERS: $apiCallMapParameters")
             Log.d(TAG, "makeRecipeApiCall: ")
-            val result = edamamRecipeSearchAPI.callForRecipe(apiCallMapParameters,healthPrefStingList)
+            val result = edamamRecipeSearchAPI.callForRecipe(apiCallMapParameters,healthPrefStringList)
             Log.d(TAG, "makeRecipeApiCall: URL: ${result.raw().request.url}")
 
             Log.d(ContentValues.TAG, "makeRecipeApiCall: SUCCESS! RESULT: ${result.body()}")
@@ -73,13 +73,13 @@ class RecipesScreenModel (var bus: EventBus, val activityContext: Context){
             Log.d(ContentValues.TAG, "RECIPE API CALL FAILED: $e")
 
             withContext(Dispatchers.Main){
-                bus.post(ApiCallFailed())
+                bus.post(ApiCallFailed(e.toString()))
             }
         }
 
     }
 
-        suspend fun retrieveFoodPreferences(database: PreferenceDatabase): List<Preference>{
+        private suspend fun retrieveFoodPreferences(database: PreferenceDatabase): List<Preference>{
             val list = database.preferenceDao().getAll()
             return list
         }
@@ -87,7 +87,7 @@ class RecipesScreenModel (var bus: EventBus, val activityContext: Context){
 
     suspend fun addRecipeToFavourites(database: RecipeDatabase, recipe: Recipes){
         
-        val recipiesInDatabase = database.recipeDao().getAll()
+        val recipiesInDatabase = database.recipeDao().getAlll()
         val onlineRecipe = recipe.recipe
         
         
@@ -114,7 +114,7 @@ class RecipesScreenModel (var bus: EventBus, val activityContext: Context){
             }
             
             database.recipeDao().insertAll(newRecipe)
-            Log.d(TAG, "addRecipeToFavourites: RECIPE ADDED TO DATABASE. DATABASE CONTENT: ${database.recipeDao().getAll()}")
+            Log.d(TAG, "addRecipeToFavourites: RECIPE ADDED TO DATABASE. DATABASE CONTENT: ${database.recipeDao().getAlll()}")
             bus.post(RecipeAddedToFavourites())
 
         }catch(e:Exception){
@@ -126,7 +126,7 @@ class RecipesScreenModel (var bus: EventBus, val activityContext: Context){
 
 
     class ApiCallSuccessful(val result: Response<RecipeCallResult>, val products: List<Product>)
-    class ApiCallFailed
+    class ApiCallFailed(val exception: String)
     class RecipeNotAddedToFavourites
     class RecipeAddedToFavourites
     class RecipeAlreadyAdded

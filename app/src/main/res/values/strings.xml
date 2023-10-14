@@ -16,7 +16,7 @@
     <string name="data_przydatno_ci">data przydatności</string>
     <string name="collapse_title">Twoja\nlodówka</string>
     <string name="przepisy_kulinarne">Przepisy kulinarne</string>
-    <string name="wyszukaj_przepis_z_moimi_produktami">Przepisy zawierające moje produkty</string>
+    <string name="wyszukaj_przepis_z_moimi_produktami">Wyszukaj przepisy zawierające moje produkty</string>
     <string name="moje_przepisy">Ulubione przepisy</string>
     <string name="ustawienia">Ustawienia</string>
     <string name="zmie_j_zyk">Zmień język</string>
@@ -43,7 +43,7 @@
     <string name="toast_brak_produktów">Musisz wybrać co najmniej 1 produkt!</string>
     <string name="info_button">Nie możesz dodać tego produktu do listy. Przejdź do szczegółów produktu, a następnie uzupełnij lub zmień typ produktu. Wypróbuj typy produktów proponowane przez aplikację.</string>
     <string name="delete_product_button">Czy na pewno chcesz usunąć ten produkt ze swojej lodówki?</string>
-    <string name="main_menu_api_failed">Wystąpił problem z pobraniem przepisów. Sprawdź czy masz połączenie z internetem, wybierz inne produkty lub zmień preferencje żywieniowe.</string>
+    <string name="main_menu_api_failed">Wystąpił problem z pobraniem przepisów. Wybierz inne produkty lub zmień preferencje żywieniowe.</string>
     <string name="brakuje_ci">Brakuje Ci</string>
     <string name="produktów">składników</string>
     <string name="no_recipies_found">Nie znaleziono przepisów zawierających podane składniki.</string>
@@ -72,7 +72,7 @@
     <string name = "SoyFree"> Bez soi</string>
     <string name = "SugarConscious">Niska zawartość cukru</string>
     <string name = "SulfiteFree">Nie zawiera siarczynów</string>
-    <string name = "TreeNutFree"> Nie zawiera orzechów drzewnych </string>
+    <string name = "TreeNutFree"> Nie zawiera orzechów włoskich</string>
     <string name = "Vegan"> Wegańskie </string>
     <string name = "Vegetarian"> Wegetariańskie </string>
     <string name = "WheatFree"> Bez pszenicy </string>
@@ -113,6 +113,14 @@
     <string name="no_name">Brak nazwy produktu</string>
     <string name="recipes_cardview_text">Przepisy kulinarne, które wykorzystują wybrane przez Ciebie produkty</string>
     <string name="no_products_main_menu_message">Aby wyszukać przepisy, musisz najpierw dodać produkt do swojej lodówki</string>
+    <string name="terms_conditions">Warunki użytkowania aplikacji (Terms of use): https://github.com/Bartosz-Broda/Policies-Terms-of-use/raw/main/Expiry%20Date%20Guard%20-%20terms%20and%20conditions.docx</string>
+    <string name="check_internet_connection">Wystąpił problem z pobraniem przepisów. Sprawdź połączenie z internetem</string>
+    <string name="Terms_of_use">Warunki używania aplikacji</string>
+    <string name="terms_of_use_1">Korzystając z aplikacji wyrażasz zgodę na</string>
+    <string name="terms_of_use_2"> warunki używania aplikacji</string>
+    <string name="dont_show_this_again">Nie pokazuj tego ponownie</string>
+    <string name="accept">Akceptuj</string>
+
 
 
     <string-array name="ingredients">
@@ -829,7 +837,7 @@
     <string name="Yogurt">Jogurt</string>
     <string name="AllSpice">Piment</string>
     <string name="AlmondExtract">Ekstrakt z migdałów</string>
-    <string name="BakingChocolate">Wypiekowa Czekolada</string>
+    <string name="BakingChocolate">Czekolada do wypieków</string>
     <string name="BakingPowder">Proszek do pieczenia</string>
     <string name="BarbecueSeasoning">Przyprawa do grilla</string>
     <string name="Basil">Bazylia</string>
@@ -878,13 +886,13 @@
     <string name="Parsley">Pietruszka</string>
     <string name="PeanutOil">Olej z orzechów</string>
     <string name="Peppercorns">Ziarnka pieprzu</string>
-    <string name="Poppyseeds">MAK</string>
+    <string name="Poppyseeds">Mak</string>
     <string name="PowderedSugar">Cukier puder</string>
     <string name="PumpkinPieFilling">Nadzienie Ciasto Dyniowe</string>
     <string name="PumpkinPieSpice">Przyprawa do ciasta dyniowego</string>
     <string name="RanchMixpacket">Ranczo Mixpack</string>
     <string name="RedPepper">Czerwona papryka</string>
-    <string name="Rosemary">rozmaryn</string>
+    <string name="Rosemary">Rozmaryn</string>
     <string name="Salt">Sól</string>
     <string name="SaltandPepper">Sól i pieprz</string>
     <string name="SeasoningSalt">Sól przyprawowa</string>

@@ -16,11 +16,11 @@ class FavouriteRecipesModel(var bus:EventBus) {
         val databaseRecipes = database.recipeDao()
         databaseRecipes.delete(recipe)
         bus.post(RecipeDeleted(position))
-        Log.d(ContentValues.TAG, "removeRecipeFromFavourites: RECIPE REMOVED FROM DATABASE. DATABASE CONTENT: ${database.recipeDao().getAll()}")
+        Log.d(ContentValues.TAG, "removeRecipeFromFavourites: RECIPE REMOVED FROM DATABASE. DATABASE CONTENT: ${database.recipeDao().getAlll()}")
     }
 
     suspend fun getRecipesAndProductsFromDatabase(database: RecipeDatabase, productsDatabase: ProductsDatabase){
-        val recipes = database.recipeDao().getAll()
+        val recipes = database.recipeDao().getAlll()
         val products = productsDatabase.productDao().getAll()
         bus.post(RecipesFetchedFromDatabase(recipes, products))
     }

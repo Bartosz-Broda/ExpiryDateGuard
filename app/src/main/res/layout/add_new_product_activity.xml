@@ -141,6 +141,18 @@
                 android:background="@drawable/rounded_background_primarycolor"
                 android:text="@string/zapisz" />
 
+            <ProgressBar
+                android:id="@+id/translationProgressBar"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_alignTop="@+id/save_new_product_button"
+                android:layout_alignBottom="@+id/save_new_product_button"
+                android:layout_marginEnd="10dp"
+                android:visibility="gone"
+                android:indeterminate="true"
+                android:indeterminateTint="@color/purple_200"
+                android:layout_toStartOf="@+id/save_new_product_button" />
+
 
         </RelativeLayout>
 
@@ -165,6 +177,8 @@
         android:layout_alignParentBottom="true"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
+        android:indeterminateTint="@color/colorPrimary"
+        android:indeterminate="true"
         android:visibility="gone"/>
 
 

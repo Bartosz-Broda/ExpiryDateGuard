@@ -26,6 +26,7 @@
         android:theme="@style/Theme.ExpiryDateGuard" >
 
 
+
 		<activity android:name="com.bbroda.expirydateguard.ui.activities.RecipesScreenActivity">
 		</activity>
         <activity

@@ -28,7 +28,7 @@ class RecipesScreenPresenter(val view: RecipesScreenView, val model: RecipesScre
             ingredientsQuantity = extras.getInt("ingredients_quantity")
             activity.lifecycleScope.launch {model.makeRecipeApiCall(ingredients,preferencesDB,productDB)}
         }else{
-            view.showMessage(activity.getString(R.string.main_menu_api_failed))
+            view.showMessage("${activity.getString(R.string.main_menu_api_failed)} \n\nError: No Ingredients passed")
         }
 
     }
@@ -47,7 +47,7 @@ class RecipesScreenPresenter(val view: RecipesScreenView, val model: RecipesScre
             event.result.body()!!.hits?.let { view.initRecyclerView(it, event.products ) }
             }
         }catch (e:Exception){
-            view.showMessage(activity.getString(R.string.main_menu_api_failed))
+            view.showMessage("${activity.getString(R.string.main_menu_api_failed)} \n\nError: Api call successfull, but $e")
             Log.d(TAG, "onRecipeApiCallSuccess: Exception: $e")
         }
     }
@@ -55,7 +55,11 @@ class RecipesScreenPresenter(val view: RecipesScreenView, val model: RecipesScre
     @Subscribe
     fun onRecipeApiCallFail(event: RecipesScreenModel.ApiCallFailed){
         view.hideProgressBar()
-        view.showMessage(activity.getString(R.string.main_menu_api_failed))
+        if(event.exception.contains("UnknownHostException")){
+            view.showMessage(activity.getString(R.string.check_internet_connection))
+        }else {
+            view.showMessage("${activity.getString(R.string.main_menu_api_failed)} \n\nError code: ${event.exception}")
+        }
     }
 
     @Subscribe
@@ -77,6 +81,7 @@ class RecipesScreenPresenter(val view: RecipesScreenView, val model: RecipesScre
     fun recipeAddedToFavouritesSuccessFully(event: RecipesScreenModel.RecipeAlreadyAdded){
         view.showToast(activity.getString(R.string.recipe_alredy_added))
     }
+
 
 
 }

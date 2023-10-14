@@ -71,8 +71,6 @@ class NotificationWorker(private val appContext: Context, workerParameters: Work
                             NotificationHandler.createReminderNotification(appContext, textContent, id)
                             }
                         )
-
-
                     }
                 }
             }
@@ -88,6 +86,7 @@ class NotificationWorker(private val appContext: Context, workerParameters: Work
 
     companion object {
         fun schedule(appContext: Context, hourOfDay: Int, minute: Int, second: Int) {
+            Log.d(ContentValues.TAG, "schedule: NOTIFICATION SCHEDULED")
             Log.d(ContentValues.TAG,"Reminder scheduling request received for $hourOfDay:$minute")
             val now = Calendar.getInstance()
             val target = Calendar.getInstance().apply {

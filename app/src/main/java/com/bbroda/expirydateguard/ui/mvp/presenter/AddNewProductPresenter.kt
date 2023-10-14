@@ -117,6 +117,7 @@ class AddNewProductPresenter(val view: AddNewProductView, val model: AddNewProdu
         if(engType == ""){
             Log.d(EventBus.TAG, "tryingToChangeProductInfo: ENGTYPE IS EMPTY")
             try {
+                view.showTranslateProgressBar()
                 Log.d(ContentValues.TAG, "translateIfNeeded: product type: ${event.type}")
                 //translating type to english for searching recipe purpose
                 val languageIdentifier = LanguageIdentification.getClient()
@@ -145,6 +146,7 @@ class AddNewProductPresenter(val view: AddNewProductView, val model: AddNewProdu
                                         activity.lifecycleScope.launch {
                                             model.addNewProductToDatabase(event.date, event.name, event.type, translatedText, ingredients, nutriments, imageUrl, translatedIngredients ,translatedNutriments,db)
                                         }
+                                        view.hideTranslateProgressBar()
                                         Log.d(ContentValues.TAG, "translateIfNeeded: TRANSLATED TEXT: $translatedText")
                                         translatorToEnglish.close()
                                     }.addOnFailureListener { exception ->
@@ -153,6 +155,7 @@ class AddNewProductPresenter(val view: AddNewProductView, val model: AddNewProdu
                                         activity.lifecycleScope.launch {
                                             model.addNewProductToDatabase(event.date, event.name, event.type, engType, ingredients, nutriments, imageUrl, translatedIngredients ,translatedNutriments,db)
                                         }
+                                        view.hideTranslateProgressBar()
                                         translatorToEnglish.close()
                                     }
                             }.addOnFailureListener { exception ->
@@ -160,6 +163,7 @@ class AddNewProductPresenter(val view: AddNewProductView, val model: AddNewProdu
                                 activity.lifecycleScope.launch {
                                     model.addNewProductToDatabase(event.date, event.name, event.type, engType, ingredients, nutriments, imageUrl, translatedIngredients ,translatedNutriments,db)
                                 }
+                                view.hideTranslateProgressBar()
                                 Log.d(ContentValues.TAG, "translateIfNeeded: Need another language model but can't download it!: $exception")
                                 translatorToEnglish.close()
                             }
@@ -189,6 +193,7 @@ class AddNewProductPresenter(val view: AddNewProductView, val model: AddNewProdu
                                         activity.lifecycleScope.launch {
                                             model.addNewProductToDatabase(event.date, event.name, event.type, engType, ingredients, nutriments, imageUrl, translatedIngredients ,translatedNutriments,db)
                                         }
+                                        view.hideTranslateProgressBar()
                                         Log.d(ContentValues.TAG, "translateIfNeeded: TRANSLATED TEXT: $translatedText")
                                         translatorToEnglish.close()
                                     }.addOnFailureListener { exception ->
@@ -197,6 +202,7 @@ class AddNewProductPresenter(val view: AddNewProductView, val model: AddNewProdu
                                         activity.lifecycleScope.launch {
                                             model.addNewProductToDatabase(event.date, event.name, event.type, engType, ingredients, nutriments, imageUrl, translatedIngredients ,translatedNutriments,db)
                                         }
+                                        view.hideTranslateProgressBar()
                                         translatorToEnglish.close()
                                     }
                             }.addOnFailureListener { exception ->
@@ -204,6 +210,7 @@ class AddNewProductPresenter(val view: AddNewProductView, val model: AddNewProdu
                                 activity.lifecycleScope.launch {
                                     model.addNewProductToDatabase(event.date, event.name, event.type, engType, ingredients, nutriments, imageUrl, translatedIngredients ,translatedNutriments,db)
                                 }
+                                view.hideTranslateProgressBar()
                                 Log.d(ContentValues.TAG, "translateIfNeeded: Need another language model but can't download it!: $exception")
                                 translatorToEnglish.close()
                             }
@@ -218,12 +225,14 @@ class AddNewProductPresenter(val view: AddNewProductView, val model: AddNewProdu
                         activity.lifecycleScope.launch {
                             model.addNewProductToDatabase(event.date, event.name, event.type, engType, ingredients, nutriments, imageUrl, translatedIngredients ,translatedNutriments,db)
                         }
+                        view.hideTranslateProgressBar()
                     }
 
             } catch (e: Exception) {
                 activity.lifecycleScope.launch {
                     model.addNewProductToDatabase(event.date, event.name, event.type, engType, ingredients, nutriments, imageUrl, translatedIngredients ,translatedNutriments,db)
                 }
+                view.hideTranslateProgressBar()
                 Log.d(ContentValues.TAG, "translateIfNeeded: $e")
             }
         }

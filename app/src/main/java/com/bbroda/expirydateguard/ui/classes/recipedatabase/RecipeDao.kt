@@ -9,7 +9,7 @@ import androidx.room.Update
 @Dao
 interface RecipeDao {
     @Query("SELECT * FROM recipe")
-    suspend fun getAll(): List<Recipe>
+    suspend fun getAlll(): List<Recipe>
 
     /*@Query("SELECT * FROM product WHERE uid IN (:productIds)")
     fun loadAllByIds(productIds: IntArray): List<Product>*/

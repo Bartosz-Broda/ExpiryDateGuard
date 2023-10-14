@@ -29,6 +29,7 @@ class AddNewProductView(var activity: AddNewProductActivity,var bus: EventBus) {
     private val saveButton: Button = activity.findViewById(R.id.save_new_product_button)
     private val scanProductButton: Button = activity.findViewById(R.id.scanButton)
     private val apiCallProgressBar:ProgressBar = activity.findViewById(R.id.scan_progress_bar)
+    private val translateProgressBar:ProgressBar = activity.findViewById(R.id.translationProgressBar)
 
     init {
         saveButton.setOnClickListener {
@@ -131,6 +132,14 @@ class AddNewProductView(var activity: AddNewProductActivity,var bus: EventBus) {
 
         snackbar.show()
         //Toast.makeText(activity, text, Toast.LENGTH_LONG).show()
+    }
+
+    fun showTranslateProgressBar(){
+        translateProgressBar.visibility = View.VISIBLE
+    }
+
+    fun hideTranslateProgressBar(){
+        translateProgressBar.visibility = View.GONE
     }
     class NewProductAdded(val date: LocalDate, val name: String, val type: String, val list: List<Type>)
     class ScanProduct()

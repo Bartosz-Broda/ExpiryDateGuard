@@ -20,6 +20,8 @@
         android:id="@+id/image_progress_bar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:indeterminate="true"
+        android:indeterminateTint="@color/colorPrimary"
         app:layout_constraintBottom_toBottomOf="@+id/product_image"
         app:layout_constraintEnd_toEndOf="@+id/product_image"
         app:layout_constraintStart_toStartOf="@+id/product_image"
